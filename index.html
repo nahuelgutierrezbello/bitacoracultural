@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bitácora Cultural - Revista Digital</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="login-container" class="login-container">
+      <div class="login-form">
+        <div class="login-logo">
+          <div class="logo-image">
+            <img
+              src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
+              alt="Bitácora Cultural"
+            />
+          </div>
+          <h2>Bitácora Cultural</h2>
+          <p>Panel de Administración</p>
+        </div>
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" placeholder="Ingrese su usuario" />
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Ingrese su contraseña"
+          />
+        </div>
+        <button class="btn" id="login-btn">Iniciar Sesión</button>
+        <div class="login-error" id="login-error">
+          Usuario o contraseña incorrectos
+        </div>
+      </div>
+    </div>
+
+    <div id="public-view">
+      <header>
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <div class="logo-image">
+                <img
+                  src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
+                  alt="Bitácora Cultural"
+                />
+              </div>
+              <div class="logo-text">
+                <h1>Bitácora Cultural</h1>
+                <p>Revista Cultural Digital</p>
+              </div>
+            </div>
+            <nav>
+              <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#revista">Revista Actual</a></li>
+                <li><a href="#anteriores">Revistas Anteriores</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#notas">Notas Periodísticas</a></li>
+                <li>
+                  <a href="#" id="admin-toggle" class="admin-link">Admin</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero" id="inicio">
+        <div class="container">
+          <h2>Bitácora Cultural</h2>
+          <p>Publicación mensual dedicada a la cultura en formato digital</p>
+          <a href="#revista" class="btn">Ver Última Edición</a>
+        </div>
+      </section>
+
+      <section class="current-issue" id="revista">
+        <div class="container">
+          <h2 class="section-title">Revista Actual</h2>
+          <div class="issue-container">
+            <div class="issue-cover">
+              <img
+                id="current-cover"
+                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
+                alt="Portada Revista Actual"
+              />
+            </div>
+            <div class="issue-content">
+              <h3 id="current-title"></h3>
+              <p class="issue-meta" id="current-meta"></p>
+              <p id="current-description"></p>
+              <div class="issue-actions">
+                <a href="#" id="current-pdf" class="btn" target="_blank">
+                  <i class="fas fa-download"></i> Descargar PDF
+                </a>
+                <a href="#" class="btn btn-outline">
+                  <i class="fas fa-eye"></i> Ver Online
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="past-issues" id="anteriores">
+        <div class="container">
+          <h2 class="section-title">Revistas Anteriores</h2>
+          <div class="carousel-container">
+            <div class="carousel" id="issues-carousel"></div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn" id="carousel-prev">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-btn" id="carousel-next">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="categories" id="categorias">
+        <div class="container">
+          <h2 class="section-title">Categorías</h2>
+          <div class="categories-grid" id="categories-container"></div>
+        </div>
+      </section>
+
+      <section class="featured-notes" id="notas">
+        <div class="container">
+          <h2 class="section-title">Notas Periodísticas</h2>
+          <div class="notes-grid" id="notes-container"></div>
+        </div>
+      </section>
+
+      <section class="category-notes" id="category-notes">
+        <div class="container">
+          <div class="category-header">
+            <a href="#" class="back-button" id="back-to-categories">
+              <i class="fas fa-arrow-left"></i> Volver a Categorías
+            </a>
+            <h2 class="section-title" id="category-title">
+              Notas de la Categoría
+            </h2>
+          </div>
+          <div class="notes-grid" id="category-notes-container"></div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h3>Bitácora Cultural</h3>
+              <p>
+                Publicación mensual dedicada a la cultura en formato digital. Un
+                espacio para explorar, descubrir y conectar con el patrimonio
+                cultural de nuestra ciudad.
+              </p>
+              <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+
+            <div class="footer-section">
+              <h3>Enlaces Rápidos</h3>
+              <a href="#inicio">Inicio</a>
+              <a href="#revista">Revista Actual</a>
+              <a href="#anteriores">Revistas Anteriores</a>
+              <a href="#categorias">Categorías</a>
+              <a href="#notas">Notas Periodísticas</a>
+            </div>
+
+            <div class="footer-section">
+              <h3>Contacto</h3>
+              <p><i class="fas fa-envelope"></i> info@bitacoracultural.com</p>
+              <p><i class="fas fa-phone"></i> +54 223 123-4567</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Mar del Plata, Argentina
+              </p>
+            </div>
+          </div>
+
+          <div class="copyright">
+            <p>&copy; 2026 Bitácora Cultural. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="admin-panel" class="admin-panel">
+      <div class="admin-header">
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <div class="logo-image">
+                <img
+                  src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
+                  alt="Bitácora Cultural"
+                />
+              </div>
+              <div class="logo-text">
+                <h1>Panel de Administración</h1>
+                <p>Bitácora Cultural</p>
+              </div>
+            </div>
+            <nav>
+              <ul>
+                <li><a href="#" id="public-toggle">Volver al Sitio</a></li>
+                <li><a href="#" id="logout-btn">Cerrar Sesión</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="admin-nav">
+          <button class="btn btn-small tab-btn active" data-tab="revistas">
+            Gestionar Revistas
+          </button>
+          <button class="btn btn-small tab-btn" data-tab="categorias">
+            Gestionar Categorías
+          </button>
+          <button class="btn btn-small tab-btn" data-tab="notas">
+            Gestionar Notas
+          </button>
+          <button class="btn btn-small tab-btn" data-tab="metricas">
+            Métricas
+          </button>
+        </div>
+
+        <div class="admin-section tab-content active" id="revistas">
+          <h3>Gestionar Revistas</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="issue-number">Número de Revista</label>
+              <input type="number" id="issue-number" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="issue-month">Mes</label>
+              <select id="issue-month">
+                <option value="enero">Enero</option>
+                <option value="febrero">Febrero</option>
+                <option value="marzo">Marzo</option>
+                <option value="abril">Abril</option>
+                <option value="mayo">Mayo</option>
+                <option value="junio">Junio</option>
+                <option value="julio">Julio</option>
+                <option value="agosto">Agosto</option>
+                <option value="septiembre">Septiembre</option>
+                <option value="octubre">Octubre</option>
+                <option value="noviembre">Noviembre</option>
+                <option value="diciembre">Diciembre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="issue-year">Año</label>
+              <input
+                type="number"
+                id="issue-year"
+                min="2020"
+                max="2030"
+                value="2026"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="issue-title">Título</label>
+            <input
+              type="text"
+              id="issue-title"
+              placeholder="Título de la revista"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="issue-description">Descripción</label>
+            <textarea
+              id="issue-description"
+              placeholder="Descripción de la revista"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="issue-cover">Portada</label>
+            <input type="file" id="issue-cover" accept="image/*" />
+            <div class="file-preview" id="issue-cover-preview"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="issue-pdf">Archivo PDF</label>
+            <input type="file" id="issue-pdf" accept=".pdf" />
+          </div>
+
+          <button class="btn" id="add-issue-btn">Agregar Revista</button>
+
+          <div class="items-list" id="issues-list"></div>
+        </div>
+
+        <div class="admin-section tab-content" id="categorias">
+          <h3>Gestionar Categorías</h3>
+
+          <div class="form-group">
+            <label for="category-name">Nombre de Categoría</label>
+            <input
+              type="text"
+              id="category-name"
+              placeholder="Nombre de la categoría"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category-description">Descripción</label>
+            <textarea
+              id="category-description"
+              placeholder="Descripción de la categoría"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="category-icon">Icono (Font Awesome)</label>
+            <input
+              type="text"
+              id="category-icon"
+              placeholder="Ej: fas fa-music"
+            />
+          </div>
+
+          <button class="btn" id="add-category-btn">Agregar Categoría</button>
+
+          <div class="items-list" id="categories-list"></div>
+        </div>
+
+        <div class="admin-section tab-content" id="notas">
+          <h3>Gestionar Notas</h3>
+
+          <div class="form-group">
+            <label for="note-title">Título</label>
+            <input
+              type="text"
+              id="note-title"
+              placeholder="Título de la nota"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="note-category">Categoría</label>
+            <select id="note-category"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="note-author">Autor</label>
+            <input
+              type="text"
+              id="note-author"
+              placeholder="Autor de la nota"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="note-date">Fecha</label>
+            <input type="date" id="note-date" />
+          </div>
+
+          <div class="form-group">
+            <label for="note-image">Imagen</label>
+            <input type="file" id="note-image" accept="image/*" />
+            <div class="file-preview" id="note-image-preview"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="note-content">Contenido</label>
+            <textarea
+              id="note-content"
+              placeholder="Contenido de la nota"
+            ></textarea>
+          </div>
+
+          <button class="btn" id="add-note-btn">Agregar Nota</button>
+
+          <div class="items-list" id="notes-list"></div>
+        </div>
+
+        <div class="admin-section tab-content" id="metricas">
+          <h3>Métricas del Sitio</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <h4>Visitas Totales</h4>
+              <p id="total-visits">1,245</p>
+            </div>
+            <div class="form-group">
+              <h4>Descargas de Revistas</h4>
+              <p id="total-downloads">892</p>
+            </div>
+            <div class="form-group">
+              <h4>Notas Publicadas</h4>
+              <p id="total-notes">156</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h4>Categorías Más Populares</h4>
+            <ul id="popular-categories"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
