@@ -1,173 +1,3 @@
-// Simulación de carga de datos desde el archivo data.json (Backend)
-const APP_DATA = {
-  currentIssue: {
-    id: 1,
-    number: 15,
-    month: "Marzo",
-    year: 2026,
-    title: "Cultura en Mar del Plata: Tradición y Vanguardia",
-    description:
-      "En esta edición exploramos la rica escena cultural de Mar del Plata, desde sus tradiciones más arraigadas hasta las expresiones artísticas más vanguardistas. Descubre entrevistas exclusivas, reseñas de eventos y análisis profundos sobre el patrimonio cultural de la ciudad.",
-    cover:
-      "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z",
-    pdf: "#",
-  },
-  issues: [
-    {
-      id: 2,
-      number: 14,
-      month: "Febrero",
-      year: 2026,
-      title: "Arte Urbano y Expresión Callejera",
-      cover:
-        "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80",
-    },
-    {
-      id: 3,
-      number: 13,
-      month: "Enero",
-      year: 2026,
-      title: "Música y Festivales de Verano",
-      cover:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    },
-    {
-      id: 4,
-      number: 12,
-      month: "Diciembre",
-      year: 2025,
-      title: "Fin de Año Cultural",
-      cover:
-        "https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
-    },
-    {
-      id: 5,
-      number: 11,
-      month: "Noviembre",
-      year: 2025,
-      title: "Patrimonio Histórico de la Ciudad",
-      cover:
-        "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80",
-    },
-    {
-      id: 6,
-      number: 10,
-      month: "Octubre",
-      year: 2025,
-      title: "Literatura y Escritores Locales",
-      cover:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    },
-  ],
-  categories: [
-    {
-      id: 1,
-      name: "Artes Visuales",
-      description:
-        "Pintura, escultura, fotografía y otras expresiones visuales",
-      icon: "fas fa-palette",
-    },
-    {
-      id: 2,
-      name: "Música",
-      description: "Conciertos, festivales y artistas locales",
-      icon: "fas fa-music",
-    },
-    {
-      id: 3,
-      name: "Teatro",
-      description: "Obras, actores y directores de la escena teatral",
-      icon: "fas fa-theater-masks",
-    },
-    {
-      id: 4,
-      name: "Literatura",
-      description: "Escritores, libros y eventos literarios",
-      icon: "fas fa-book",
-    },
-    {
-      id: 5,
-      name: "Cine",
-      description: "Estrenos, festivales y realizadores locales",
-      icon: "fas fa-film",
-    },
-    {
-      id: 6,
-      name: "Patrimonio",
-      description: "Historia, arquitectura y tradiciones culturales",
-      icon: "fas fa-landmark",
-    },
-  ],
-  notes: [
-    {
-      id: 1,
-      title: "El renacimiento del arte callejero en Mar del Plata",
-      category: 1,
-      author: "Ana López",
-      date: "2026-03-15",
-      image:
-        "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80",
-      content:
-        "Exploramos cómo los artistas urbanos están transformando los espacios públicos de la ciudad con murales y grafitis que reflejan la identidad cultural marplatense.",
-    },
-    {
-      id: 2,
-      title: "Festival de Jazz: Una tradición que crece",
-      category: 2,
-      author: "Carlos Méndez",
-      date: "2026-03-10",
-      image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      content:
-        "El Festival Internacional de Jazz de Mar del Plata celebra su décima edición con artistas de renombre mundial y propuestas locales innovadoras.",
-    },
-    {
-      id: 3,
-      title: "Nueva obra del Teatro Municipal",
-      category: 3,
-      author: "Laura Fernández",
-      date: "2026-03-05",
-      image:
-        "https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
-      content:
-        "El Teatro Municipal estrena 'Memorias de la Costa', una obra que explora la historia de la ciudad a través de las vidas de sus habitantes.",
-    },
-    {
-      id: 4,
-      title: "Escritores marplatenses en la Feria del Libro",
-      category: 4,
-      author: "Roberto Sosa",
-      date: "2026-02-28",
-      image:
-        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
-      content:
-        "Autores locales presentan sus últimas obras en la Feria Internacional del Libro, destacando la diversidad literaria de la región.",
-    },
-    {
-      id: 5,
-      title: "Cine independiente en el Festival de Mar del Plata",
-      category: 5,
-      author: "María González",
-      date: "2026-02-20",
-      image:
-        "https://images.unsplash.com/photo-1489599809505-f2d4cac355af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      content:
-        "El festival cinematográfico más importante del país presenta una selección de películas independientes que exploran nuevas narrativas.",
-    },
-    {
-      id: 6,
-      title: "Restauración del Hotel Bristol: Un ícono arquitectónico",
-      category: 6,
-      author: "Diego Ramírez",
-      date: "2026-02-15",
-      image:
-        "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1465&q=80",
-      content:
-        "El proceso de restauración del histórico Hotel Bristol busca preservar su valor patrimonial mientras se adapta a las necesidades contemporáneas.",
-    },
-  ],
-};
-
 // Estado de la aplicación
 let appState = {
   currentView: "public",
@@ -175,15 +5,73 @@ let appState = {
   isLoggedIn: false,
 };
 
-// Inicialización
-document.addEventListener("DOMContentLoaded", function () {
-  // Carga inicial de datos de la vista pública
-  loadCurrentIssue();
-  loadIssues();
-  loadCategories();
-  loadNotes();
+// Función para cargar datos desde data.json
+async function loadData() {
+    try {
+        const response = await fetch('./data.json', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
 
-  setupEventListeners();
+        // Obtener información detallada de la respuesta
+        const status = response.status;
+        const statusText = response.statusText;
+        const headers = response.headers;
+        const contentType = headers.get('content-type');
+
+        console.log('Información de la respuesta:');
+        console.log('Status:', status);
+        console.log('Status Text:', statusText);
+        console.log('Content-Type:', contentType);
+
+        // Verificar el estado de la respuesta
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error en la respuesta:', errorText);
+            throw new Error(`Error ${status}: ${statusText}`);
+        }
+
+        // Obtener el texto raw de la respuesta
+        const text = await response.text();
+        console.log('Longitud de la respuesta:', text.length);
+        console.log('Respuesta raw:', text);
+
+        // Intentar parsear el JSON
+        try {
+            const data = JSON.parse(text);
+            console.log('Datos parseados:', data);
+            return data;
+        } catch (parseError) {
+            console.error('Error al parsear JSON:', parseError);
+            console.log('Texto raw de la respuesta:', text);
+            throw new Error('Error al parsear JSON: ' + parseError.message);
+        }
+    } catch (error) {
+        console.error('Error al cargar datos:', error);
+        throw error;
+    }
+}
+
+// Inicialización
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        const data = await loadData();
+        if (data) {
+            loadCurrentIssue(data);
+            loadIssues(data);
+            loadCategories(data);
+            loadNotes(data);
+            setupEventListeners();
+        }
+    } catch (error) {
+        console.error('Error detallado:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = 'Error al cargar los datos. Por favor, recargue la página.';
+        document.body.insertBefore(errorDiv, document.body.firstChild);
+    }
 });
 
 // Configurar event listeners
@@ -228,11 +116,32 @@ function setupEventListeners() {
     .addEventListener("click", carouselNext);
 
   // Botones de administración - Funcionalidad implementada
-  document.getElementById("add-issue-btn").addEventListener("click", addIssue);
-  document
-    .getElementById("add-category-btn")
-    .addEventListener("click", addCategory);
-  document.getElementById("add-note-btn").addEventListener("click", addNote);
+document.getElementById("add-issue-btn").addEventListener("click", async function() {
+    const issueData = {
+        number: document.getElementById("issue-number").value,
+        month: document.getElementById("issue-month").value,
+        year: document.getElementById("issue-year").value,
+        title: document.getElementById("issue-title").value,
+        description: document.getElementById("issue-description").value,
+        cover: document.getElementById("issue-cover").files[0],
+        pdf: document.getElementById("issue-pdf").files[0]
+    };
+    
+    console.log('Datos del formulario:', JSON.stringify(issueData, null, 2));
+    
+    try {
+        await addIssue(issueData);
+        // Limpiar el formulario
+        document.getElementById("issue-number").value = "";
+        document.getElementById("issue-title").value = "";
+        document.getElementById("issue-description").value = "";
+        document.getElementById("issue-cover").value = "";
+        document.getElementById("issue-pdf").value = "";
+    } catch (error) {
+        console.error('Error al agregar revista:', error);
+        alert('Error al agregar la revista. Por favor, intente nuevamente.');
+    }
+});
 
   // Previsualización de archivos
   document
@@ -260,74 +169,82 @@ function setupEventListeners() {
 // VISTA PÚBLICA (Funciones de Carga)
 // =================================================================
 
-function loadCurrentIssue() {
-  const issue = APP_DATA.currentIssue;
-  document.getElementById("current-cover").src = issue.cover;
-  document.getElementById("current-title").textContent = issue.title;
-  document.getElementById(
-    "current-meta"
-  ).textContent = `N° ${issue.number} - ${issue.month} ${issue.year}`;
-  document.getElementById("current-description").textContent =
-    issue.description;
-  document.getElementById("current-pdf").href = issue.pdf;
+async function loadCurrentIssue(data) {
+    if (!data || !data.currentIssue) {
+        console.error('Datos inválidos: currentIssue no encontrado');
+        return;
+    }
+    const issue = data.currentIssue;
+    document.getElementById("current-cover").src = issue.cover;
+    document.getElementById("current-title").textContent = issue.title;
+    document.getElementById("current-meta").textContent = 
+        `N° ${issue.number} - ${issue.month} ${issue.year}`;
+    document.getElementById("current-description").textContent = issue.description;
+    document.getElementById("current-pdf").href = issue.pdf;
 }
 
-function loadIssues() {
-  const carousel = document.getElementById("issues-carousel");
-  carousel.innerHTML = "";
-
-  APP_DATA.issues.forEach((issue) => {
-    const issueElement = document.createElement("div");
-    issueElement.className = "carousel-item";
-    issueElement.innerHTML = `
-                <div class="carousel-cover">
-                    <img src="${issue.cover}" alt="${issue.title}">
-                </div>
-                <div class="carousel-info">
-                    <h4>N° ${issue.number}</h4>
-                    <p>${issue.month} ${issue.year}</p>
-                    <p>${issue.title}</p>
-                </div>
-            `;
-    carousel.appendChild(issueElement);
-  });
-}
-
-function loadCategories() {
-  const container = document.getElementById("categories-container");
-  container.innerHTML = "";
-
-  APP_DATA.categories.forEach((category) => {
-    const categoryElement = document.createElement("div");
-    categoryElement.className = "category-card";
-    categoryElement.setAttribute("data-category-id", category.id);
-    categoryElement.innerHTML = `
-                <h3><i class="${category.icon}"></i> ${category.name}</h3>
-                <p>${category.description}</p>
-            `;
-
-    categoryElement.addEventListener("click", function () {
-      showCategoryNotes(category.id);
+function loadIssues(data) {
+    if (!data || !data.issues) {
+        console.error('Error: No se encontró el array issues en los datos');
+        console.log('Datos recibidos:', JSON.stringify(data, null, 2));
+        return;
+    }
+    
+    let issuesArray = Array.isArray(data.issues) ? data.issues : Object.values(data.issues);
+    const carousel = document.getElementById("issues-carousel");
+    carousel.innerHTML = "";
+    
+    issuesArray.forEach((issue) => {
+        const issueElement = document.createElement("div");
+        issueElement.className = "carousel-item";
+        issueElement.innerHTML = `
+            <div class="carousel-cover">
+                <img src="${issue.cover}" 
+                     alt="${issue.title}" 
+                     onerror="this.onerror=null; 
+                             this.src='https://picsum.photos/400/300?random=${Math.random()}'; 
+                             this.style.opacity = '0.7';">
+            </div>
+            <div class="carousel-info">
+                <h4>N° ${issue.number}</h4>
+                <p>${issue.month} ${issue.year}</p>
+                <p>${issue.title}</p>
+            </div>
+        `;
+        carousel.appendChild(issueElement);
     });
-
-    container.appendChild(categoryElement);
-  });
 }
 
-function loadNotes() {
-  const container = document.getElementById("notes-container");
-  container.innerHTML = "";
+function loadCategories(data) {
+    const container = document.getElementById("categories-container");
+    container.innerHTML = "";
+    data.categories.forEach((category) => {
+        const categoryElement = document.createElement("div");
+        categoryElement.className = "category-card";
+        categoryElement.setAttribute("data-category-id", category.id);
+        categoryElement.innerHTML = `
+            <h3><i class="${category.icon}"></i> ${category.name}</h3>
+            <p>${category.description}</p>
+        `;
+        categoryElement.addEventListener("click", function () {
+            showCategoryNotes(category.id);
+        });
+        container.appendChild(categoryElement);
+    });
+}
 
-  // Ordenar notas por fecha, de la más reciente a la más antigua
-  const sortedNotes = [...APP_DATA.notes].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
-
-  sortedNotes.forEach((note) => {
-    const category = APP_DATA.categories.find((c) => c.id === note.category);
-    const noteElement = createNoteElement(note, category);
-    container.appendChild(noteElement);
-  });
+function loadNotes(data) {
+    const container = document.getElementById("notes-container");
+    container.innerHTML = "";
+    // Ordenar notas por fecha, de la más reciente a la más antigua
+    const sortedNotes = [...data.notes].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    sortedNotes.forEach((note) => {
+        const category = data.categories.find((c) => c.id === note.category);
+        const noteElement = createNoteElement(note, category);
+        container.appendChild(noteElement);
+    });
 }
 
 function createNoteElement(note, category) {
@@ -359,173 +276,334 @@ function createNoteElement(note, category) {
 // PANEL DE ADMINISTRACIÓN (Funciones de Carga y Acciones)
 // =================================================================
 
-function loadAdminData() {
-  // Llama a las funciones de carga solo una vez para llenar todos los listados
-  loadAdminIssues();
-  loadAdminCategories();
-  loadAdminNotes();
-  populateCategorySelect();
+function loadAdminData(data) {
+    // Llama a las funciones de carga solo una vez para llenar todos los listados
+    loadAdminIssues(data);
+    loadAdminCategories(data);
+    loadAdminNotes(data);
+    populateCategorySelect(data);
 }
 
-function loadAdminIssues() {
-  const container = document.getElementById("issues-list");
-  container.innerHTML = "";
-
-  // Revista actual
-  const currentIssue = APP_DATA.currentIssue;
-  const issueElement = createIssueAdminElement(currentIssue);
-  container.appendChild(issueElement);
-
-  // Revistas anteriores
-  APP_DATA.issues.forEach((issue) => {
-    const issueElement = createIssueAdminElement(issue);
-    container.appendChild(issueElement);
-  });
+function loadAdminIssues(data) {
+    if (!data || !data.issues) {
+        console.error('Error: No se encontró el array issues en los datos');
+        console.log('Datos recibidos:', JSON.stringify(data, null, 2));
+        return;
+    }
+    
+    // Convertir issues a array si es un objeto
+    let issuesArray = Array.isArray(data.issues) ? data.issues : Object.values(data.issues);
+    
+    const container = document.getElementById("issues-list");
+    container.innerHTML = "";
+    
+    // Agregar la revista actual
+    if (data.currentIssue) {
+        const issueElement = createIssueAdminElement(data.currentIssue);
+        container.appendChild(issueElement);
+    }
+    
+    // Agregar las revistas anteriores
+    issuesArray.forEach((issue) => {
+        const issueElement = createIssueAdminElement(issue);
+        container.appendChild(issueElement);
+    });
 }
 
 function createIssueAdminElement(issue) {
-  const issueElement = document.createElement("div");
-  issueElement.className = "item-card";
-  issueElement.innerHTML = `
-            <div class="item-image">
-                <img src="${issue.cover}" alt="${issue.title}">
-            </div>
+    const issueElement = document.createElement("div");
+    issueElement.className = "item-card";
+    issueElement.innerHTML = `
+        <div class="item-image">
+            <img src="${issue.cover}" alt="${issue.title}">
+        </div>
+        <div class="item-content">
+            <h4>N° ${issue.number} - ${issue.month} ${issue.year}</h4>
+            <p>${issue.title}</p>
+        </div>
+        <div class="item-actions">
+            <button class="btn btn-small edit-issue" data-id="${issue.id}">Editar</button>
+            <button class="btn btn-small btn-danger delete-issue" data-id="${issue.id}">Eliminar</button>
+        </div>
+    `;
+
+    // Agregar event listeners a los botones
+    const editButton = issueElement.querySelector('.edit-issue');
+    const deleteButton = issueElement.querySelector('.delete-issue');
+
+    editButton.addEventListener('click', async function() {
+    try {
+        const response = await fetch(`./api/issues.php?id=${issue.id}`);
+        const data = await response.json();
+        
+        // Rellenar el formulario con los datos actuales
+        document.getElementById("issue-number").value = data.number;
+        document.getElementById("issue-month").value = data.month;
+        document.getElementById("issue-year").value = data.year;
+        document.getElementById("issue-title").value = data.title;
+        document.getElementById("issue-description").value = data.description;
+        
+        // Guardar el ID y las rutas actuales de los archivos
+        const currentIssue = {
+            id: data.id,
+            coverPath: data.cover,
+            pdfPath: data.pdf
+        };
+        
+        // Mostrar el formulario de edición
+        document.querySelector('.tab-content.active').scrollTo({
+            top: document.getElementById("issue-number").offsetTop,
+            behavior: 'smooth'
+        });
+        
+        const saveButton = document.getElementById("save-issue-btn");
+        if (saveButton) {
+            saveButton.addEventListener('click', async function() {
+                const issueData = {
+                    id: currentIssue.id,
+                    number: document.getElementById("issue-number").value,
+                    month: document.getElementById("issue-month").value,
+                    year: document.getElementById("issue-year").value,
+                    title: document.getElementById("issue-title").value,
+                    description: document.getElementById("issue-description").value,
+                    cover: document.getElementById("issue-cover").files[0],
+                    pdf: document.getElementById("issue-pdf").files[0]
+                };
+                
+                try {
+                    await editIssue(issueData);
+                    alert('Revista actualizada correctamente');
+                    loadAdminIssues(data);
+                    loadIssues(data);
+                } catch (error) {
+                    console.error('Error al guardar cambios:', error);
+                    alert('Error al guardar los cambios. Por favor, intente nuevamente.');
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error al cargar datos de la revista:', error);
+        alert('Error al cargar los datos de la revista');
+    }
+});
+
+    deleteButton.addEventListener('click', async function() {
+        if (confirm(`¿Está seguro de eliminar la revista "${issue.title}"?`)) {
+            try {
+                await deleteIssue(issue.id);
+            } catch (error) {
+                console.error('Error al eliminar la revista:', error);
+                alert('Error al eliminar la revista');
+            }
+        }
+    });
+
+    return issueElement;
+}
+
+function loadAdminCategories(data) {
+    const container = document.getElementById("categories-list");
+    container.innerHTML = "";
+    data.categories.forEach((category) => {
+        const categoryElement = document.createElement("div");
+        categoryElement.className = "item-card";
+        categoryElement.innerHTML = `
             <div class="item-content">
-                <h4>N° ${issue.number} - ${issue.month} ${issue.year}</h4>
-                <p>${issue.title}</p>
+                <h4><i class="${category.icon}"></i> ${category.name}</h4>
+                <p>${category.description}</p>
             </div>
             <div class="item-actions">
-                <button class="btn btn-small">Editar</button>
-                <button class="btn btn-small btn-danger">Eliminar</button>
+                <button class="btn btn-small edit-category" data-id="${category.id}">Editar</button>
+                <button class="btn btn-small btn-danger delete-category" data-id="${category.id}">Eliminar</button>
             </div>
         `;
-  return issueElement;
+        container.appendChild(categoryElement);
+    });
+    // Añadir Event Listeners a los botones dinámicos de CATEGORÍAS
+    document.querySelectorAll(".delete-category").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = parseInt(this.getAttribute("data-id"));
+            deleteCategory(id);
+        });
+    });
+    document.querySelectorAll(".edit-category").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = parseInt(this.getAttribute("data-id"));
+            editCategory(id);
+        });
+    });
 }
 
-function loadAdminCategories() {
-  const container = document.getElementById("categories-list");
-  container.innerHTML = "";
 
-  APP_DATA.categories.forEach((category) => {
-    const categoryElement = document.createElement("div");
-    categoryElement.className = "item-card";
-    categoryElement.innerHTML = `
-                <div class="item-content">
-                    <h4><i class="${category.icon}"></i> ${category.name}</h4>
-                    <p>${category.description}</p>
-                </div>
-                <div class="item-actions">
-                    <button class="btn btn-small edit-category" data-id="${category.id}">Editar</button>
-                    <button class="btn btn-small btn-danger delete-category" data-id="${category.id}">Eliminar</button>
-                </div>
-            `;
-    container.appendChild(categoryElement);
-  });
-
-  // Añadir Event Listeners a los botones dinámicos de CATEGORÍAS
-  document.querySelectorAll(".delete-category").forEach((button) => {
-    button.addEventListener("click", function () {
-      const id = parseInt(this.getAttribute("data-id"));
-      deleteCategory(id);
+function loadAdminNotes(data) {
+    const container = document.getElementById("notes-list");
+    container.innerHTML = "";
+    data.notes.forEach((note) => {
+        const category = data.categories.find((c) => c.id === note.category);
+        const categoryName = category ? category.name : "N/A";
+        const noteElement = document.createElement("div");
+        noteElement.className = "item-card";
+        noteElement.innerHTML = `
+            <div class="item-image">
+                <img src="${note.image || "https://via.placeholder.com/80x100?text=IMG"}" 
+                     alt="${note.title}">
+            </div>
+            <div class="item-content">
+                <h4>${note.title}</h4>
+                <p><strong>Categoría:</strong> ${categoryName} | <strong>Autor:</strong> ${note.author} | 
+                   <strong>Fecha:</strong> ${formatDate(note.date)}</p>
+                <p>${note.content.substring(0, 150)}...</p>
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-small edit-note" data-id="${note.id}">Editar</button>
+                <button class="btn btn-small btn-danger delete-note" data-id="${note.id}">Eliminar</button>
+            </div>
+        `;
+        container.appendChild(noteElement);
     });
-  });
-
-  document.querySelectorAll(".edit-category").forEach((button) => {
-    button.addEventListener("click", function () {
-      const id = parseInt(this.getAttribute("data-id"));
-      editCategory(id);
+    // Añadir Event Listeners a los botones dinámicos de NOTAS
+    document.querySelectorAll(".delete-note").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = parseInt(this.getAttribute("data-id"));
+            deleteNote(id);
+        });
     });
-  });
+    document.querySelectorAll(".edit-note").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = parseInt(this.getAttribute("data-id"));
+            editNote(id);
+        });
+    });
 }
 
-function loadAdminNotes() {
-  const container = document.getElementById("notes-list");
-  container.innerHTML = "";
-
-  APP_DATA.notes.forEach((note) => {
-    const category = APP_DATA.categories.find((c) => c.id === note.category);
-    const categoryName = category ? category.name : "N/A";
-
-    const noteElement = document.createElement("div");
-    noteElement.className = "item-card";
-    noteElement.innerHTML = `
-                <div class="item-image">
-                    <img src="${
-                      note.image ||
-                      "https://via.placeholder.com/80x100?text=IMG"
-                    }" alt="${note.title}">
-                </div>
-                <div class="item-content">
-                    <h4>${note.title}</h4>
-                    <p><strong>Categoría:</strong> ${categoryName} | <strong>Autor:</strong> ${
-      note.author
-    } | <strong>Fecha:</strong> ${formatDate(note.date)}</p>
-                    <p>${note.content.substring(0, 150)}...</p>
-                </div>
-                <div class="item-actions">
-                    <button class="btn btn-small edit-note" data-id="${
-                      note.id
-                    }">Editar</button>
-                    <button class="btn btn-small btn-danger delete-note" data-id="${
-                      note.id
-                    }">Eliminar</button>
-                </div>
-            `;
-    container.appendChild(noteElement);
-  });
-
-  // Añadir Event Listeners a los botones dinámicos de NOTAS
-  document.querySelectorAll(".delete-note").forEach((button) => {
-    button.addEventListener("click", function () {
-      const id = parseInt(this.getAttribute("data-id"));
-      deleteNote(id);
+function populateCategorySelect(data) {
+    const select = document.getElementById("note-category");
+    select.innerHTML = "";
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Seleccione una categoría";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    select.appendChild(defaultOption);
+    data.categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        select.appendChild(option);
     });
-  });
-
-  document.querySelectorAll(".edit-note").forEach((button) => {
-    button.addEventListener("click", function () {
-      const id = parseInt(this.getAttribute("data-id"));
-      editNote(id);
-    });
-  });
-}
-
-function populateCategorySelect() {
-  const select = document.getElementById("note-category");
-  select.innerHTML = "";
-
-  // Añadir opción por defecto
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "Seleccione una categoría";
-  defaultOption.disabled = true;
-  defaultOption.selected = true;
-  select.appendChild(defaultOption);
-
-  APP_DATA.categories.forEach((category) => {
-    const option = document.createElement("option");
-    option.value = category.id;
-    option.textContent = category.name;
-    select.appendChild(option);
-  });
 }
 
 // =================================================================
-// FUNCIONES CRUD (Simuladas)
+// FUNCIONES CRUD 
 // =================================================================
 
 // --- Revistas ---
-function addIssue() {
-  // Simulación de agregar revista...
-  alert("Simulación: Revista agregada.");
-  document.getElementById("issue-number").value = "";
-  document.getElementById("issue-title").value = "";
-  document.getElementById("issue-description").value = "";
-  document.getElementById("issue-cover").value = "";
-  document.getElementById("issue-pdf").value = "";
-  document.getElementById("issue-cover-preview").innerHTML = "";
-  loadAdminIssues();
-  loadIssues();
+
+async function addIssue(issueData) {
+    try {
+        const formData = new FormData();
+        formData.append('number', issueData.number);
+        formData.append('month', issueData.month);
+        formData.append('year', issueData.year);
+        formData.append('title', issueData.title);
+        formData.append('description', issueData.description);
+        formData.append('cover', issueData.cover);
+        formData.append('pdf', issueData.pdf);
+        
+        console.log('Datos del formulario:', JSON.stringify(issueData, null, 2));
+        
+        const response = await fetch('./api/issues.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error al agregar revista: ${errorData?.error || response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Respuesta del servidor:', JSON.stringify(data, null, 2));
+        
+        const newData = await loadData();
+        if (newData) {
+            loadAdminIssues(newData);
+            loadIssues(newData);
+            alert('Revista agregada correctamente');
+            return data;
+        } else {
+            throw new Error('Error al recargar datos después de agregar la revista');
+        }
+    } catch (error) {
+        console.error('Error al agregar revista:', error);
+        alert('Error al agregar la revista. Por favor, intente nuevamente.');
+        throw error;
+    }
+}
+
+async function deleteIssue(id) {
+    try {
+        const response = await fetch(`./api/issues.php?id=${id}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error en la respuesta:', errorData);
+            throw new Error(`Error al eliminar revista: ${errorData?.error || response.statusText}`);
+        }
+        
+        const newData = await loadData();
+        
+        if (newData) {
+            loadAdminIssues(newData);
+            loadIssues(newData);
+            alert('Revista eliminada correctamente');
+        } else {
+            throw new Error('Error al recargar datos después de eliminar la revista');
+        }
+    } catch (error) {
+        console.error('Error al eliminar revista:', error);
+        alert('Error al eliminar la revista. Por favor, intente nuevamente.');
+        throw error;
+    }
+}
+
+async function editIssue(issueData) {
+    try {
+        const formData = new FormData();
+        formData.append('id', issueData.id);
+        formData.append('number', issueData.number);
+        formData.append('month', issueData.month);
+        formData.append('year', issueData.year);
+        formData.append('title', issueData.title);
+        formData.append('description', issueData.description);
+        
+        // Solo agregar archivos si se han modificado
+        if (issueData.cover instanceof File) {
+            formData.append('cover', issueData.cover);
+        }
+        if (issueData.pdf instanceof File) {
+            formData.append('pdf', issueData.pdf);
+        }
+
+        const response = await fetch('./api/issues.php', {
+            method: 'PUT',
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error al editar revista: ${errorData?.error || response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Revista actualizada:', data);
+        return data;
+    } catch (error) {
+        console.error('Error al editar revista:', error);
+        throw error;
+    }
 }
 
 // --- Categorías ---
@@ -694,30 +772,23 @@ function showPublicView() {
  * Función CLAVE: Se encarga de la carga inicial de datos y la activación
  * de la pestaña de Revistas al entrar al panel, garantizando que el contenido exista.
  */
-function showAdminPanel() {
-  document.getElementById("public-view").style.display = "none";
-  document.getElementById("admin-panel").style.display = "block";
-  appState.currentView = "admin";
-
-  // 1. Carga inicial de todos los datos (IMPORTANTE: Llena las listas de Revistas, Categorías y Notas)
-  loadAdminData();
-
-  // 2. Forzar la activación y visualización de la pestaña por defecto: 'revistas'
-  const defaultTabId = "revistas";
-
-  // Asegurarse de que solo la pestaña inicial esté activa
-  document
-    .querySelectorAll(".tab-btn")
-    .forEach((btn) => btn.classList.remove("active"));
-  document
-    .querySelectorAll(".tab-content")
-    .forEach((content) => content.classList.remove("active"));
-
-  // Activar la pestaña por defecto
-  document
-    .querySelector(`.tab-btn[data-tab="${defaultTabId}"]`)
-    .classList.add("active");
-  document.getElementById(defaultTabId).classList.add("active");
+async function showAdminPanel() {
+    document.getElementById("public-view").style.display = "none";
+    document.getElementById("admin-panel").style.display = "block";
+    appState.currentView = "admin";
+    // 1. Carga inicial de todos los datos
+    const data = await loadData();
+    if (data) {
+        loadAdminData(data);
+        // 2. Forzar la activación y visualización de la pestaña por defecto: 'revistas'
+        const defaultTabId = "revistas";
+        // Asegurarse de que solo la pestaña inicial esté activa
+        document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
+        // Activar la pestaña por defecto
+        document.querySelector(`.tab-btn[data-tab="${defaultTabId}"]`).classList.add("active");
+        document.getElementById(defaultTabId).classList.add("active");
+    }
 }
 
 function showCategoriesView() {
