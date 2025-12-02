@@ -173,6 +173,7 @@ let appState = {
   currentView: "public",
   currentCategory: null,
   isLoggedIn: false,
+  flipbook: null,
 };
 
 // Inicialización
@@ -227,7 +228,7 @@ function setupEventListeners() {
     .getElementById("carousel-next")
     .addEventListener("click", carouselNext);
 
-  // Botones de administración - Funcionalidad implementada
+  // Botones de administración
   document.getElementById("add-issue-btn").addEventListener("click", addIssue);
   document
     .getElementById("add-category-btn")
@@ -254,6 +255,118 @@ function setupEventListeners() {
       e.preventDefault();
       showCategoriesView();
     });
+
+  // Revista interactiva
+  initializeFlipbook();
+}
+
+// =================================================================
+// REVISTA INTERACTIVA (Flipbook)
+// =================================================================
+
+function initializeFlipbook() {
+  // Botón para ver la revista
+  document
+    .getElementById("btn-ver-revista")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      showMagazine();
+    });
+
+  // Botón para cerrar la revista
+  document
+    .getElementById("close-magazine")
+    .addEventListener("click", function () {
+      hideMagazine();
+    });
+
+  // Navegación de la revista
+  document
+    .getElementById("magazine-prev")
+    .addEventListener("click", function () {
+      if (appState.flipbook) {
+        appState.flipbook.turn("previous");
+      }
+    });
+
+  document
+    .getElementById("magazine-next")
+    .addEventListener("click", function () {
+      if (appState.flipbook) {
+        appState.flipbook.turn("next");
+      }
+    });
+
+  // Cerrar revista al hacer clic fuera del contenido
+  document
+    .getElementById("magazine-overlay")
+    .addEventListener("click", function (e) {
+      if (e.target.id === "magazine-overlay") {
+        hideMagazine();
+      }
+    });
+
+  // Navegación con teclado
+  document.addEventListener("keydown", function (e) {
+    if (document.getElementById("magazine-overlay").style.display === "block") {
+      if (e.key === "Escape") {
+        hideMagazine();
+      }
+      if (e.key === "ArrowRight") {
+        if (appState.flipbook) {
+          appState.flipbook.turn("next");
+        }
+      }
+      if (e.key === "ArrowLeft") {
+        if (appState.flipbook) {
+          appState.flipbook.turn("previous");
+        }
+      }
+    }
+  });
+}
+
+function showMagazine() {
+  const overlay = document.getElementById("magazine-overlay");
+  overlay.style.display = "block";
+
+  // Inicializar el flipbook después de mostrar el overlay
+  setTimeout(() => {
+    if (typeof turn === "undefined") {
+      console.error("Turn.js no está cargado");
+      return;
+    }
+
+    // Redimensionar para dispositivos móviles
+    const width = window.innerWidth < 768 ? 400 : 800;
+    const height = window.innerWidth < 768 ? 300 : 500;
+
+    // Destruir flipbook existente si hay uno
+    if (appState.flipbook) {
+      appState.flipbook.turn("destroy");
+    }
+
+    // Crear nuevo flipbook
+    appState.flipbook = $("#flipbook").turn({
+      width: width,
+      height: height,
+      autoCenter: true,
+      display: "double",
+      acceleration: true,
+      elevation: 50,
+      gradients: true,
+      duration: 1000,
+      when: {
+        turned: function (e, page) {
+          console.log("Página actual: " + page);
+        },
+      },
+    });
+  }, 100);
+}
+
+function hideMagazine() {
+  document.getElementById("magazine-overlay").style.display = "none";
 }
 
 // =================================================================
@@ -360,7 +473,6 @@ function createNoteElement(note, category) {
 // =================================================================
 
 function loadAdminData() {
-  // Llama a las funciones de carga solo una vez para llenar todos los listados
   loadAdminIssues();
   loadAdminCategories();
   loadAdminNotes();
@@ -516,7 +628,6 @@ function populateCategorySelect() {
 
 // --- Revistas ---
 function addIssue() {
-  // Simulación de agregar revista...
   alert("Simulación: Revista agregada.");
   document.getElementById("issue-number").value = "";
   document.getElementById("issue-title").value = "";
@@ -529,7 +640,6 @@ function addIssue() {
 }
 
 // --- Categorías ---
-
 function addCategory() {
   const name = document.getElementById("category-name").value;
   const description = document.getElementById("category-description").value;
@@ -541,7 +651,7 @@ function addCategory() {
   }
 
   const newCategory = {
-    id: APP_DATA.categories.length + 1, // Nuevo ID simulado
+    id: APP_DATA.categories.length + 1,
     name: name,
     description: description,
     icon: icon,
@@ -583,7 +693,6 @@ function editCategory(id) {
 }
 
 // --- Notas ---
-
 function addNote() {
   const title = document.getElementById("note-title").value;
   const categoryId = parseInt(document.getElementById("note-category").value);
@@ -602,7 +711,7 @@ function addNote() {
     : "https://via.placeholder.com/400x200?text=Nueva+Nota";
 
   const newNote = {
-    id: APP_DATA.notes.length + 1, // Nuevo ID simulado
+    id: APP_DATA.notes.length + 1,
     title: title,
     category: categoryId,
     author: author,
@@ -649,11 +758,7 @@ function editNote(id) {
 // FUNCIONES DE NAVEGACIÓN Y UTILITARIAS
 // =================================================================
 
-/**
- * Función CLAVE: Maneja el cambio de pestañas y asegura la recarga de contenido.
- */
 function switchTab(tabId) {
-  // 1. Desactivar todas las pestañas y su contenido
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.classList.remove("active");
   });
@@ -662,13 +767,11 @@ function switchTab(tabId) {
     content.classList.remove("active");
   });
 
-  // 2. Activar la pestaña seleccionada
   document
     .querySelector(`.tab-btn[data-tab="${tabId}"]`)
     .classList.add("active");
   document.getElementById(tabId).classList.add("active");
 
-  // 3. Recargar contenido específico
   if (tabId === "categorias") {
     loadAdminCategories();
     populateCategorySelect();
@@ -690,22 +793,15 @@ function showPublicView() {
   appState.currentView = "public";
 }
 
-/**
- * Función CLAVE: Se encarga de la carga inicial de datos y la activación
- * de la pestaña de Revistas al entrar al panel, garantizando que el contenido exista.
- */
 function showAdminPanel() {
   document.getElementById("public-view").style.display = "none";
   document.getElementById("admin-panel").style.display = "block";
   appState.currentView = "admin";
 
-  // 1. Carga inicial de todos los datos (IMPORTANTE: Llena las listas de Revistas, Categorías y Notas)
   loadAdminData();
 
-  // 2. Forzar la activación y visualización de la pestaña por defecto: 'revistas'
   const defaultTabId = "revistas";
 
-  // Asegurarse de que solo la pestaña inicial esté activa
   document
     .querySelectorAll(".tab-btn")
     .forEach((btn) => btn.classList.remove("active"));
@@ -713,7 +809,6 @@ function showAdminPanel() {
     .querySelectorAll(".tab-content")
     .forEach((content) => content.classList.remove("active"));
 
-  // Activar la pestaña por defecto
   document
     .querySelector(`.tab-btn[data-tab="${defaultTabId}"]`)
     .classList.add("active");
@@ -765,7 +860,7 @@ function login() {
     document.getElementById("login-container").style.display = "none";
     document.getElementById("login-error").style.display = "none";
     appState.isLoggedIn = true;
-    showAdminPanel(); // Llama a la función mejorada
+    showAdminPanel();
   } else {
     document.getElementById("login-error").style.display = "block";
   }
