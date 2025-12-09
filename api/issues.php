@@ -1,173 +1,194 @@
 <?php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
-$method = $_SERVER['REQUEST_METHOD'];
-switch ($method) {
+$uploadDir = __DIR__ . '/uploads/';
+$publicDir = './api/uploads/';
+$jsonFile = '../data.json';
 
-    //===============  POST  =========================
-
-    case 'POST':
-
-        $formData = $_FILES;
-        $postData = $_POST;
-
-        // Validaciones
-        $requiredFields = ['number', 'month', 'year', 'title', 'description'];
-        $missingFields = array_filter($requiredFields, fn($f) => empty($postData[$f]));
-
-        if ($missingFields) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Campos requeridos faltantes', 'missing_fields' => array_values($missingFields)]);
-            exit;
-        }
-
-        if (!isset($formData['cover']) || !isset($formData['pdf'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Se requieren archivos cover y pdf']);
-            exit;
-        }
-
-        // =======================
-        //  RUTAS IMPORTANTES
-        // =======================
-
-        // Ruta física (servidor)
-        $uploadDir = __DIR__ . '/uploads/';
-
-        // Ruta pública (lo que irá al JSON)
-        $publicDir = './api/uploads/';
-
-        // Crear carpeta si no existe
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-
-        // =======================
-        //    GUARDAR COVER
-        // =======================
-
-        $coverFile = $formData['cover'];
-        $coverName = "cover_" . time() . "." . pathinfo($coverFile['name'], PATHINFO_EXTENSION);
-
-        $coverPathPhysical = $uploadDir . $coverName;      // física
-        $coverPathPublic   = $publicDir . $coverName;      // pública
-
-        if (!move_uploaded_file($coverFile['tmp_name'], $coverPathPhysical)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Error al subir la portada']);
-            exit;
-        }
-
-        // =======================
-        //    GUARDAR PDF
-        // =======================
-
-        $pdfFile = $formData['pdf'];
-        $pdfName = "revista_" . time() . ".pdf";
-
-        $pdfPathPhysical = $uploadDir . $pdfName;
-        $pdfPathPublic   = $publicDir . $pdfName;
-
-        if (!move_uploaded_file($pdfFile['tmp_name'], $pdfPathPhysical)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Error al subir el PDF']);
-            exit;
-        }
-
-        // =======================
-        //     GUARDAR EN JSON
-        // =======================
-
-        $data = array_merge($postData, [
-            'cover' => $coverPathPublic,   // SOLO guardamos ruta PÚBLICA
-            'pdf'   => $pdfPathPublic,     // igual para el pdf
-            'id'    => time()
-        ]);
-
-        $jsonFile = '../data.json';
-        $json = json_decode(file_get_contents($jsonFile), true);
-
-        if (!isset($json['issues']) || !is_array($json['issues'])) {
-            $json['issues'] = [];
-        }
-
-        $json['issues'][] = $data;
-        file_put_contents($jsonFile, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-        echo json_encode(['status' => 'success', 'data' => $data]);
-        exit;
-
-    //===============  PUT  =========================
-
-    case 'PUT':
-    $formData = $_FILES;
-    $postData = $_POST;
-    
-    // Validaciones
-    $requiredFields = ['id', 'number', 'month', 'year', 'title', 'description'];
-    $missingFields = array_filter($requiredFields, fn($f) => empty($postData[$f]));
-    if ($missingFields) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Campos requeridos faltantes', 'missing_fields' => array_values($missingFields)]);
-        exit;
-    }
-    
-    // Buscar la revista existente
-    $jsonFile = '../data.json';
-    $json = json_decode(file_get_contents($jsonFile), true);
-    $issues = $json['issues'] ?? [];
-    $issueIndex = array_search($postData['id'], array_column($issues, 'id'));
-    
-    if ($issueIndex === false) {
-        http_response_code(404);
-        echo json_encode(['error' => 'Revista no encontrada']);
-        exit;
-    }
-    
-    // Actualizar datos
-    $updatedData = array_merge($issues[$issueIndex], $postData);
-    
-    // Manejar archivos si se proporcionan
-    if (isset($formData['cover'])) {
-        $coverFile = $formData['cover'];
-        $coverName = "cover_" . time() . "." . pathinfo($coverFile['name'], PATHINFO_EXTENSION);
-        $coverPathPhysical = $uploadDir . $coverName;
-        $coverPathPublic = $publicDir . $coverName;
-        
-        if (!move_uploaded_file($coverFile['tmp_name'], $coverPathPhysical)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Error al subir la portada']);
-            exit;
-        }
-        $updatedData['cover'] = $coverPathPublic;
-    }
-    
-    if (isset($formData['pdf'])) {
-        $pdfFile = $formData['pdf'];
-        $pdfName = "revista_" . time() . ".pdf";
-        $pdfPathPhysical = $uploadDir . $pdfName;
-        $pdfPathPublic = $publicDir . $pdfName;
-        
-        if (!move_uploaded_file($pdfFile['tmp_name'], $pdfPathPhysical)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Error al subir el PDF']);
-            exit;
-        }
-        $updatedData['pdf'] = $pdfPathPublic;
-    }
-    
-    // Actualizar el JSON
-    $issues[$issueIndex] = $updatedData;
-    $json['issues'] = $issues;
-    file_put_contents($jsonFile, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-    
-    echo json_encode(['status' => 'success', 'data' => $updatedData]);
+/* -------------------------
+   CARGAR JSON
+-------------------------- */
+if (!file_exists($jsonFile)) {
+    echo json_encode(['error' => 'Archivo data.json no encontrado']);
     exit;
-    break;
 }
 
+$data = json_decode(file_get_contents($jsonFile), true);
 
+/* -------------------------
+   FUNCIONES AUXILIARES
+-------------------------- */
+
+function saveJSON($file, $data) {
+    file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
+}
+
+function uploadFile($fileInputName, $uploadDir, $publicDir) {
+    if (!isset($_FILES[$fileInputName]) || empty($_FILES[$fileInputName]['name'])) {
+        return null; // No subieron archivo
+    }
+
+    $name = time() . "_" . basename($_FILES[$fileInputName]['name']);
+    $path = $uploadDir . $name;
+
+    if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $path)) {
+        return $publicDir . $name;
+    }
+
+    return null;
+}
+
+/* -------------------------
+   DETECTAR MÉTODO REAL
+-------------------------- */
+
+$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+
+/* -------------------------
+   SWITCH PRINCIPAL
+-------------------------- */
+
+switch ($method) {
+
+
+/* -------------------------
+   GET (Listar revistas)
+-------------------------- */
+case 'GET':
+    echo json_encode([
+        "status" => "success",
+        "data" => $data["issues"]
+    ]);
+    break;
+
+
+/* -------------------------
+   POST (Crear revista)
+-------------------------- */
+case 'POST':
+
+    $newIssue = [
+        "id" => time(),
+        "number" => $_POST["number"] ?? "",
+        "month"  => $_POST["month"] ?? "",
+        "year"   => $_POST["year"] ?? "",
+        "title"  => $_POST["title"] ?? "",
+        "description" => $_POST["description"] ?? "",
+        "cover" => "",
+        "pdf" => ""
+    ];
+
+    // Subir portada y PDF si existen
+    $coverFile = uploadFile("cover", $uploadDir, $publicDir);
+    if ($coverFile) $newIssue["cover"] = $coverFile;
+
+    $pdfFile = uploadFile("pdf", $uploadDir, $publicDir);
+    if ($pdfFile) $newIssue["pdf"] = $pdfFile;
+
+    $data["issues"][] = $newIssue;
+    saveJSON($jsonFile, $data);
+
+    echo json_encode(["status" => "success", "data" => $newIssue]);
+    break;
+
+
+
+/* -------------------------
+   PUT (Editar revista)
+-------------------------- */
+case 'PUT':
+
+    $id = $_POST["id"] ?? null;
+    if (!$id) {
+        echo json_encode(["error" => "ID requerido"]);
+        exit;
+    }
+
+    foreach ($data["issues"] as &$issue) {
+        if ($issue["id"] == $id) {
+
+            // Campos editables
+            $issue["number"] = $_POST["number"] ?? $issue["number"];
+            $issue["month"]  = $_POST["month"]  ?? $issue["month"];
+            $issue["year"]   = $_POST["year"]   ?? $issue["year"];
+            $issue["title"]  = $_POST["title"]  ?? $issue["title"];
+            $issue["description"] = $_POST["description"] ?? $issue["description"];
+
+            // Reemplazar portada solo si subieron una nueva
+            $newCover = uploadFile("cover", $uploadDir, $publicDir);
+            if ($newCover) $issue["cover"] = $newCover;
+
+            // Reemplazar PDF solo si subieron uno nuevo
+            $newPDF = uploadFile("pdf", $uploadDir, $publicDir);
+            if ($newPDF) $issue["pdf"] = $newPDF;
+
+            saveJSON($jsonFile, $data);
+
+            echo json_encode(["status" => "success", "data" => $issue]);
+            exit;
+        }
+    }
+
+    echo json_encode(["error" => "Revista no encontrada"]);
+    break;
+
+
+
+/* -------------------------
+   DELETE (Eliminar revista)
+-------------------------- */
+case 'DELETE':
+
+    $id = $_GET["id"] ?? null;
+
+    if (!$id) {
+        echo json_encode(["error" => "ID requerido"]);
+        exit;
+    }
+
+    // Buscar la revista antes de eliminarla
+    $issueToDelete = null;
+    foreach ($data["issues"] as $i) {
+        if ($i["id"] == $id) {
+            $issueToDelete = $i;
+            break;
+        }
+    }
+
+    if (!$issueToDelete) {
+        echo json_encode(["error" => "Revista no encontrada"]);
+        exit;
+    }
+
+    // Eliminar archivos asociados
+    if (!empty($issueToDelete["cover"]) && file_exists($issueToDelete["cover"])) {
+        unlink($issueToDelete["cover"]);
+    }
+
+    if (!empty($issueToDelete["pdf"]) && file_exists($issueToDelete["pdf"])) {
+        unlink($issueToDelete["pdf"]);
+    }
+
+    // Eliminar del array
+    $data["issues"] = array_filter($data["issues"], fn($i) => $i["id"] != $id);
+
+    // Guardar cambios
+    saveJSON($jsonFile, $data);
+
+    echo json_encode(["status" => "success", "message" => "Revista eliminada"]);
+
+    break;
+
+
+/* -------------------------
+   MÉTODO NO SOPORTADO
+-------------------------- */
+default:
+    echo json_encode(["error" => "Método no soportado"]);
+    break;
+}

@@ -5,49 +5,27 @@ let appState = {
   isLoggedIn: false,
 };
 
-// Función para cargar datos desde data.json
 async function loadData() {
     try {
         const response = await fetch('./data.json', {
             method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
         });
 
-        // Obtener información detallada de la respuesta
-        const status = response.status;
-        const statusText = response.statusText;
-        const headers = response.headers;
-        const contentType = headers.get('content-type');
-
-        console.log('Información de la respuesta:');
-        console.log('Status:', status);
-        console.log('Status Text:', statusText);
-        console.log('Content-Type:', contentType);
-
-        // Verificar el estado de la respuesta
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Error en la respuesta:', errorText);
-            throw new Error(`Error ${status}: ${statusText}`);
+            throw new Error(`Error ${response.status}: ${errorText}`);
         }
 
-        // Obtener el texto raw de la respuesta
         const text = await response.text();
-        console.log('Longitud de la respuesta:', text.length);
-        console.log('Respuesta raw:', text);
+        let data = JSON.parse(text);
 
-        // Intentar parsear el JSON
-        try {
-            const data = JSON.parse(text);
-            console.log('Datos parseados:', data);
-            return data;
-        } catch (parseError) {
-            console.error('Error al parsear JSON:', parseError);
-            console.log('Texto raw de la respuesta:', text);
-            throw new Error('Error al parsear JSON: ' + parseError.message);
-        }
+        console.log(data)
+
+        if (!Array.isArray(data.issues)) data.issues = [];
+
+        return data;
+
     } catch (error) {
         console.error('Error al cargar datos:', error);
         throw error;
@@ -57,14 +35,19 @@ async function loadData() {
 // Inicialización
 document.addEventListener("DOMContentLoaded", async function () {
     try {
+        // Cargar revista actual desde la API
+        loadCurrentIssue();
+
+        // Cargar TODO lo demás desde data.json
         const data = await loadData();
+
         if (data) {
-            loadCurrentIssue(data);
             loadIssues(data);
             loadCategories(data);
             loadNotes(data);
             setupEventListeners();
         }
+
     } catch (error) {
         console.error('Error detallado:', error);
         const errorDiv = document.createElement('div');
@@ -73,6 +56,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.body.insertBefore(errorDiv, document.body.firstChild);
     }
 });
+
+
 
 // Configurar event listeners
 function setupEventListeners() {
@@ -169,19 +154,50 @@ document.getElementById("add-issue-btn").addEventListener("click", async functio
 // VISTA PÚBLICA (Funciones de Carga)
 // =================================================================
 
-async function loadCurrentIssue(data) {
-    if (!data || !data.currentIssue) {
-        console.error('Datos inválidos: currentIssue no encontrado');
-        return;
+async function loadCurrentIssue() {
+    try {
+        const response = await fetch('./api/issues.php', {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        });
+
+        const responseBody = await response.text();
+
+        if (!response.ok) {
+            console.error('Respuesta del servidor:', responseBody);
+            throw new Error(`Error ${response.status}: ${responseBody}`);
+        }
+
+        const data = JSON.parse(responseBody);
+        let issues = data.data;
+
+        if (!Array.isArray(issues) || issues.length === 0) {
+            throw new Error('No hay revistas disponibles.');
+        }
+
+        // Ordenar por número de revista descendente
+        issues.sort((a, b) => parseInt(b.number) - parseInt(a.number));
+
+        // Tomar la revista más reciente
+        const currentIssue = issues[0];
+
+        document.getElementById("current-cover").src = currentIssue.cover;
+        document.getElementById("current-title").textContent = currentIssue.title;
+        document.getElementById("current-meta").textContent =
+            `N° ${currentIssue.number} - ${currentIssue.month} ${currentIssue.year}`;
+        document.getElementById("current-description").textContent = currentIssue.description;
+        document.getElementById("current-pdf").href = currentIssue.pdf;
+
+    } catch (error) {
+        console.error('Error al cargar la revista actual:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = 'Error al cargar la revista actual.';
+        document.body.insertBefore(errorDiv, document.body.firstChild);
     }
-    const issue = data.currentIssue;
-    document.getElementById("current-cover").src = issue.cover;
-    document.getElementById("current-title").textContent = issue.title;
-    document.getElementById("current-meta").textContent = 
-        `N° ${issue.number} - ${issue.month} ${issue.year}`;
-    document.getElementById("current-description").textContent = issue.description;
-    document.getElementById("current-pdf").href = issue.pdf;
 }
+
+
 
 function loadIssues(data) {
     if (!data || !data.issues) {
@@ -291,24 +307,30 @@ function loadAdminIssues(data) {
         return;
     }
     
-    // Convertir issues a array si es un objeto
-    let issuesArray = Array.isArray(data.issues) ? data.issues : Object.values(data.issues);
-    
+    // Convertir issues a array si viene como objeto
+    let issuesArray = Array.isArray(data.issues)
+        ? data.issues
+        : Object.values(data.issues);
+
+    // 🔥 ESTA LÍNEA ES LA QUE FALTABA
+    window.loadedIssues = issuesArray;
+
     const container = document.getElementById("issues-list");
     container.innerHTML = "";
-    
+
     // Agregar la revista actual
     if (data.currentIssue) {
         const issueElement = createIssueAdminElement(data.currentIssue);
         container.appendChild(issueElement);
     }
-    
+
     // Agregar las revistas anteriores
     issuesArray.forEach((issue) => {
         const issueElement = createIssueAdminElement(issue);
         container.appendChild(issueElement);
     });
 }
+
 
 function createIssueAdminElement(issue) {
     const issueElement = document.createElement("div");
@@ -327,72 +349,86 @@ function createIssueAdminElement(issue) {
         </div>
     `;
 
-    // Agregar event listeners a los botones
     const editButton = issueElement.querySelector('.edit-issue');
     const deleteButton = issueElement.querySelector('.delete-issue');
 
-    editButton.addEventListener('click', async function() {
+    /* ============================================================
+       ================   BOTÓN EDITAR (FRONT ONLY)   ==============
+       ============================================================ */
+
+  editButton.addEventListener('click', async () => {
     try {
-        const response = await fetch(`./api/issues.php?id=${issue.id}`);
+        console.log("Editando ID:", issue.id);
+
+        const response = await fetch('./api/issues.php');
+        if (!response.ok) throw new Error("No se pudieron cargar las revistas");
+
         const data = await response.json();
-        
-        // Rellenar el formulario con los datos actuales
-        document.getElementById("issue-number").value = data.number;
-        document.getElementById("issue-month").value = data.month;
-        document.getElementById("issue-year").value = data.year;
-        document.getElementById("issue-title").value = data.title;
-        document.getElementById("issue-description").value = data.description;
-        
-        // Guardar el ID y las rutas actuales de los archivos
-        const currentIssue = {
-            id: data.id,
-            coverPath: data.cover,
-            pdfPath: data.pdf
-        };
-        
-        // Mostrar el formulario de edición
-        document.querySelector('.tab-content.active').scrollTo({
-            top: document.getElementById("issue-number").offsetTop,
-            behavior: 'smooth'
-        });
-        
-        const saveButton = document.getElementById("save-issue-btn");
-        if (saveButton) {
-            saveButton.addEventListener('click', async function() {
-                const issueData = {
-                    id: currentIssue.id,
-                    number: document.getElementById("issue-number").value,
-                    month: document.getElementById("issue-month").value,
-                    year: document.getElementById("issue-year").value,
-                    title: document.getElementById("issue-title").value,
-                    description: document.getElementById("issue-description").value,
-                    cover: document.getElementById("issue-cover").files[0],
-                    pdf: document.getElementById("issue-pdf").files[0]
-                };
-                
-                try {
-                    await editIssue(issueData);
-                    alert('Revista actualizada correctamente');
-                    loadAdminIssues(data);
-                    loadIssues(data);
-                } catch (error) {
-                    console.error('Error al guardar cambios:', error);
-                    alert('Error al guardar los cambios. Por favor, intente nuevamente.');
-                }
-            });
+
+        // DIAGNÓSTICO
+        console.log("DATA COMPLETA:", data);
+
+        // 🔥 SOLUCIÓN 🔥
+        const issues = data.data;
+
+        if (!Array.isArray(issues)) {
+            console.error("issues NO ES ARRAY:", issues);
+            throw new Error("El servidor no devolvió un array de revistas");
         }
+
+        const issueData = issues.find(i => i.id == issue.id);
+
+        if (!issueData) {
+            console.error("ID buscado:", issue.id);
+            console.error("Lista de issues recibida:", issues);
+            throw new Error("No se encontró la revista seleccionada");
+        }
+
+        // Llenar inputs
+        document.getElementById("edit-issue-number").value = issueData.number ?? "";
+        document.getElementById("edit-issue-month").value = issueData.month ?? "";
+        document.getElementById("edit-issue-year").value = issueData.year ?? "";
+        document.getElementById("edit-issue-title").value = issueData.title ?? "";
+        document.getElementById("edit-issue-description").value = issueData.description ?? "";
+
+        window.currentEditingIssue = issueData;
+
+        const coverPreview = document.getElementById("edit-issue-cover-preview");
+        if (coverPreview) coverPreview.src = issueData.cover ?? "";
+
+        const pdfPreview = document.getElementById("edit-issue-pdf-preview");
+        if (pdfPreview) {
+            if (issueData.pdf) {
+                pdfPreview.href = issueData.pdf;
+                pdfPreview.textContent = "Ver PDF actual";
+            } else {
+                pdfPreview.href = "#";
+                pdfPreview.textContent = "No hay PDF cargado";
+            }
+        }
+
+        document.getElementById("edit-issue-modal").style.display = "flex";
+
     } catch (error) {
-        console.error('Error al cargar datos de la revista:', error);
-        alert('Error al cargar los datos de la revista');
+        console.error("Error al cargar datos para editar:", error);
+        alert(error.message || "No se pudo cargar la revista para editar");
     }
 });
 
-    deleteButton.addEventListener('click', async function() {
-        if (confirm(`¿Está seguro de eliminar la revista "${issue.title}"?`)) {
+
+
+    /* ============================================================
+       ===================   BOTÓN ELIMINAR   ======================
+       ============================================================ */
+
+    deleteButton.addEventListener('click', async () => {
+        if (confirm(`¿Eliminar la revista "${issue.title}"?`)) {
             try {
                 await deleteIssue(issue.id);
+                const newData = await loadData();
+                loadAdminIssues(newData);
+                loadIssues(newData);
             } catch (error) {
-                console.error('Error al eliminar la revista:', error);
                 alert('Error al eliminar la revista');
             }
         }
@@ -400,6 +436,8 @@ function createIssueAdminElement(issue) {
 
     return issueElement;
 }
+
+
 
 function loadAdminCategories(data) {
     const container = document.getElementById("categories-list");
@@ -569,42 +607,79 @@ async function deleteIssue(id) {
     }
 }
 
-async function editIssue(issueData) {
+// Función para editar revista
+async function editIssue() {
     try {
+        const currentIssue = window.currentEditingIssue;
+        if (!currentIssue) throw new Error('No hay una revista seleccionada para editar');
+
         const formData = new FormData();
-        formData.append('id', issueData.id);
-        formData.append('number', issueData.number);
-        formData.append('month', issueData.month);
-        formData.append('year', issueData.year);
-        formData.append('title', issueData.title);
-        formData.append('description', issueData.description);
-        
-        // Solo agregar archivos si se han modificado
-        if (issueData.cover instanceof File) {
-            formData.append('cover', issueData.cover);
-        }
-        if (issueData.pdf instanceof File) {
-            formData.append('pdf', issueData.pdf);
-        }
+        formData.append('_method', 'PUT');
+        formData.append('id', currentIssue.id);
+
+        const fields = ['number','month','year','title','description'];
+        fields.forEach(field => {
+            const input = document.getElementById(`edit-issue-${field}`);
+            if (input) formData.append(field, input.value);
+        });
+
+        const coverFile = document.getElementById('edit-issue-cover')?.files?.[0];
+        const pdfFile = document.getElementById('edit-issue-pdf')?.files?.[0];
+        if (coverFile) formData.append('cover', coverFile);
+        if (pdfFile) formData.append('pdf', pdfFile);
+
+        console.log("📦 ID EN FORM:", formData.get('id'));
 
         const response = await fetch('./api/issues.php', {
-            method: 'PUT',
+            method: 'POST',
             body: formData
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Error al editar revista: ${errorData?.error || response.statusText}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || 'Error al actualizar la revista');
         }
 
-        const data = await response.json();
-        console.log('Revista actualizada:', data);
-        return data;
+        const result = await response.json();
+        console.log('Revista actualizada:', result);
+
+        await loadData();
+        const modal = document.getElementById('edit-issue-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            modal.classList.remove('modal--opened');
+        }
+
+        alert('Revista actualizada correctamente');
+        return result;
     } catch (error) {
-        console.error('Error al editar revista:', error);
+        console.error('Error en edición:', error);
+        alert(error.message || 'No se pudo actualizar la revista');
         throw error;
     }
 }
+
+
+// Botón guardar cambios
+document.getElementById("save-edit-issue").addEventListener("click", async (e) => {
+    e.preventDefault();
+    await editIssue();
+});
+
+// Cerrar modal con botón
+document.getElementById("close-edit-modal").addEventListener("click", () => {
+    document.getElementById("edit-issue-modal").style.display = "none";
+});
+
+// Cerrar modal al hacer click fuera
+document.getElementById("edit-issue-modal").addEventListener("click", (e) => {
+    if (e.target.id === "edit-issue-modal") {
+        document.getElementById("edit-issue-modal").style.display = "none";
+    }
+});
+
+
+
 
 // --- Categorías ---
 
