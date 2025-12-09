@@ -144,14 +144,19 @@ case 'PUT':
 -------------------------- */
 case 'DELETE':
 
-    $id = $_POST["id"] ?? null;
+    $id = $_GET["id"] ?? null;
+
     if (!$id) {
         echo json_encode(["error" => "ID requerido"]);
         exit;
     }
 
     $before = count($data["issues"]);
-    $data["issues"] = array_filter($data["issues"], fn($i) => $i["id"] != $id);
+
+    $data["issues"] = array_values(array_filter(
+        $data["issues"],
+        fn($i) => $i["id"] != $id
+    ));
 
     if (count($data["issues"]) === $before) {
         echo json_encode(["error" => "Revista no encontrada"]);
@@ -159,8 +164,10 @@ case 'DELETE':
     }
 
     saveJSON($jsonFile, $data);
+
     echo json_encode(["status" => "success", "message" => "Revista eliminada"]);
     break;
+
 
 
 
