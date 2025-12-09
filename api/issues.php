@@ -144,45 +144,24 @@ case 'PUT':
 -------------------------- */
 case 'DELETE':
 
-    $id = $_GET["id"] ?? null;
-
+    $id = $_POST["id"] ?? null;
     if (!$id) {
         echo json_encode(["error" => "ID requerido"]);
         exit;
     }
 
-    // Buscar la revista antes de eliminarla
-    $issueToDelete = null;
-    foreach ($data["issues"] as $i) {
-        if ($i["id"] == $id) {
-            $issueToDelete = $i;
-            break;
-        }
-    }
+    $before = count($data["issues"]);
+    $data["issues"] = array_filter($data["issues"], fn($i) => $i["id"] != $id);
 
-    if (!$issueToDelete) {
+    if (count($data["issues"]) === $before) {
         echo json_encode(["error" => "Revista no encontrada"]);
         exit;
     }
 
-    // Eliminar archivos asociados
-    if (!empty($issueToDelete["cover"]) && file_exists($issueToDelete["cover"])) {
-        unlink($issueToDelete["cover"]);
-    }
-
-    if (!empty($issueToDelete["pdf"]) && file_exists($issueToDelete["pdf"])) {
-        unlink($issueToDelete["pdf"]);
-    }
-
-    // Eliminar del array
-    $data["issues"] = array_filter($data["issues"], fn($i) => $i["id"] != $id);
-
-    // Guardar cambios
     saveJSON($jsonFile, $data);
-
     echo json_encode(["status" => "success", "message" => "Revista eliminada"]);
-
     break;
+
 
 
 /* -------------------------
