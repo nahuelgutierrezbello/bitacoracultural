@@ -1,8 +1,9 @@
 // Estado de la aplicación
 let appState = {
-    currentView: "public",
-    currentCategory: null,
-    isLoggedIn: false,
+  currentView: "public",
+  currentCategory: null,
+  isLoggedIn: false,
+  flipbook: null,
 };
 
 async function loadData() {
@@ -104,6 +105,19 @@ function setupEventListeners() {
             console.error('Error al agregar revista:', error);
             alert('Error al agregar la revista. Por favor, intente nuevamente.');
         }
+  });
+
+  // Botones de administración
+  document
+    .getElementById("add-category-btn")
+    .addEventListener("click", addCategory);
+  document.getElementById("add-note-btn").addEventListener("click", addNote);
+
+  // Previsualización de archivos
+  document
+    .getElementById("issue-cover")
+    .addEventListener("change", function (e) {
+      previewImage(e.target, "issue-cover-preview");
     });
 
     document.getElementById("issue-cover").addEventListener("change", function (e) {
@@ -113,6 +127,119 @@ function setupEventListeners() {
     document.getElementById("note-image").addEventListener("change", function (e) {
         previewImage(e.target, "note-image-preview");
     });
+
+  // Revista interactiva
+  initializeFlipbook();
+}
+
+// =================================================================
+// REVISTA INTERACTIVA (Flipbook)
+// =================================================================
+
+function initializeFlipbook() {
+  // Botón para ver la revista
+  document
+    .getElementById("btn-ver-revista")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      showMagazine();
+    });
+
+  // Botón para cerrar la revista
+  document
+    .getElementById("close-magazine")
+    .addEventListener("click", function () {
+      hideMagazine();
+    });
+
+  // Navegación de la revista
+  document
+    .getElementById("magazine-prev")
+    .addEventListener("click", function () {
+      if (appState.flipbook) {
+        appState.flipbook.turn("previous");
+      }
+    });
+
+  document
+    .getElementById("magazine-next")
+    .addEventListener("click", function () {
+      if (appState.flipbook) {
+        appState.flipbook.turn("next");
+      }
+    });
+
+  // Cerrar revista al hacer clic fuera del contenido
+  document
+    .getElementById("magazine-overlay")
+    .addEventListener("click", function (e) {
+      if (e.target.id === "magazine-overlay") {
+        hideMagazine();
+      }
+    });
+
+  // Navegación con teclado
+  document.addEventListener("keydown", function (e) {
+    if (document.getElementById("magazine-overlay").style.display === "block") {
+      if (e.key === "Escape") {
+        hideMagazine();
+      }
+      if (e.key === "ArrowRight") {
+        if (appState.flipbook) {
+          appState.flipbook.turn("next");
+        }
+      }
+      if (e.key === "ArrowLeft") {
+        if (appState.flipbook) {
+          appState.flipbook.turn("previous");
+        }
+      }
+    }
+  });
+}
+
+function showMagazine() {
+  const overlay = document.getElementById("magazine-overlay");
+  overlay.style.display = "block";
+
+  // Inicializar el flipbook después de mostrar el overlay
+  setTimeout(() => {
+    if (typeof turn === "undefined") {
+      console.error("Turn.js no está cargado");
+      return;
+    }
+
+    // Redimensionar para dispositivos móviles
+    const width = window.innerWidth < 768 ? 400 : 800;
+    const height = window.innerWidth < 768 ? 300 : 500;
+
+    // Destruir flipbook existente si hay uno
+    if (appState.flipbook) {
+      appState.flipbook.turn("destroy");
+    }
+
+    // Crear nuevo flipbook
+    appState.flipbook = $("#flipbook").turn({
+      width: width,
+      height: height,
+      autoCenter: true,
+      display: "double",
+      acceleration: true,
+      elevation: 50,
+      gradients: true,
+      duration: 1000,
+      when: {
+        turned: function (e, page) {
+          console.log("Página actual: " + page);
+        },
+      },
+    });
+  }, 100);
+}
+
+function hideMagazine() {
+  document.getElementById("magazine-overlay").style.display = "none";
+}
 
     document.getElementById("back-to-categories").addEventListener("click", function (e) {
         e.preventDefault();
@@ -751,17 +878,17 @@ function showCategoryNotes(categoryId) {
 
 // Login/Logout
 function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    if (username === "admin" && password === "admin") {
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("login-error").style.display = "none";
-        appState.isLoggedIn = true;
-        showAdminPanel();
-    } else {
-        document.getElementById("login-error").style.display = "block";
-    }
+  if (username === "admin" && password === "admin") {
+    document.getElementById("login-container").style.display = "none";
+    document.getElementById("login-error").style.display = "none";
+    appState.isLoggedIn = true;
+    showAdminPanel();
+  } else {
+    document.getElementById("login-error").style.display = "block";
+  }
 }
 
 function logout() {

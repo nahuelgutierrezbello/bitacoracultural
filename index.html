@@ -4,10 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bitácora Cultural - Revista Digital</title>
+    <!-- Fuente Montserrat Italic -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>"
     />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -19,10 +27,63 @@
       <div class="login-form">
         <div class="login-logo">
           <div class="logo-image">
-            <img
-              src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
-              alt="Bitácora Cultural"
-            />
+            <!-- Logo SVG para login -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 60"
+              width="200"
+              height="60"
+            >
+              <defs>
+                <linearGradient
+                  id="logoGradient2"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    style="stop-color: #ff6f61; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #4b8b60; stop-opacity: 1"
+                  />
+                </linearGradient>
+              </defs>
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="60"
+                rx="8"
+                fill="url(#logoGradient2)"
+              />
+              <text
+                x="100"
+                y="35"
+                text-anchor="middle"
+                fill="white"
+                font-family="Montserrat, sans-serif"
+                font-style="italic"
+                font-weight="bold"
+                font-size="24"
+              >
+                BC
+              </text>
+              <text
+                x="100"
+                y="50"
+                text-anchor="middle"
+                fill="white"
+                font-family="Montserrat, sans-serif"
+                font-size="10"
+                font-weight="bold"
+              >
+                CULTURAL
+              </text>
+            </svg>
           </div>
           <h2>Bitácora Cultural</h2>
           <p>Panel de Administración</p>
@@ -52,10 +113,63 @@
           <div class="header-content">
             <div class="logo">
               <div class="logo-image">
-                <img
-                  src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
-                  alt="Bitácora Cultural"
-                />
+                <!-- Logo SVG para header principal -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 200 60"
+                  width="200"
+                  height="60"
+                >
+                  <defs>
+                    <linearGradient
+                      id="logoGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #ff6f61; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #4b8b60; stop-opacity: 1"
+                      />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="200"
+                    height="60"
+                    rx="8"
+                    fill="url(#logoGradient)"
+                  />
+                  <text
+                    x="100"
+                    y="35"
+                    text-anchor="middle"
+                    fill="white"
+                    font-family="Montserrat, sans-serif"
+                    font-style="italic"
+                    font-weight="bold"
+                    font-size="24"
+                  >
+                    BC
+                  </text>
+                  <text
+                    x="100"
+                    y="50"
+                    text-anchor="middle"
+                    fill="white"
+                    font-family="Montserrat, sans-serif"
+                    font-size="10"
+                    font-weight="bold"
+                  >
+                    CULTURAL
+                  </text>
+                </svg>
               </div>
               <div class="logo-text">
                 <h1>Bitácora Cultural</h1>
@@ -105,8 +219,8 @@
                 <a href="#" id="current-pdf" class="btn" target="_blank">
                   <i class="fas fa-download"></i> Descargar PDF
                 </a>
-                <a href="#" class="btn btn-outline">
-                  <i class="fas fa-eye"></i> Ver Online
+                <a href="#" id="btn-ver-revista" class="btn btn-outline">
+                  <i class="fas fa-eye"></i> Ver Revista (Flipbook)
                 </a>
               </div>
             </div>
@@ -209,10 +323,63 @@
           <div class="header-content">
             <div class="logo">
               <div class="logo-image">
-                <img
-                  src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z"
-                  alt="Bitácora Cultural"
-                />
+                <!-- Logo SVG para panel admin -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 200 60"
+                  width="200"
+                  height="60"
+                >
+                  <defs>
+                    <linearGradient
+                      id="logoGradient3"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #ff6f61; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #4b8b60; stop-opacity: 1"
+                      />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="200"
+                    height="60"
+                    rx="8"
+                    fill="url(#logoGradient3)"
+                  />
+                  <text
+                    x="100"
+                    y="35"
+                    text-anchor="middle"
+                    fill="white"
+                    font-family="Montserrat, sans-serif"
+                    font-style="italic"
+                    font-weight="bold"
+                    font-size="24"
+                  >
+                    BC
+                  </text>
+                  <text
+                    x="100"
+                    y="50"
+                    text-anchor="middle"
+                    fill="white"
+                    font-family="Montserrat, sans-serif"
+                    font-size="10"
+                    font-weight="bold"
+                  >
+                    ADMIN
+                  </text>
+                </svg>
               </div>
               <div class="logo-text">
                 <h1>Panel de Administración</h1>
@@ -247,7 +414,6 @@
 
         <div class="admin-section tab-content active" id="revistas">
           <h3>Gestionar Revistas</h3>
-
           <div class="form-row">
             <div class="form-group">
               <label for="issue-number">Número de Revista</label>
@@ -281,7 +447,6 @@
               />
             </div>
           </div>
-
           <div class="form-group">
             <label for="issue-title">Título</label>
             <input
@@ -290,7 +455,6 @@
               placeholder="Título de la revista"
             />
           </div>
-
           <div class="form-group">
             <label for="issue-description">Descripción</label>
             <textarea
@@ -298,27 +462,22 @@
               placeholder="Descripción de la revista"
             ></textarea>
           </div>
-
           <div class="form-group">
             <label for="issue-cover">Portada</label>
             <input type="file" id="issue-cover" accept="image/*" />
             <div class="file-preview" id="issue-cover-preview"></div>
           </div>
-
           <div class="form-group">
             <label for="issue-pdf">Archivo PDF</label>
             <input type="file" id="issue-pdf" accept=".pdf" />
           </div>
-
           <button class="btn" id="add-issue-btn">Agregar Revista</button>
-
           <div class="items-list" id="issues-list"></div>
         </div>
 
 
         <div class="admin-section tab-content" id="categorias">
           <h3>Gestionar Categorías</h3>
-
           <div class="form-group">
             <label for="category-name">Nombre de Categoría</label>
             <input
@@ -327,7 +486,6 @@
               placeholder="Nombre de la categoría"
             />
           </div>
-
           <div class="form-group">
             <label for="category-description">Descripción</label>
             <textarea
@@ -335,7 +493,6 @@
               placeholder="Descripción de la categoría"
             ></textarea>
           </div>
-
           <div class="form-group">
             <label for="category-icon">Icono (Font Awesome)</label>
             <input
@@ -344,15 +501,12 @@
               placeholder="Ej: fas fa-music"
             />
           </div>
-
           <button class="btn" id="add-category-btn">Agregar Categoría</button>
-
           <div class="items-list" id="categories-list"></div>
         </div>
 
         <div class="admin-section tab-content" id="notas">
           <h3>Gestionar Notas</h3>
-
           <div class="form-group">
             <label for="note-title">Título</label>
             <input
@@ -361,12 +515,10 @@
               placeholder="Título de la nota"
             />
           </div>
-
           <div class="form-group">
             <label for="note-category">Categoría</label>
             <select id="note-category"></select>
           </div>
-
           <div class="form-group">
             <label for="note-author">Autor</label>
             <input
@@ -375,18 +527,15 @@
               placeholder="Autor de la nota"
             />
           </div>
-
           <div class="form-group">
             <label for="note-date">Fecha</label>
             <input type="date" id="note-date" />
           </div>
-
           <div class="form-group">
             <label for="note-image">Imagen</label>
             <input type="file" id="note-image" accept="image/*" />
             <div class="file-preview" id="note-image-preview"></div>
           </div>
-
           <div class="form-group">
             <label for="note-content">Contenido</label>
             <textarea
@@ -394,15 +543,12 @@
               placeholder="Contenido de la nota"
             ></textarea>
           </div>
-
           <button class="btn" id="add-note-btn">Agregar Nota</button>
-
           <div class="items-list" id="notes-list"></div>
         </div>
 
         <div class="admin-section tab-content" id="metricas">
           <h3>Métricas del Sitio</h3>
-
           <div class="form-row">
             <div class="form-group">
               <h4>Visitas Totales</h4>
@@ -417,7 +563,6 @@
               <p id="total-notes">156</p>
             </div>
           </div>
-
           <div class="form-group">
             <h4>Categorías Más Populares</h4>
             <ul id="popular-categories"></ul>
@@ -480,6 +625,191 @@
     </div>
 </div>
 
+
+    <!-- Overlay para revista interactiva -->
+    <div id="magazine-overlay" class="magazine-overlay">
+      <button class="close-magazine" id="close-magazine">
+        <i class="fas fa-times"></i> Cerrar Revista
+      </button>
+
+      <div class="magazine-nav">
+        <button id="magazine-prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button id="magazine-next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="magazine-container">
+        <div id="flipbook">
+          <!-- Portada -->
+          <div
+            class="hard"
+            style="
+              background-color: #2c3e50;
+              color: white;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <h1
+              style="
+                font-family: 'Montserrat', sans-serif;
+                font-style: italic;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Bitácora Cultural
+            </h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem">
+              N° 15 - Marzo 2026
+            </p>
+            <h2
+              style="
+                font-family: 'Montserrat', sans-serif;
+                font-style: italic;
+                font-size: 1.8rem;
+                text-align: center;
+              "
+            >
+              Cultura en Mar del Plata:<br />Tradición y Vanguardia
+            </h2>
+          </div>
+
+          <div class="hard"></div>
+
+          <!-- Página 1 -->
+          <div class="page text-page">
+            <h2>Editorial</h2>
+            <p>
+              Bienvenidos a la nueva edición de Bitácora Cultural. En este
+              número exploramos la rica escena cultural de Mar del Plata, desde
+              sus tradiciones más arraigadas hasta las expresiones artísticas
+              más vanguardistas.
+            </p>
+            <p>
+              Descubra entrevistas exclusivas, reseñas de eventos y análisis
+              profundos sobre el patrimonio cultural de nuestra ciudad. Una
+              edición especial dedicada a celebrar la diversidad y creatividad
+              que hace única a nuestra comunidad.
+            </p>
+            <p><em>La Redacción</em></p>
+          </div>
+
+          <!-- Página 2 -->
+          <div class="page">
+            <img
+              src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80"
+              alt="Arte Urbano"
+            />
+            <div style="padding: 20px">
+              <h3>Arte Urbano: Los Muros Hablan</h3>
+              <p>
+                Los artistas callejeros transforman la ciudad en una galería al
+                aire libre.
+              </p>
+            </div>
+          </div>
+
+          <!-- Página 3 -->
+          <div class="page text-page">
+            <h2>Cultura Viva</h2>
+            <p>
+              Mar del Plata brilla con luz propia este verano. Los teatros, las
+              calles y los espacios públicos se convierten en escenarios de
+              expresión artística.
+            </p>
+            <p>
+              Desde el renombrado Festival de Jazz hasta las exposiciones de
+              arte contemporáneo, la oferta cultural se diversifica y crece cada
+              año, atrayendo a visitantes de todo el país.
+            </p>
+            <p>
+              La sinergia entre tradición y modernidad define el paisaje
+              cultural marplatense.
+            </p>
+          </div>
+
+          <!-- Página 4 -->
+          <div class="page">
+            <img
+              src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80"
+              alt="Festival de Jazz"
+            />
+            <div style="padding: 20px">
+              <h3>Festival Internacional de Jazz</h3>
+              <p>
+                Celebrando una década de ritmos y melodías que llenan la costa.
+              </p>
+            </div>
+          </div>
+
+          <!-- Página 5 -->
+          <div class="page text-page">
+            <h2>Patrimonio Cultural</h2>
+            <p>
+              La restauración del histórico Hotel Bristol representa un hito en
+              la preservación de nuestro patrimonio arquitectónico.
+            </p>
+            <p>
+              Este ícono de la ciudad, testigo de décadas de historia turística,
+              renace con un proyecto que respeta su esencia original mientras
+              incorpora funcionalidades modernas.
+            </p>
+            <p>
+              Un ejemplo de cómo el pasado y el presente pueden dialogar en
+              armonía.
+            </p>
+          </div>
+
+          <!-- Página 6 -->
+          <div class="page">
+            <img
+              src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80"
+              alt="Hotel Bristol"
+            />
+            <div style="padding: 20px">
+              <h3>Hotel Bristol: Renacimiento de un Ícono</h3>
+              <p>La joya arquitectónica recupera su esplendor original.</p>
+            </div>
+          </div>
+
+          <div class="hard"></div>
+
+          <!-- Contraportada -->
+          <div
+            class="hard back-cover"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <div style="text-align: center; color: white">
+              <h3
+                style="
+                  font-family: 'Montserrat', sans-serif;
+                  font-style: italic;
+                  margin-bottom: 1rem;
+                "
+              >
+                Próxima Edición: Abril 2026
+              </h3>
+              <p>"Gastronomía y Cultura"</p>
+              <p style="margin-top: 2rem">www.bitacoracultural.com</p>
+              <p>info@bitacoracultural.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
     <script src="app.js"></script>
   </body>
