@@ -1,64 +1,34 @@
 {
     "issues": [
         {
-            "number": "6",
-            "month": "junio",
-            "year": "2026",
-            "title": "Exposici\u00f3n de Arteeeeeeeeeeeeeeeeeeee",
-            "description": "Exposici\u00f3n de Arte",
-            "cover": ".\/api\/uploads\/cover_1764679881.jpg",
-            "pdf": ".\/api\/uploads\/revista_1764679881.pdf",
-            "id": 1764679881
-        },
-        {
-            "number": "7",
-            "month": "enero",
-            "year": "2025",
-            "title": "Melina Fuch en Galer\u00edas",
-            "description": "Melina Fuch en Galer\u00edas",
-            "cover": ".\/api\/uploads\/cover_1764679963.jpg",
-            "pdf": ".\/api\/uploads\/revista_1764679963.pdf",
-            "id": 1764679963
-        },
-        {
-            "number": "8",
-            "month": "noviembre",
-            "year": "2026",
-            "title": "Cumplea\u00f1os Melina Fuch, la artista m\u00e1s grande\u2665",
-            "description": "Cumplea\u00f1os Melina Fuch, la artista m\u00e1s grande\u2665",
-            "cover": ".\/api\/uploads\/cover_1764680040.png",
-            "pdf": ".\/api\/uploads\/revista_1764680040.pdf",
-            "id": 1764680040
-        },
-        {
-            "number": "9",
-            "month": "diciembre",
-            "year": "2026",
-            "title": "Navidad en Italia!",
-            "description": "Navidad en Italia!",
-            "cover": ".\/api\/uploads\/cover_1764680308.jpg",
-            "pdf": ".\/api\/uploads\/revista_1764680308.pdf",
-            "id": 1764680308
-        },
-        {
-            "number": "6",
-            "month": "diciembre",
-            "year": "2030",
-            "title": "asss",
-            "description": "ssssssdas",
-            "id": 1764937519,
-            "cover": ".\/api\/uploads\/cover_1764937519.avif",
-            "pdf": ".\/api\/uploads\/revista_1764937519.pdf"
-        },
-        {
-            "id": 1765321347,
+            "id": 1765372578,
             "number": "1",
             "month": "enero",
             "year": "2026",
-            "title": "ARRTE",
-            "description": "ARTE",
-            "cover": ".\/api\/uploads\/1765321347_Arte Urbano y Expresi\u00f3n Callejera.avif",
-            "pdf": ".\/api\/uploads\/1765321347_pasajes.pdf"
+            "title": "Arte y Cultura",
+            "description": "Arte y Cultura",
+            "cover": ".\/api\/uploads\/1765372578_Arte Urbano y Expresi\u00f3n Callejera.avif",
+            "pdf": ".\/api\/uploads\/1765372578_Ebook Marketing Digital .pdf"
+        },
+        {
+            "id": 1765372625,
+            "number": "2",
+            "month": "febrero",
+            "year": "2026",
+            "title": "Cine y Vacaciones",
+            "description": "Cine y Vacaciones",
+            "cover": ".\/api\/uploads\/1765372625_Fin de A\u00f1o Cultural.avif",
+            "pdf": ".\/api\/uploads\/1765372625_Ebook Marketing Digital .pdf"
+        },
+        {
+            "id": 1765372668,
+            "number": "3",
+            "month": "marzo",
+            "year": "2026",
+            "title": "Literartura y Escritores Locales",
+            "description": "Literartura y Escritores Locales",
+            "cover": ".\/api\/uploads\/1765372668_Literatura y Escritores Locales.avif",
+            "pdf": ".\/api\/uploads\/1765372668_Ebook Marketing Digital .pdf"
         }
     ],
     "categories": [
