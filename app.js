@@ -1,4 +1,5 @@
 // Simulación de carga de datos desde el archivo data.json (Backend)
+
 const APP_DATA = {
   currentIssue: {
     id: 1,
