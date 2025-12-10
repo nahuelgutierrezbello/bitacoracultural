@@ -1,148 +1,128 @@
 {
-  "currentIssue": {
-    "id": 1,
-    "number": 15,
-    "month": "Marzo",
-    "year": 2026,
-    "title": "Cultura en Mar del Plata: Tradición y Vanguardia",
-    "description": "En esta edición exploramos la rica escena cultural de Mar del Plata, desde sus tradiciones más arraigadas hasta las expresiones artísticas más vanguardistas. Descubre entrevistas exclusivas, reseñas de eventos y análisis profundos sobre el patrimonio cultural de la ciudad.",
-    "cover": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAPwCdABmQn//Z",
-    "pdf": "#"
-  },
-  "issues": [
-    {
-      "id": 2,
-      "number": 14,
-      "month": "Febrero",
-      "year": 2026,
-      "title": "Arte Urbano y Expresión Callejera",
-      "cover": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80"
-    },
-    {
-      "id": 3,
-      "number": 13,
-      "month": "Enero",
-      "year": 2026,
-      "title": "Música y Festivales de Verano",
-      "cover": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-    },
-    {
-      "id": 4,
-      "number": 12,
-      "month": "Diciembre",
-      "year": 2025,
-      "title": "Fin de Año Cultural",
-      "cover": "https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80"
-    },
-    {
-      "id": 5,
-      "number": 11,
-      "month": "Noviembre",
-      "year": 2025,
-      "title": "Patrimonio Histórico de la Ciudad",
-      "cover": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80"
-    },
-    {
-      "id": 6,
-      "number": 10,
-      "month": "Octubre",
-      "year": 2025,
-      "title": "Literatura y Escritores Locales",
-      "cover": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-    }
-  ],
-  "categories": [
-    {
-      "id": 1,
-      "name": "Artes Visuales",
-      "description": "Pintura, escultura, fotografía y otras expresiones visuales",
-      "icon": "fas fa-palette"
-    },
-    {
-      "id": 2,
-      "name": "Música",
-      "description": "Conciertos, festivales y artistas locales",
-      "icon": "fas fa-music"
-    },
-    {
-      "id": 3,
-      "name": "Teatro",
-      "description": "Obras, actores y directores de la escena teatral",
-      "icon": "fas fa-theater-masks"
-    },
-    {
-      "id": 4,
-      "name": "Literatura",
-      "description": "Escritores, libros y eventos literarios",
-      "icon": "fas fa-book"
-    },
-    {
-      "id": 5,
-      "name": "Cine",
-      "description": "Estrenos, festivales y realizadores locales",
-      "icon": "fas fa-film"
-    },
-    {
-      "id": 6,
-      "name": "Patrimonio",
-      "description": "Historia, arquitectura y tradiciones culturales",
-      "icon": "fas fa-landmark"
-    }
-  ],
-  "notes": [
-    {
-      "id": 1,
-      "title": "El renacimiento del arte callejero en Mar del Plata",
-      "category": 1,
-      "author": "Ana López",
-      "date": "2026-03-15",
-      "image": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80",
-      "content": "Exploramos cómo los artistas urbanos están transformando los espacios públicos de la ciudad con murales y grafitis que reflejan la identidad cultural marplatense."
-    },
-    {
-      "id": 2,
-      "title": "Festival de Jazz: Una tradición que crece",
-      "category": 2,
-      "author": "Carlos Méndez",
-      "date": "2026-03-10",
-      "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      "content": "El Festival Internacional de Jazz de Mar del Plata celebra su décima edición con artistas de renombre mundial y propuestas locales innovadoras."
-    },
-    {
-      "id": 3,
-      "title": "Nueva obra del Teatro Municipal",
-      "category": 3,
-      "author": "Laura Fernández",
-      "date": "2026-03-05",
-      "image": "https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
-      "content": "El Teatro Municipal estrena 'Memorias de la Costa', una obra que explora la historia de la ciudad a través de las vidas de sus habitantes."
-    },
-    {
-      "id": 4,
-      "title": "Escritores marplatenses en la Feria del Libro",
-      "category": 4,
-      "author": "Roberto Sosa",
-      "date": "2026-02-28",
-      "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
-      "content": "Autores locales presentan sus últimas obras en la Feria Internacional del Libro, destacando la diversidad literaria de la región."
-    },
-    {
-      "id": 5,
-      "title": "Cine independiente en el Festival de Mar del Plata",
-      "category": 5,
-      "author": "María González",
-      "date": "2026-02-20",
-      "image": "https://images.unsplash.com/photo-1489599809505-f2d4cac355af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      "content": "El festival cinematográfico más importante del país presenta una selección de películas independientes que exploran nuevas narrativas."
-    },
-    {
-      "id": 6,
-      "title": "Restauración del Hotel Bristol: Un ícono arquitectónico",
-      "category": 6,
-      "author": "Diego Ramírez",
-      "date": "2026-02-15",
-      "image": "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1465&q=80",
-      "content": "El proceso de restauración del histórico Hotel Bristol busca preservar su valor patrimonial mientras se adapta a las necesidades contemporáneas."
-    }
-  ]
+    "issues": [
+        {
+            "id": 1765372578,
+            "number": "1",
+            "month": "enero",
+            "year": "2026",
+            "title": "Arte y Cultura",
+            "description": "Arte y Cultura",
+            "cover": ".\/api\/uploads\/1765372578_Arte Urbano y Expresi\u00f3n Callejera.avif",
+            "pdf": ".\/api\/uploads\/1765372578_Ebook Marketing Digital .pdf"
+        },
+        {
+            "id": 1765372625,
+            "number": "2",
+            "month": "febrero",
+            "year": "2026",
+            "title": "Cine y Vacaciones",
+            "description": "Cine y Vacaciones",
+            "cover": ".\/api\/uploads\/1765372625_Fin de A\u00f1o Cultural.avif",
+            "pdf": ".\/api\/uploads\/1765372625_Ebook Marketing Digital .pdf"
+        },
+        {
+            "id": 1765372668,
+            "number": "3",
+            "month": "marzo",
+            "year": "2026",
+            "title": "Literartura y Escritores Locales",
+            "description": "Literartura y Escritores Locales",
+            "cover": ".\/api\/uploads\/1765372668_Literatura y Escritores Locales.avif",
+            "pdf": ".\/api\/uploads\/1765372668_Ebook Marketing Digital .pdf"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Artes Visuales",
+            "description": "Pintura, escultura, fotograf\u00eda y otras expresiones visuales",
+            "icon": "fas fa-palette"
+        },
+        {
+            "id": 2,
+            "name": "M\u00fasica",
+            "description": "Conciertos, festivales y artistas locales",
+            "icon": "fas fa-music"
+        },
+        {
+            "id": 3,
+            "name": "Teatro",
+            "description": "Obras, actores y directores de la escena teatral",
+            "icon": "fas fa-theater-masks"
+        },
+        {
+            "id": 4,
+            "name": "Literatura",
+            "description": "Escritores, libros y eventos literarios",
+            "icon": "fas fa-book"
+        },
+        {
+            "id": 5,
+            "name": "Cine",
+            "description": "Estrenos, festivales y realizadores locales",
+            "icon": "fas fa-film"
+        },
+        {
+            "id": 6,
+            "name": "Patrimonio",
+            "description": "Historia, arquitectura y tradiciones culturales",
+            "icon": "fas fa-landmark"
+        }
+    ],
+    "notes": [
+        {
+            "id": 1,
+            "title": "El renacimiento del arte callejero en Mar del Plata",
+            "category": 1,
+            "author": "Ana L\u00f3pez",
+            "date": "2026-03-15",
+            "image": "https:\/\/images.unsplash.com\/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80",
+            "content": "Exploramos c\u00f3mo los artistas urbanos est\u00e1n transformando los espacios p\u00fablicos de la ciudad con murales y grafitis que reflejan la identidad cultural marplatense."
+        },
+        {
+            "id": 2,
+            "title": "Festival de Jazz: Una tradici\u00f3n que crece",
+            "category": 2,
+            "author": "Carlos M\u00e9ndez",
+            "date": "2026-03-10",
+            "image": "https:\/\/images.unsplash.com\/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            "content": "El Festival Internacional de Jazz de Mar del Plata celebra su d\u00e9cima edici\u00f3n con artistas de renombre mundial y propuestas locales innovadoras."
+        },
+        {
+            "id": 3,
+            "title": "Nueva obra del Teatro Municipal",
+            "category": 3,
+            "author": "Laura Fern\u00e1ndez",
+            "date": "2026-03-05",
+            "image": "https:\/\/images.unsplash.com\/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
+            "content": "El Teatro Municipal estrena 'Memorias de la Costa', una obra que explora la historia de la ciudad a trav\u00e9s de las vidas de sus habitantes."
+        },
+        {
+            "id": 4,
+            "title": "Escritores marplatenses en la Feria del Libro",
+            "category": 4,
+            "author": "Roberto Sosa",
+            "date": "2026-02-28",
+            "image": "https:\/\/images.unsplash.com\/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
+            "content": "Autores locales presentan sus \u00faltimas obras en la Feria Internacional del Libro, destacando la diversidad literaria de la regi\u00f3n."
+        },
+        {
+            "id": 5,
+            "title": "Cine independiente en el Festival de Mar del Plata",
+            "category": 5,
+            "author": "Mar\u00eda Gonz\u00e1lez",
+            "date": "2026-02-20",
+            "image": "https:\/\/images.unsplash.com\/photo-1489599809505-f2d4cac355af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            "content": "El festival cinematogr\u00e1fico m\u00e1s importante del pa\u00eds presenta una selecci\u00f3n de pel\u00edculas independientes que exploran nuevas narrativas."
+        },
+        {
+            "id": 6,
+            "title": "Restauraci\u00f3n del Hotel Bristol: Un \u00edcono arquitect\u00f3nico",
+            "category": 6,
+            "author": "Diego Ram\u00edrez",
+            "date": "2026-02-15",
+            "image": "https:\/\/images.unsplash.com\/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1465&q=80",
+            "content": "El proceso de restauraci\u00f3n del hist\u00f3rico Hotel Bristol busca preservar su valor patrimonial mientras se adapta a las necesidades contempor\u00e1neas."
+        }
+    ]
 }

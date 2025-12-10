@@ -475,6 +475,7 @@
           <div class="items-list" id="issues-list"></div>
         </div>
 
+
         <div class="admin-section tab-content" id="categorias">
           <h3>Gestionar Categorías</h3>
           <div class="form-group">
@@ -569,6 +570,61 @@
         </div>
       </div>
     </div>
+   <!-- MODAL: EDITAR ISSUE -->
+<div id="edit-issue-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <button id="close-edit-modal" class="modal-close">&times;</button>
+        
+        <h2>Editar Revista</h2>
+
+        <!-- IMPORTANTE: Añadido enctype="multipart/form-data" -->
+        <form id="edit-issue-form" enctype="multipart/form-data">
+            <!-- Campo ID oculto para identificar la revista -->
+            <input type="hidden" id="edit-issue-id" name="id">
+            
+            <label for="edit-issue-number">Número:</label>
+            <input type="number" id="edit-issue-number" name="number" required>
+
+            <label for="edit-issue-month">Mes:</label>
+            <input type="text" id="edit-issue-month" name="month" required>
+
+            <label for="edit-issue-year">Año:</label>
+            <input type="number" id="edit-issue-year" name="year" required>
+
+            <label for="edit-issue-title">Título:</label>
+            <input type="text" id="edit-issue-title" name="title" required>
+
+            <label for="edit-issue-description">Descripción:</label>
+            <textarea id="edit-issue-description" name="description"></textarea>
+
+            <label for="edit-issue-cover">Cambiar Portada:</label>
+            <input type="file" id="edit-issue-cover" name="cover" accept="image/*" 
+                   onchange="updateImagePreview(this, 'edit-issue-cover-preview')">
+
+            <label for="edit-issue-pdf">Cambiar PDF:</label>
+            <input type="file" id="edit-issue-pdf" name="pdf" accept="application/pdf"
+                   onchange="updatePdfPreview(this, 'edit-issue-pdf-preview')">
+
+            <!-- Vista previa de la portada actual -->
+            <div class="preview-section">
+                <p>Portada actual:</p>
+                <img id="edit-issue-cover-preview" src="" alt="Portada actual"
+                    style="max-width: 150px; border-radius: 6px; display:block; margin-bottom:10px;">
+            </div>
+
+            <!-- Vista previa del PDF actual -->
+            <div class="preview-section" style="margin-top: 10px;">
+                <p>PDF actual:</p>
+                <a id="edit-issue-pdf-preview" href="#" target="_blank">No hay PDF cargado</a>
+            </div>
+
+            <button id="save-edit-issue" type="button" class="btn btn-primary">
+                Guardar Cambios
+            </button>
+        </form>
+    </div>
+</div>
+
 
     <!-- Overlay para revista interactiva -->
     <div id="magazine-overlay" class="magazine-overlay">
