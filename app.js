@@ -50,8 +50,7 @@ const DEFAULT_DATA = {
     {
       id: 1,
       name: "Artes Visuales",
-      description:
-        "Pintura, escultura, fotografía y otras expresiones visuales",
+      description: "Pintura, escultura, fotografía y otras expresiones visuales",
       icon: "fas fa-palette",
     },
     {
@@ -92,10 +91,8 @@ const DEFAULT_DATA = {
       category: 1,
       author: "Ana López",
       date: "2026-03-15",
-      image:
-        "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80",
-      content:
-        "Exploramos cómo los artistas urbanos están transformando los espacios públicos...",
+      image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80",
+      content: "Exploramos cómo los artistas urbanos están transformando los espacios públicos...",
     },
     {
       id: 2,
@@ -103,10 +100,8 @@ const DEFAULT_DATA = {
       category: 2,
       author: "Carlos Méndez",
       date: "2026-03-10",
-      image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80",
-      content:
-        "El Festival Internacional de Jazz de Mar del Plata celebra su décima edición...",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80",
+      content: "El Festival Internacional de Jazz de Mar del Plata celebra su décima edición...",
     },
     {
       id: 3,
@@ -114,8 +109,7 @@ const DEFAULT_DATA = {
       category: 3,
       author: "Laura Fernández",
       date: "2026-03-05",
-      image:
-        "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=800&q=80",
       content: "El Teatro Municipal estrena 'Memorias de la Costa'...",
     },
   ],
@@ -167,19 +161,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setupEventListeners() {
   // --- Navegación Login/Logout ---
-  document
-    .getElementById("admin-toggle")
-    .addEventListener("click", function (e) {
-      e.preventDefault();
-      showLogin();
-    });
+  document.getElementById("admin-toggle").addEventListener("click", function (e) {
+    e.preventDefault();
+    showLogin();
+  });
 
-  document
-    .getElementById("public-toggle")
-    .addEventListener("click", function (e) {
-      e.preventDefault();
-      showPublicView();
-    });
+  document.getElementById("public-toggle").addEventListener("click", function (e) {
+    e.preventDefault();
+    showPublicView();
+  });
 
   document.getElementById("logout-btn").addEventListener("click", function (e) {
     e.preventDefault();
@@ -214,9 +204,7 @@ function setupEventListeners() {
   if (addIssueBtn) {
     addIssueBtn.addEventListener("click", function () {
       // Aquí iría la lógica de agregar revista a la DB simulada
-      alert(
-        "Simulación: Revista agregada (Backend necesario para archivos reales)"
-      );
+      alert("Simulación: Revista agregada (Backend necesario para archivos reales)");
     });
   }
 
@@ -242,17 +230,10 @@ function setupEventListeners() {
 
   // Cerrar Modales
   document.querySelectorAll(".close-category-modal").forEach((btn) => {
-    btn.addEventListener(
-      "click",
-      () =>
-        (document.getElementById("edit-category-modal").style.display = "none")
-    );
+    btn.addEventListener("click", () => (document.getElementById("edit-category-modal").style.display = "none"));
   });
   document.querySelectorAll(".close-note-modal").forEach((btn) => {
-    btn.addEventListener(
-      "click",
-      () => (document.getElementById("edit-note-modal").style.display = "none")
-    );
+    btn.addEventListener("click", () => (document.getElementById("edit-note-modal").style.display = "none"));
   });
 
   // Cerrar modal al hacer clic afuera
@@ -337,28 +318,36 @@ function loadAdminCategories(data) {
   data.categories.forEach((category) => {
     const categoryElement = document.createElement("div");
     categoryElement.className = "item-card";
-    // Estilo inline para asegurar layout si falla CSS externo
     categoryElement.style.display = "flex";
     categoryElement.style.justifyContent = "space-between";
     categoryElement.style.alignItems = "center";
+    categoryElement.style.padding = "15px";
+    categoryElement.style.marginBottom = "10px";
+    categoryElement.style.backgroundColor = "#f8f9fa";
+    categoryElement.style.borderRadius = "4px";
+    categoryElement.style.borderLeft = "4px solid var(--secondary)";
 
     categoryElement.innerHTML = `
-            <div class="item-details-container" style="display:flex; align-items:center;">
-                <div class="cat-icon-large" style="font-size:1.5rem; margin-right:15px; color:#ff6f61;"><i class="${category.icon}"></i></div>
-                <div class="item-content">
-                    <h4 style="margin:0;">${category.name}</h4>
-                    <p style="margin:0; font-size:0.85em; color:#666;">${category.description}</p>
-                </div>
-            </div>
-            <div class="item-actions-group" style="display:flex; gap:10px;">
-                <button class="action-btn btn-edit" onclick="editCategory(${category.id})" title="Editar" style="background:#ffc107; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="action-btn btn-delete" onclick="deleteCategory(${category.id})" title="Eliminar" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
+      <div class="item-details-container" style="display:flex; align-items:center; flex:1;">
+        <div class="cat-icon-large" style="font-size:1.5rem; margin-right:15px; color:#ff6f61;">
+          <i class="${category.icon}"></i>
+        </div>
+        <div class="item-content" style="flex:1;">
+          <h4 style="margin:0 0 5px 0;">${category.name}</h4>
+          <p style="margin:0; font-size:0.85em; color:#666;">${category.description}</p>
+        </div>
+      </div>
+      <div class="item-actions-group" style="display:flex; gap:10px;">
+        <button class="action-btn btn-edit" onclick="editCategory(${category.id})" title="Editar" 
+                style="background:#ffc107; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; color:#333;">
+          <i class="fas fa-edit"></i> Editar
+        </button>
+        <button class="action-btn btn-delete" onclick="deleteCategory(${category.id})" title="Eliminar" 
+                style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
+          <i class="fas fa-trash"></i> Eliminar
+        </button>
+      </div>
+    `;
     container.appendChild(categoryElement);
   });
 }
@@ -386,28 +375,40 @@ function loadAdminNotes(data) {
     noteElement.style.display = "flex";
     noteElement.style.justifyContent = "space-between";
     noteElement.style.alignItems = "center";
+    noteElement.style.padding = "15px";
+    noteElement.style.marginBottom = "10px";
+    noteElement.style.backgroundColor = "#f8f9fa";
+    noteElement.style.borderRadius = "4px";
+    noteElement.style.borderLeft = "4px solid var(--secondary)";
 
     noteElement.innerHTML = `
-            <div class="item-details-container" style="display:flex; align-items:center;">
-                <div class="item-image" style="width:60px; height:60px; margin-right:10px; flex-shrink:0; overflow:hidden; border-radius:4px;">
-                    <img src="${note.image}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/60'">
-                </div>
-                <div class="item-content">
-                    <h4 style="margin:0;">${note.title}</h4>
-                    <p style="margin:0; font-size:0.85em; color:#666;">
-                        <strong>Cat:</strong> ${categoryName} | <strong>Autor:</strong> ${note.author}
-                    </p>
-                </div>
-            </div>
-            <div class="item-actions-group" style="display:flex; gap:10px;">
-                <button class="action-btn btn-edit" onclick="editNote(${note.id})" title="Editar" style="background:#ffc107; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="action-btn btn-delete" onclick="deleteNote(${note.id})" title="Eliminar" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
+      <div class="item-details-container" style="display:flex; align-items:center; flex:1;">
+        <div class="item-image" style="width:80px; height:80px; margin-right:15px; flex-shrink:0; overflow:hidden; border-radius:4px;">
+          <img src="${note.image}" 
+               style="width:100%; height:100%; object-fit:cover;" 
+               onerror="this.src='https://via.placeholder.com/80'"
+               alt="${note.title}">
+        </div>
+        <div class="item-content" style="flex:1;">
+          <h4 style="margin:0 0 5px 0;">${note.title}</h4>
+          <p style="margin:0; font-size:0.85em; color:#666;">
+            <strong>Cat:</strong> ${categoryName} | 
+            <strong>Autor:</strong> ${note.author} | 
+            <strong>Fecha:</strong> ${formatDate(note.date)}
+          </p>
+        </div>
+      </div>
+      <div class="item-actions-group" style="display:flex; gap:10px;">
+        <button class="action-btn btn-edit" onclick="editNote(${note.id})" title="Editar" 
+                style="background:#ffc107; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; color:#333;">
+          <i class="fas fa-edit"></i> Editar
+        </button>
+        <button class="action-btn btn-delete" onclick="deleteNote(${note.id})" title="Eliminar" 
+                style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
+          <i class="fas fa-trash"></i> Eliminar
+        </button>
+      </div>
+    `;
     container.appendChild(noteElement);
   });
 }
@@ -467,10 +468,12 @@ function populateCategorySelect(data) {
 function addCategory() {
   const name = document.getElementById("category-name").value;
   const description = document.getElementById("category-description").value;
-  const icon =
-    document.getElementById("category-icon").value || "fas fa-folder";
+  const icon = document.getElementById("category-icon").value || "fas fa-folder";
 
-  if (!name || !description) return alert("Complete nombre y descripción.");
+  if (!name || !description) {
+    alert("Complete nombre y descripción.");
+    return;
+  }
 
   const newCategory = {
     id:
@@ -493,22 +496,7 @@ function addCategory() {
   alert(`Categoría '${name}' creada.`);
 }
 
-// Global scope para onclick en HTML
-window.deleteCategory = function (id) {
-  if (!confirm(`¿Eliminar categoría? Las notas quedarán sin categoría.`))
-    return;
-
-  window.APP_DATA.categories = window.APP_DATA.categories.filter(
-    (c) => c.id !== id
-  );
-  // Desvincular notas
-  window.APP_DATA.notes = window.APP_DATA.notes.map((n) =>
-    n.category === id ? { ...n, category: null } : n
-  );
-
-  refreshAllViews();
-};
-
+// Exportar funciones al scope global para que onclick funcione
 window.editCategory = function (id) {
   const category = window.APP_DATA.categories.find((c) => c.id === id);
   if (category) {
@@ -520,17 +508,26 @@ window.editCategory = function (id) {
   }
 };
 
+window.deleteCategory = function (id) {
+  if (!confirm(`¿Eliminar categoría? Las notas quedarán sin categoría.`)) return;
+
+  window.APP_DATA.categories = window.APP_DATA.categories.filter((c) => c.id !== id);
+  // Desvincular notas
+  window.APP_DATA.notes = window.APP_DATA.notes.map((n) =>
+    n.category === id ? { ...n, category: null } : n
+  );
+
+  refreshAllViews();
+};
+
 function saveEditCategory() {
   const id = parseInt(document.getElementById("edit-cat-id").value);
   const index = window.APP_DATA.categories.findIndex((c) => c.id === id);
 
   if (index !== -1) {
-    window.APP_DATA.categories[index].name =
-      document.getElementById("edit-cat-name").value;
-    window.APP_DATA.categories[index].description =
-      document.getElementById("edit-cat-desc").value;
-    window.APP_DATA.categories[index].icon =
-      document.getElementById("edit-cat-icon").value;
+    window.APP_DATA.categories[index].name = document.getElementById("edit-cat-name").value;
+    window.APP_DATA.categories[index].description = document.getElementById("edit-cat-desc").value;
+    window.APP_DATA.categories[index].icon = document.getElementById("edit-cat-icon").value;
 
     document.getElementById("edit-category-modal").style.display = "none";
     refreshAllViews();
@@ -547,8 +544,10 @@ function addNote() {
   const content = document.getElementById("note-content").value;
   const imageFile = document.getElementById("note-image").files[0];
 
-  if (!title || !categoryId || !content)
-    return alert("Título, Categoría y Contenido son obligatorios.");
+  if (!title || !categoryId || !content) {
+    alert("Título, Categoría y Contenido son obligatorios.");
+    return;
+  }
 
   const processNote = (imageUrl) => {
     const newNote = {
@@ -566,7 +565,7 @@ function addNote() {
 
     window.APP_DATA.notes.push(newNote);
 
-    // Limpiar
+    // Limpiar formulario
     document.getElementById("note-title").value = "";
     document.getElementById("note-category").value = "";
     document.getElementById("note-author").value = "";
@@ -577,7 +576,7 @@ function addNote() {
     if (preview) preview.innerHTML = "";
 
     refreshAllViews();
-    alert(`Nota publicada.`);
+    alert(`Nota '${title}' publicada.`);
   };
 
   if (imageFile) {
@@ -590,12 +589,6 @@ function addNote() {
     processNote("https://via.placeholder.com/400x200?text=Nota+Sin+Imagen");
   }
 }
-
-window.deleteNote = function (id) {
-  if (!confirm(`¿Eliminar nota permanentemente?`)) return;
-  window.APP_DATA.notes = window.APP_DATA.notes.filter((n) => n.id !== id);
-  refreshAllViews();
-};
 
 window.editNote = function (id) {
   const note = window.APP_DATA.notes.find((n) => n.id === id);
@@ -611,9 +604,15 @@ window.editNote = function (id) {
     const currentImg = document.getElementById("edit-note-current-img");
     if (currentImg) currentImg.src = note.image;
 
-    document.getElementById("edit-note-image").value = ""; // Reset file
+    document.getElementById("edit-note-image").value = ""; // Reset file input
     document.getElementById("edit-note-modal").style.display = "flex";
   }
+};
+
+window.deleteNote = function (id) {
+  if (!confirm(`¿Eliminar nota permanentemente?`)) return;
+  window.APP_DATA.notes = window.APP_DATA.notes.filter((n) => n.id !== id);
+  refreshAllViews();
 };
 
 function saveEditNote() {
@@ -649,7 +648,7 @@ function saveEditNote() {
       };
       reader.readAsDataURL(imageFile);
     } else {
-      updateData(null); // Mantener imagen si no se selecciona nueva
+      updateData(null); // Mantener imagen actual si no se selecciona nueva
     }
   }
 }
@@ -673,8 +672,7 @@ function loadCurrentIssue() {
     if (desc) desc.textContent = issue.description;
 
     const meta = document.getElementById("current-meta");
-    if (meta)
-      meta.textContent = `N° ${issue.number} - ${issue.month} ${issue.year}`;
+    if (meta) meta.textContent = `N° ${issue.number} - ${issue.month} ${issue.year}`;
   }
 }
 
@@ -706,9 +704,7 @@ function loadNotes(data) {
   if (!container) return;
   container.innerHTML = "";
 
-  const sortedNotes = [...data.notes].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  const sortedNotes = [...data.notes].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   sortedNotes.forEach((note) => {
     const category = data.categories.find((c) => c.id === note.category);
@@ -750,9 +746,7 @@ function createNoteElement(note, category) {
 
   noteElement.innerHTML = `
         <div class="note-image">
-            <img src="${
-              note.image || "https://via.placeholder.com/400x200?text=Imagen"
-            }" alt="${note.title}">
+            <img src="${note.image || "https://via.placeholder.com/400x200?text=Imagen"}" alt="${note.title}">
         </div>
         <div class="note-content">
             <span class="note-category">${categoryName}</span>
@@ -772,12 +766,8 @@ function createNoteElement(note, category) {
 // =================================================================
 
 function switchTab(tabId) {
-  document
-    .querySelectorAll(".tab-btn")
-    .forEach((btn) => btn.classList.remove("active"));
-  document
-    .querySelectorAll(".tab-content")
-    .forEach((content) => content.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
 
   const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
   if (btn) btn.classList.add("active");
@@ -816,19 +806,14 @@ function showCategoryNotes(categoryId) {
   const catSection = document.getElementById("category-notes");
   if (catSection) {
     catSection.style.display = "block";
-    document.getElementById(
-      "category-title"
-    ).textContent = `Notas de: ${category.name}`;
+    document.getElementById("category-title").textContent = `Notas de: ${category.name}`;
 
     const container = document.getElementById("category-notes-container");
     container.innerHTML = "";
 
-    const categoryNotes = window.APP_DATA.notes.filter(
-      (note) => note.category === categoryId
-    );
+    const categoryNotes = window.APP_DATA.notes.filter((note) => note.category === categoryId);
     if (categoryNotes.length === 0) {
-      container.innerHTML =
-        "<p>No hay notas disponibles para esta categoría.</p>";
+      container.innerHTML = "<p>No hay notas disponibles para esta categoría.</p>";
     } else {
       categoryNotes.forEach((note) => {
         const noteElement = createNoteElement(note, category);
@@ -974,3 +959,10 @@ function hideMagazine() {
   const overlay = document.getElementById("magazine-overlay");
   if (overlay) overlay.style.display = "none";
 }
+
+// Inicialización forzada
+setTimeout(() => {
+  if (document.getElementById("categories-list")) {
+    refreshAllViews();
+  }
+}, 1000);
