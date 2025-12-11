@@ -20,6 +20,317 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="style.css" />
+
+    <!-- ESTILOS DE EMERGENCIA TEMPORALES -->
+    <style>
+      /* ESTILOS DE EMERGENCIA - ASEGURAR VISIBILIDAD */
+      body.debug * {
+        outline: 1px solid rgba(255, 0, 0, 0.1) !important;
+      }
+
+      .admin-panel {
+        background: white !important;
+        min-height: 100vh !important;
+        padding: 20px 0 !important;
+      }
+
+      .admin-section {
+        background: #ffffff !important;
+        padding: 30px !important;
+        border-radius: 10px !important;
+        margin: 20px 0 !important;
+        border: 2px solid #ff6f61 !important;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      .items-list {
+        background: white !important;
+        padding: 20px !important;
+        border-radius: 8px !important;
+        border: 1px solid #dee2e6 !important;
+        min-height: 300px !important;
+        margin-top: 20px !important;
+      }
+
+      /* ASEGURAR QUE LAS SECCIONES SE VEAN */
+      #categorias.admin-section,
+      #notas.admin-section,
+      #revistas.admin-section,
+      #metricas.admin-section {
+        display: block !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      /* Forzar visibilidad del contenido de tabs */
+      .tab-content.active {
+        display: block !important;
+        animation: fadeIn 0.5s ease !important;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Asegurar que los botones de tab funcionen */
+      .admin-nav {
+        background: #f8f9fa !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+        margin: 20px 0 !important;
+        display: flex !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+        border: 1px solid #ddd !important;
+      }
+
+      .tab-btn {
+        background: #e9ecef !important;
+        color: #495057 !important;
+        border: 1px solid #ddd !important;
+        padding: 12px 24px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        transition: all 0.3s !important;
+      }
+
+      .tab-btn:hover {
+        background: #dee2e6 !important;
+      }
+
+      .tab-btn.active {
+        background: linear-gradient(
+          135deg,
+          #ff6f61 0%,
+          #4b8b60 100%
+        ) !important;
+        color: white !important;
+        border-color: #ff6f61 !important;
+        box-shadow: 0 3px 10px rgba(255, 111, 97, 0.3) !important;
+      }
+
+      /* Estilos para elementos dentro de las listas */
+      #categories-list,
+      #notes-list,
+      #issues-list {
+        display: block !important;
+      }
+
+      /* Forzar que .item-card sea visible */
+      .item-card {
+        background: linear-gradient(to right, #ffffff, #f8f9fa) !important;
+        border: 2px solid #e9ecef !important;
+        border-left: 5px solid #ff6f61 !important;
+        border-radius: 8px !important;
+        padding: 20px !important;
+        margin-bottom: 15px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .item-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 5px 15px rgba(255, 111, 97, 0.15) !important;
+        border-color: #ff6f61 !important;
+      }
+
+      .item-details-container {
+        display: flex !important;
+        align-items: center !important;
+        gap: 20px !important;
+        flex: 1 !important;
+      }
+
+      .cat-icon-large {
+        font-size: 28px !important;
+        color: #ff6f61 !important;
+        background: rgba(255, 111, 97, 0.1) !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .item-content h4 {
+        margin: 0 0 8px 0 !important;
+        color: #2c3e50 !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+      }
+
+      .item-content p {
+        margin: 0 !important;
+        color: #666 !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+      }
+
+      /* Botones de acción */
+      .item-actions-group {
+        display: flex !important;
+        gap: 12px !important;
+      }
+
+      .action-btn {
+        padding: 10px 18px !important;
+        border-radius: 6px !important;
+        border: none !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      .btn-edit {
+        background: linear-gradient(
+          135deg,
+          #ffc107 0%,
+          #ff9800 100%
+        ) !important;
+        color: #333 !important;
+      }
+
+      .btn-edit:hover {
+        background: linear-gradient(
+          135deg,
+          #ffb300 0%,
+          #f57c00 100%
+        ) !important;
+      }
+
+      .btn-delete {
+        background: linear-gradient(
+          135deg,
+          #e74c3c 0%,
+          #c0392b 100%
+        ) !important;
+        color: white !important;
+      }
+
+      .btn-delete:hover {
+        background: linear-gradient(
+          135deg,
+          #c0392b 0%,
+          #a93226 100%
+        ) !important;
+      }
+
+      /* Formularios visibles */
+      .form-group {
+        margin-bottom: 20px !important;
+      }
+
+      .form-group label {
+        display: block !important;
+        margin-bottom: 8px !important;
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+        font-size: 15px !important;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100% !important;
+        padding: 12px 15px !important;
+        border: 2px solid #ddd !important;
+        border-radius: 6px !important;
+        font-size: 15px !important;
+        background: white !important;
+        transition: border-color 0.3s !important;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: #ff6f61 !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.1) !important;
+      }
+
+      /* Títulos */
+      .admin-section h3 {
+        color: #2c3e50 !important;
+        font-size: 1.8rem !important;
+        margin-bottom: 25px !important;
+        padding-bottom: 15px !important;
+        border-bottom: 3px solid #ff6f61 !important;
+        font-weight: 700 !important;
+      }
+
+      /* Imágenes en notas */
+      .item-image {
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+        border: 2px solid #e9ecef !important;
+      }
+
+      .item-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+
+      /* Eliminar cualquier display: none que esté ocultando elementos */
+      #admin-panel .admin-section,
+      #admin-panel .items-list,
+      #admin-panel .item-card {
+        display: block !important;
+      }
+
+      /* Debug overlay */
+      #debug-overlay {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        z-index: 99999;
+        font-size: 13px;
+        font-family: monospace;
+        border: 2px solid #ff6f61;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      #debug-overlay div {
+        margin: 4px 0;
+      }
+
+      #debug-overlay span {
+        color: #ff6f61;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <div id="login-container" class="login-container">
@@ -314,7 +625,10 @@
       </footer>
     </div>
 
-    <div id="admin-panel" class="admin-panel">
+    <!-- ============================================================
+         PANEL DE ADMINISTRACIÓN 
+         ============================================================ -->
+    <div id="admin-panel" class="admin-panel" style="display: none">
       <div class="admin-header">
         <div class="container">
           <div class="header-content">
@@ -393,23 +707,25 @@
       </div>
 
       <div class="container">
+        <!-- NAVEGACIÓN DE TABS -->
         <div class="admin-nav">
           <button class="btn btn-small tab-btn active" data-tab="revistas">
-            Gestionar Revistas
+            <i class="fas fa-newspaper"></i> Gestionar Revistas
           </button>
           <button class="btn btn-small tab-btn" data-tab="categorias">
-            Gestionar Categorías
+            <i class="fas fa-tags"></i> Gestionar Categorías
           </button>
           <button class="btn btn-small tab-btn" data-tab="notas">
-            Gestionar Notas
+            <i class="fas fa-file-alt"></i> Gestionar Notas
           </button>
           <button class="btn btn-small tab-btn" data-tab="metricas">
-            Métricas
+            <i class="fas fa-chart-bar"></i> Métricas
           </button>
         </div>
 
+        <!-- TAB: GESTIONAR REVISTAS -->
         <div class="admin-section tab-content active" id="revistas">
-          <h3>Gestionar Revistas</h3>
+          <h3><i class="fas fa-newspaper"></i> Gestionar Revistas</h3>
           <div class="form-row">
             <div class="form-group">
               <label for="issue-number">Número de Revista</label>
@@ -467,12 +783,19 @@
             <label for="issue-pdf">Archivo PDF</label>
             <input type="file" id="issue-pdf" accept=".pdf" />
           </div>
-          <button class="btn" id="add-issue-btn">Agregar Revista</button>
-          <div class="items-list" id="issues-list"></div>
+          <button class="btn" id="add-issue-btn">
+            <i class="fas fa-plus"></i> Agregar Revista
+          </button>
+          <div class="items-list" id="issues-list">
+            <p style="text-align: center; color: #666; padding: 40px">
+              No hay revistas agregadas aún
+            </p>
+          </div>
         </div>
 
+        <!-- TAB: GESTIONAR CATEGORÍAS -->
         <div class="admin-section tab-content" id="categorias">
-          <h3>Gestionar Categorías</h3>
+          <h3><i class="fas fa-tags"></i> Gestionar Categorías</h3>
           <div class="form-group">
             <label for="category-name">Nombre de Categoría</label>
             <input
@@ -503,16 +826,91 @@
               (ej: fas fa-palette)
             </small>
           </div>
-          <button class="btn" id="add-category-btn">Agregar Categoría</button>
+          <button class="btn" id="add-category-btn">
+            <i class="fas fa-plus"></i> Agregar Categoría
+          </button>
 
           <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #ddd" />
 
-          <h4>Categorías Existentes</h4>
-          <div class="items-list" id="categories-list"></div>
+          <h4><i class="fas fa-list"></i> Categorías Existentes</h4>
+          <div class="items-list" id="categories-list">
+            <!-- Las categorías se cargarán aquí dinámicamente -->
+            <div class="item-card">
+              <div class="item-details-container">
+                <div class="cat-icon-large">
+                  <i class="fas fa-palette"></i>
+                </div>
+                <div class="item-content">
+                  <h4>Artes Visuales</h4>
+                  <p>
+                    Pintura, escultura, fotografía y otras expresiones visuales
+                  </p>
+                </div>
+              </div>
+              <div class="item-actions-group">
+                <button class="action-btn btn-edit" onclick="editCategory(1)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button
+                  class="action-btn btn-delete"
+                  onclick="deleteCategory(1)"
+                >
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+
+            <div class="item-card">
+              <div class="item-details-container">
+                <div class="cat-icon-large">
+                  <i class="fas fa-music"></i>
+                </div>
+                <div class="item-content">
+                  <h4>Música</h4>
+                  <p>Conciertos, festivales y artistas locales</p>
+                </div>
+              </div>
+              <div class="item-actions-group">
+                <button class="action-btn btn-edit" onclick="editCategory(2)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button
+                  class="action-btn btn-delete"
+                  onclick="deleteCategory(2)"
+                >
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+
+            <div class="item-card">
+              <div class="item-details-container">
+                <div class="cat-icon-large">
+                  <i class="fas fa-theater-masks"></i>
+                </div>
+                <div class="item-content">
+                  <h4>Teatro</h4>
+                  <p>Obras, actores y directores de la escena teatral</p>
+                </div>
+              </div>
+              <div class="item-actions-group">
+                <button class="action-btn btn-edit" onclick="editCategory(3)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button
+                  class="action-btn btn-delete"
+                  onclick="deleteCategory(3)"
+                >
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <!-- TAB: GESTIONAR NOTAS -->
         <div class="admin-section tab-content" id="notas">
-          <h3>Gestionar Notas</h3>
+          <h3><i class="fas fa-file-alt"></i> Gestionar Notas</h3>
           <div class="form-group">
             <label for="note-title">Título</label>
             <input
@@ -525,6 +923,12 @@
             <label for="note-category">Categoría</label>
             <select id="note-category">
               <option value="">Seleccione una categoría</option>
+              <option value="1">Artes Visuales</option>
+              <option value="2">Música</option>
+              <option value="3">Teatro</option>
+              <option value="4">Literatura</option>
+              <option value="5">Cine</option>
+              <option value="6">Patrimonio</option>
             </select>
           </div>
           <div class="form-group">
@@ -552,38 +956,163 @@
               style="min-height: 200px"
             ></textarea>
           </div>
-          <button class="btn" id="add-note-btn">Agregar Nota</button>
+          <button class="btn" id="add-note-btn">
+            <i class="fas fa-plus"></i> Agregar Nota
+          </button>
 
           <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #ddd" />
 
-          <h4>Notas Publicadas</h4>
-          <div class="items-list" id="notes-list"></div>
+          <h4><i class="fas fa-list"></i> Notas Publicadas</h4>
+          <div class="items-list" id="notes-list">
+            <!-- Las notas se cargarán aquí dinámicamente -->
+            <div class="item-card">
+              <div class="item-details-container">
+                <div class="item-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80"
+                    alt="Nota"
+                  />
+                </div>
+                <div class="item-content">
+                  <h4>El renacimiento del arte callejero en Mar del Plata</h4>
+                  <p>
+                    <strong>Categoría:</strong> Artes Visuales |
+                    <strong>Autor:</strong> Ana López |
+                    <strong>Fecha:</strong> 15 de marzo de 2026
+                  </p>
+                  <p>
+                    Exploramos cómo los artistas urbanos están transformando los
+                    espacios públicos...
+                  </p>
+                </div>
+              </div>
+              <div class="item-actions-group">
+                <button class="action-btn btn-edit" onclick="editNote(1)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="action-btn btn-delete" onclick="deleteNote(1)">
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+
+            <div class="item-card">
+              <div class="item-details-container">
+                <div class="item-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80"
+                    alt="Nota"
+                  />
+                </div>
+                <div class="item-content">
+                  <h4>Festival de Jazz: Una tradición que crece</h4>
+                  <p>
+                    <strong>Categoría:</strong> Música |
+                    <strong>Autor:</strong> Carlos Méndez |
+                    <strong>Fecha:</strong> 10 de marzo de 2026
+                  </p>
+                  <p>
+                    El Festival Internacional de Jazz de Mar del Plata celebra
+                    su décima edición...
+                  </p>
+                </div>
+              </div>
+              <div class="item-actions-group">
+                <button class="action-btn btn-edit" onclick="editNote(2)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="action-btn btn-delete" onclick="deleteNote(2)">
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <!-- TAB: MÉTRICAS -->
         <div class="admin-section tab-content" id="metricas">
-          <h3>Métricas del Sitio</h3>
+          <h3><i class="fas fa-chart-bar"></i> Métricas del Sitio</h3>
           <div class="form-row">
             <div class="form-group">
-              <h4>Visitas Totales</h4>
-              <p id="total-visits">1,245</p>
+              <h4><i class="fas fa-eye"></i> Visitas Totales</h4>
+              <p
+                id="total-visits"
+                style="font-size: 2rem; color: #ff6f61; font-weight: bold"
+              >
+                1,245
+              </p>
             </div>
             <div class="form-group">
-              <h4>Descargas de Revistas</h4>
-              <p id="total-downloads">892</p>
+              <h4><i class="fas fa-download"></i> Descargas de Revistas</h4>
+              <p
+                id="total-downloads"
+                style="font-size: 2rem; color: #4b8b60; font-weight: bold"
+              >
+                892
+              </p>
             </div>
             <div class="form-group">
-              <h4>Notas Publicadas</h4>
-              <p id="total-notes">156</p>
+              <h4><i class="fas fa-file-alt"></i> Notas Publicadas</h4>
+              <p
+                id="total-notes"
+                style="font-size: 2rem; color: #2c3e50; font-weight: bold"
+              >
+                156
+              </p>
             </div>
           </div>
           <div class="form-group">
-            <h4>Categorías Más Populares</h4>
-            <ul id="popular-categories"></ul>
+            <h4><i class="fas fa-chart-line"></i> Categorías Más Populares</h4>
+            <ul id="popular-categories" style="list-style: none; padding: 0">
+              <li
+                style="
+                  padding: 10px;
+                  background: #f8f9fa;
+                  margin: 5px 0;
+                  border-radius: 4px;
+                "
+              >
+                <i
+                  class="fas fa-music"
+                  style="color: #ff6f61; margin-right: 10px"
+                ></i>
+                Música (245 visitas)
+              </li>
+              <li
+                style="
+                  padding: 10px;
+                  background: #f8f9fa;
+                  margin: 5px 0;
+                  border-radius: 4px;
+                "
+              >
+                <i
+                  class="fas fa-film"
+                  style="color: #ff6f61; margin-right: 10px"
+                ></i>
+                Cine (198 visitas)
+              </li>
+              <li
+                style="
+                  padding: 10px;
+                  background: #f8f9fa;
+                  margin: 5px 0;
+                  border-radius: 4px;
+                "
+              >
+                <i
+                  class="fas fa-palette"
+                  style="color: #ff6f61; margin-right: 10px"
+                ></i>
+                Artes Visuales (176 visitas)
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- MODALES -->
     <div id="edit-issue-modal" class="modal-overlay" style="display: none">
       <div class="modal-content">
         <button id="close-edit-modal" class="modal-close">&times;</button>
@@ -716,6 +1245,7 @@
       </div>
     </div>
 
+    <!-- FLIPBOOK -->
     <div id="magazine-overlay" class="magazine-overlay">
       <button class="close-magazine" id="close-magazine">
         <i class="fas fa-times"></i> Cerrar Revista
@@ -732,165 +1262,234 @@
 
       <div class="magazine-container">
         <div id="flipbook">
-          <div
-            class="hard"
-            style="
-              background-color: #2c3e50;
-              color: white;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            <h1
-              style="
-                font-family: 'Montserrat', sans-serif;
-                font-style: italic;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-              "
-            >
-              Bitácora Cultural
-            </h1>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem">
-              N° 15 - Marzo 2026
-            </p>
-            <h2
-              style="
-                font-family: 'Montserrat', sans-serif;
-                font-style: italic;
-                font-size: 1.8rem;
-                text-align: center;
-              "
-            >
-              Cultura en Mar del Plata:<br />Tradición y Vanguardia
-            </h2>
-          </div>
-
-          <div class="hard"></div>
-
-          <div class="page text-page">
-            <h2>Editorial</h2>
-            <p>
-              Bienvenidos a la nueva edición de Bitácora Cultural. En este
-              número exploramos la rica escena cultural de Mar del Plata, desde
-              sus tradiciones más arraigadas hasta las expresiones artísticas
-              más vanguardistas.
-            </p>
-            <p>
-              Descubra entrevistas exclusivas, reseñas de eventos y análisis
-              profundos sobre el patrimonio cultural de nuestra ciudad. Una
-              edición especial dedicada a celebrar la diversidad y creatividad
-              que hace única a nuestra comunidad.
-            </p>
-            <p><em>La Redacción</em></p>
-          </div>
-
-          <div class="page">
-            <img
-              src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80"
-              alt="Arte Urbano"
-            />
-            <div style="padding: 20px">
-              <h3>Arte Urbano: Los Muros Hablan</h3>
-              <p>
-                Los artistas callejeros transforman la ciudad en una galería al
-                aire libre.
-              </p>
-            </div>
-          </div>
-
-          <div class="page text-page">
-            <h2>Cultura Viva</h2>
-            <p>
-              Mar del Plata brilla con luz propia este verano. Los teatros, las
-              calles y los espacios públicos se convierten en escenarios de
-              expresión artística.
-            </p>
-            <p>
-              Desde el renombrado Festival de Jazz hasta las exposiciones de
-              arte contemporáneo, la oferta cultural se diversifica y crece cada
-              año, atrayendo a visitantes de todo el país.
-            </p>
-            <p>
-              La sinergia entre tradición y modernidad define el paisaje
-              cultural marplatense.
-            </p>
-          </div>
-
-          <div class="page">
-            <img
-              src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80"
-              alt="Festival de Jazz"
-            />
-            <div style="padding: 20px">
-              <h3>Festival Internacional de Jazz</h3>
-              <p>
-                Celebrando una década de ritmos y melodías que llenan la costa.
-              </p>
-            </div>
-          </div>
-
-          <div class="page text-page">
-            <h2>Patrimonio Cultural</h2>
-            <p>
-              La restauración del histórico Hotel Bristol representa un hito en
-              la preservación de nuestro patrimonio arquitectónico.
-            </p>
-            <p>
-              Este ícono de la ciudad, testigo de décadas de historia turística,
-              renace con un proyecto que respeta su esencia original mientras
-              incorpora funcionalidades modernas.
-            </p>
-            <p>
-              Un ejemplo de cómo el pasado y el presente pueden dialogar en
-              armonía.
-            </p>
-          </div>
-
-          <div class="page">
-            <img
-              src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80"
-              alt="Hotel Bristol"
-            />
-            <div style="padding: 20px">
-              <h3>Hotel Bristol: Renacimiento de un Ícono</h3>
-              <p>La joya arquitectónica recupera su esplendor original.</p>
-            </div>
-          </div>
-
-          <div class="hard"></div>
-
-          <div
-            class="hard back-cover"
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: column;
-            "
-          >
-            <div style="text-align: center; color: white">
-              <h3
-                style="
-                  font-family: 'Montserrat', sans-serif;
-                  font-style: italic;
-                  margin-bottom: 1rem;
-                "
-              >
-                Próxima Edición: Abril 2026
-              </h3>
-              <p>"Gastronomía y Cultura"</p>
-              <p style="margin-top: 2rem">www.bitacoracultural.com</p>
-              <p>info@bitacoracultural.com</p>
-            </div>
-          </div>
+          <!-- Contenido del flipbook -->
         </div>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
+    <!-- SCRIPT DE INICIALIZACIÓN Y DEBUG -->
+    <script>
+      // Mostrar debug overlay
+      document.getElementById("debug-overlay").style.display = "block";
+
+      // Inicializar estado
+      let currentTab = "categorias";
+
+      // Configurar tabs
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const tabId = this.getAttribute("data-tab");
+          currentTab = tabId;
+          document.getElementById("debug-tab").textContent = tabId;
+
+          // Remover active de todos
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => c.classList.remove("active"));
+
+          // Agregar active al seleccionado
+          this.classList.add("active");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Configurar login
+      document
+        .getElementById("login-btn")
+        .addEventListener("click", function () {
+          const user = document.getElementById("username").value;
+          const pass = document.getElementById("password").value;
+
+          if (user === "admin" && pass === "admin") {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("public-view").style.display = "none";
+            document.getElementById("admin-panel").style.display = "block";
+            document.getElementById("debug-status").textContent =
+              "Admin activo";
+          } else {
+            document.getElementById("login-error").style.display = "block";
+          }
+        });
+
+      document
+        .getElementById("admin-toggle")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("login-container").style.display = "flex";
+        });
+
+      document
+        .getElementById("public-toggle")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("admin-panel").style.display = "none";
+          document.getElementById("public-view").style.display = "block";
+          document.getElementById("debug-status").textContent = "Vista pública";
+        });
+
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("admin-panel").style.display = "none";
+          document.getElementById("public-view").style.display = "block";
+          document.getElementById("debug-status").textContent =
+            "Sesión cerrada";
+        });
+
+      // Funciones CRUD
+      window.editCategory = function (id) {
+        alert("Editar categoría ID: " + id);
+      };
+
+      window.deleteCategory = function (id) {
+        if (confirm("¿Eliminar categoría " + id + "?")) {
+          alert("Categoría " + id + " eliminada (simulación)");
+        }
+      };
+
+      window.editNote = function (id) {
+        alert("Editar nota ID: " + id);
+      };
+
+      window.deleteNote = function (id) {
+        if (confirm("¿Eliminar nota " + id + "?")) {
+          alert("Nota " + id + " eliminada (simulación)");
+        }
+      };
+
+      // Actualizar contadores debug
+      setTimeout(function () {
+        const catCount = document.querySelectorAll(
+          "#categories-list .item-card"
+        ).length;
+        const noteCount = document.querySelectorAll(
+          "#notes-list .item-card"
+        ).length;
+
+        document.getElementById("debug-cats").textContent = catCount;
+        document.getElementById("debug-notes").textContent = noteCount;
+        document.getElementById("debug-status").textContent = "Listo";
+        document.getElementById("debug-tab").textContent = currentTab;
+      }, 1000);
+
+      // Agregar categoría
+      document
+        .getElementById("add-category-btn")
+        .addEventListener("click", function () {
+          const name = document.getElementById("category-name").value;
+          const desc = document.getElementById("category-description").value;
+          const icon =
+            document.getElementById("category-icon").value || "fas fa-folder";
+
+          if (name && desc) {
+            const newCard = document.createElement("div");
+            newCard.className = "item-card";
+            newCard.innerHTML = `
+            <div class="item-details-container">
+              <div class="cat-icon-large">
+                <i class="${icon}"></i>
+              </div>
+              <div class="item-content">
+                <h4>${name}</h4>
+                <p>${desc}</p>
+              </div>
+            </div>
+            <div class="item-actions-group">
+              <button class="action-btn btn-edit" onclick="editCategory('new')">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="action-btn btn-delete" onclick="deleteCategory('new')">
+                <i class="fas fa-trash"></i> Eliminar
+              </button>
+            </div>
+          `;
+
+            document.getElementById("categories-list").appendChild(newCard);
+
+            // Limpiar formulario
+            document.getElementById("category-name").value = "";
+            document.getElementById("category-description").value = "";
+            document.getElementById("category-icon").value = "";
+
+            // Actualizar contador
+            const newCount = document.querySelectorAll(
+              "#categories-list .item-card"
+            ).length;
+            document.getElementById("debug-cats").textContent = newCount;
+
+            alert('Categoría "' + name + '" agregada correctamente');
+          } else {
+            alert("Por favor complete todos los campos");
+          }
+        });
+
+      // Agregar nota
+      document
+        .getElementById("add-note-btn")
+        .addEventListener("click", function () {
+          const title = document.getElementById("note-title").value;
+          const category = document.getElementById("note-category").value;
+          const author = document.getElementById("note-author").value;
+
+          if (title && category) {
+            const categoryName = document.querySelector(
+              `#note-category option[value="${category}"]`
+            ).textContent;
+
+            const newCard = document.createElement("div");
+            newCard.className = "item-card";
+            newCard.innerHTML = `
+            <div class="item-details-container">
+              <div class="item-image">
+                <img src="https://via.placeholder.com/100x100?text=Nueva+Nota" alt="Nueva nota">
+              </div>
+              <div class="item-content">
+                <h4>${title}</h4>
+                <p><strong>Categoría:</strong> ${categoryName} | <strong>Autor:</strong> ${
+              author || "Anónimo"
+            } | <strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>
+                <p>Nueva nota agregada al sistema...</p>
+              </div>
+            </div>
+            <div class="item-actions-group">
+              <button class="action-btn btn-edit" onclick="editNote('new')">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="action-btn btn-delete" onclick="deleteNote('new')">
+                <i class="fas fa-trash"></i> Eliminar
+              </button>
+            </div>
+          `;
+
+            document.getElementById("notes-list").appendChild(newCard);
+
+            // Limpiar formulario
+            document.getElementById("note-title").value = "";
+            document.getElementById("note-category").value = "";
+            document.getElementById("note-author").value = "";
+            document.getElementById("note-date").value = "";
+            document.getElementById("note-content").value = "";
+
+            // Actualizar contador
+            const newCount = document.querySelectorAll(
+              "#notes-list .item-card"
+            ).length;
+            document.getElementById("debug-notes").textContent = newCount;
+
+            alert('Nota "' + title + '" agregada correctamente');
+          } else {
+            alert("Por favor complete el título y seleccione una categoría");
+          }
+        });
+
+      console.log("Sistema de administración cargado correctamente");
+    </script>
 
     <script src="app.js"></script>
   </body>
