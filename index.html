@@ -471,7 +471,6 @@
           <div class="items-list" id="issues-list"></div>
         </div>
 
-
         <div class="admin-section tab-content" id="categorias">
           <h3>Gestionar Categorías</h3>
           <div class="form-group">
@@ -496,8 +495,19 @@
               id="category-icon"
               placeholder="Ej: fas fa-music"
             />
+            <small style="color: var(--gray); display: block; margin-top: 5px">
+              Copia la clase del icono desde
+              <a href="https://fontawesome.com/icons" target="_blank"
+                >FontAwesome</a
+              >
+              (ej: fas fa-palette)
+            </small>
           </div>
           <button class="btn" id="add-category-btn">Agregar Categoría</button>
+
+          <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #ddd" />
+
+          <h4>Categorías Existentes</h4>
           <div class="items-list" id="categories-list"></div>
         </div>
 
@@ -513,7 +523,9 @@
           </div>
           <div class="form-group">
             <label for="note-category">Categoría</label>
-            <select id="note-category"></select>
+            <select id="note-category">
+              <option value="">Seleccione una categoría</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="note-author">Autor</label>
@@ -528,18 +540,23 @@
             <input type="date" id="note-date" />
           </div>
           <div class="form-group">
-            <label for="note-image">Imagen</label>
+            <label for="note-image">Imagen Principal</label>
             <input type="file" id="note-image" accept="image/*" />
             <div class="file-preview" id="note-image-preview"></div>
           </div>
           <div class="form-group">
-            <label for="note-content">Contenido</label>
+            <label for="note-content">Contenido Completo</label>
             <textarea
               id="note-content"
-              placeholder="Contenido de la nota"
+              placeholder="Escribe aquí el cuerpo de la nota..."
+              style="min-height: 200px"
             ></textarea>
           </div>
           <button class="btn" id="add-note-btn">Agregar Nota</button>
+
+          <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #ddd" />
+
+          <h4>Notas Publicadas</h4>
           <div class="items-list" id="notes-list"></div>
         </div>
 
@@ -567,103 +584,136 @@
       </div>
     </div>
 
-    <div id="edit-issue-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <button id="close-edit-modal" class="modal-close">&times;</button>
-            <h2>Editar Revista</h2>
-            <form id="edit-issue-form" enctype="multipart/form-data">
-                <input type="hidden" id="edit-issue-id" name="id">
-                <label for="edit-issue-number">Número:</label>
-                <input type="number" id="edit-issue-number" name="number" required>
-                <label for="edit-issue-month">Mes:</label>
-                <input type="text" id="edit-issue-month" name="month" required>
-                <label for="edit-issue-year">Año:</label>
-                <input type="number" id="edit-issue-year" name="year" required>
-                <label for="edit-issue-title">Título:</label>
-                <input type="text" id="edit-issue-title" name="title" required>
-                <label for="edit-issue-description">Descripción:</label>
-                <textarea id="edit-issue-description" name="description"></textarea>
-                <label for="edit-issue-cover">Cambiar Portada:</label>
-                <input type="file" id="edit-issue-cover" name="cover" accept="image/*" 
-                       onchange="updateImagePreview(this, 'edit-issue-cover-preview')">
-                <label for="edit-issue-pdf">Cambiar PDF:</label>
-                <input type="file" id="edit-issue-pdf" name="pdf" accept="application/pdf"
-                       onchange="updatePdfPreview(this, 'edit-issue-pdf-preview')">
-                <div class="preview-section">
-                    <p>Portada actual:</p>
-                    <img id="edit-issue-cover-preview" src="" alt="Portada actual"
-                        style="max-width: 150px; border-radius: 6px; display:block; margin-bottom:10px;">
-                </div>
-                <div class="preview-section" style="margin-top: 10px;">
-                    <p>PDF actual:</p>
-                    <a id="edit-issue-pdf-preview" href="#" target="_blank">No hay PDF cargado</a>
-                </div>
-                <button id="save-edit-issue" type="button" class="btn btn-primary">
-                    Guardar Cambios
-                </button>
-            </form>
-        </div>
+    <div id="edit-issue-modal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <button id="close-edit-modal" class="modal-close">&times;</button>
+        <h2>Editar Revista</h2>
+        <form id="edit-issue-form" enctype="multipart/form-data">
+          <input type="hidden" id="edit-issue-id" name="id" />
+          <label for="edit-issue-number">Número:</label>
+          <input type="number" id="edit-issue-number" name="number" required />
+          <label for="edit-issue-month">Mes:</label>
+          <input type="text" id="edit-issue-month" name="month" required />
+          <label for="edit-issue-year">Año:</label>
+          <input type="number" id="edit-issue-year" name="year" required />
+          <label for="edit-issue-title">Título:</label>
+          <input type="text" id="edit-issue-title" name="title" required />
+          <label for="edit-issue-description">Descripción:</label>
+          <textarea id="edit-issue-description" name="description"></textarea>
+          <label for="edit-issue-cover">Cambiar Portada:</label>
+          <input
+            type="file"
+            id="edit-issue-cover"
+            name="cover"
+            accept="image/*"
+            onchange="updateImagePreview(this, 'edit-issue-cover-preview')"
+          />
+          <label for="edit-issue-pdf">Cambiar PDF:</label>
+          <input
+            type="file"
+            id="edit-issue-pdf"
+            name="pdf"
+            accept="application/pdf"
+          />
+          <div class="preview-section">
+            <p>Portada actual:</p>
+            <img
+              id="edit-issue-cover-preview"
+              src=""
+              alt="Portada actual"
+              style="
+                max-width: 150px;
+                border-radius: 6px;
+                display: block;
+                margin-bottom: 10px;
+              "
+            />
+          </div>
+          <button id="save-edit-issue" type="button" class="btn btn-primary">
+            Guardar Cambios
+          </button>
+        </form>
+      </div>
     </div>
 
-    <div id="edit-category-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <button id="close-edit-category-modal" class="modal-close">&times;</button>
-            <h2>Editar Categoría</h2>
-            <form id="edit-category-form">
-                <input type="hidden" id="edit-category-id">
-                
-                <label for="edit-category-name">Nombre:</label>
-                <input type="text" id="edit-category-name" required>
+    <div id="edit-category-modal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <button class="modal-close close-category-modal">&times;</button>
+        <h2>Editar Categoría</h2>
+        <form id="edit-category-form">
+          <input type="hidden" id="edit-cat-id" />
 
-                <label for="edit-category-description">Descripción:</label>
-                <textarea id="edit-category-description" required></textarea>
+          <label for="edit-cat-name">Nombre:</label>
+          <input type="text" id="edit-cat-name" required />
 
-                <label for="edit-category-icon">Icono (Font Awesome):</label>
-                <input type="text" id="edit-category-icon" required placeholder="Ej: fas fa-music">
+          <label for="edit-cat-desc">Descripción:</label>
+          <textarea id="edit-cat-desc" required></textarea>
 
-                <button id="save-edit-category" type="button" class="btn btn-primary">
-                    Guardar Cambios
-                </button>
-            </form>
-        </div>
+          <label for="edit-cat-icon">Icono (Font Awesome):</label>
+          <input
+            type="text"
+            id="edit-cat-icon"
+            placeholder="Ej: fas fa-music"
+          />
+
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="margin-top: 15px"
+          >
+            Guardar Cambios
+          </button>
+        </form>
+      </div>
     </div>
 
-    <div id="edit-note-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <button id="close-edit-note-modal" class="modal-close">&times;</button>
-            <h2>Editar Nota</h2>
-            <form id="edit-note-form" enctype="multipart/form-data">
-                <input type="hidden" id="edit-note-id">
-                
-                <label for="edit-note-title">Título:</label>
-                <input type="text" id="edit-note-title" required>
+    <div id="edit-note-modal" class="modal-overlay" style="display: none">
+      <div class="modal-content" style="max-width: 700px">
+        <button class="modal-close close-note-modal">&times;</button>
+        <h2>Editar Nota</h2>
+        <form id="edit-note-form">
+          <input type="hidden" id="edit-note-id" />
 
-                <label for="edit-note-category">Categoría:</label>
-                <select id="edit-note-category" required></select>
+          <label for="edit-note-title">Título:</label>
+          <input type="text" id="edit-note-title" required />
 
-                <label for="edit-note-author">Autor:</label>
-                <input type="text" id="edit-note-author" required>
+          <label for="edit-note-cat">Categoría:</label>
+          <select id="edit-note-cat" required></select>
 
-                <label for="edit-note-date">Fecha:</label>
-                <input type="date" id="edit-note-date" required>
+          <label for="edit-note-author">Autor:</label>
+          <input type="text" id="edit-note-author" required />
 
-                <label for="edit-note-content">Contenido:</label>
-                <textarea id="edit-note-content" required></textarea>
+          <label for="edit-note-date">Fecha:</label>
+          <input type="date" id="edit-note-date" required />
 
-                <label for="edit-note-image">Cambiar Imagen:</label>
-                <input type="file" id="edit-note-image" accept="image/*" 
-                       onchange="previewImage(this, 'edit-note-image-preview')">
-                
-                <div class="preview-section">
-                    <p>Imagen actual / Previsualización:</p>
-                    <img id="edit-note-image-preview" src="" alt="Previsualización" style="max-width: 150px; border-radius: 6px; display:block; margin-bottom:10px;">
-                </div>
+          <label>Imagen Actual:</label>
+          <div id="current-note-img-container" style="margin-bottom: 10px">
+            <img
+              id="edit-note-current-img"
+              src=""
+              style="max-width: 200px; border-radius: 4px"
+            />
+          </div>
 
-                <button id="save-edit-note" type="button" class="btn btn-primary">
-                    Guardar Cambios
-                </button>
-            </form>
-        </div>
+          <label for="edit-note-image">Cambiar Imagen:</label>
+          <input type="file" id="edit-note-image" accept="image/*" />
+
+          <label for="edit-note-content">Contenido:</label>
+          <textarea
+            id="edit-note-content"
+            style="min-height: 150px"
+            required
+          ></textarea>
+
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="margin-top: 15px"
+          >
+            Guardar Cambios
+          </button>
+        </form>
+      </div>
     </div>
 
     <div id="magazine-overlay" class="magazine-overlay">
