@@ -1,7 +1,4 @@
-/* ============================================================
-   ARCHIVO: app.js - VERSIÓN CORREGIDA
-   Lógica completa con Datos del data.json integrados
-   ============================================================ */
+
 
 // 1. ESTADO DE LA APLICACIÓN
 let appState = {
@@ -12,158 +9,45 @@ let appState = {
 };
 
 // 2. DATOS POR DEFECTO
-const DEFAULT_DATA = {
-  issues: [
-    {
-      id: 1765372578,
-      number: "1",
-      month: "enero",
-      year: "2026",
-      title: "Arte y Cultura",
-      description: "Arte y Cultura",
-      cover: "./api/uploads/1765372578_Arte Urbano y Expresión Callejera.avif",
-      pdf: "./api/uploads/1765372578_Ebook Marketing Digital .pdf",
-    },
-    {
-      id: 1765372625,
-      number: "2",
-      month: "febrero",
-      year: "2026",
-      title: "Cine y Vacaciones",
-      description: "Cine y Vacaciones",
-      cover: "./api/uploads/1765372625_Fin de Año Cultural.avif",
-      pdf: "./api/uploads/1765372625_Ebook Marketing Digital .pdf",
-    },
-    {
-      id: 1765372668,
-      number: "3",
-      month: "marzo",
-      year: "2026",
-      title: "Literartura y Escritores Locales",
-      description: "Literartura y Escritores Locales",
-      cover: "./api/uploads/1765372668_Literatura y Escritores Locales.avif",
-      pdf: "./api/uploads/1765372668_Ebook Marketing Digital .pdf",
-    },
-  ],
-  categories: [
-    {
-      id: 1,
-      name: "Artes Visuales",
-      description:
-        "Pintura, escultura, fotografía y otras expresiones visuales",
-      icon: "fas fa-palette",
-    },
-    {
-      id: 2,
-      name: "Música",
-      description: "Conciertos, festivales y artistas locales",
-      icon: "fas fa-music",
-    },
-    {
-      id: 3,
-      name: "Teatro",
-      description: "Obras, actores y directores de la escena teatral",
-      icon: "fas fa-theater-masks",
-    },
-    {
-      id: 4,
-      name: "Literatura",
-      description: "Escritores, libros y eventos literarios",
-      icon: "fas fa-book",
-    },
-    {
-      id: 5,
-      name: "Cine",
-      description: "Estrenos, festivales y realizadores locales",
-      icon: "fas fa-film",
-    },
-    {
-      id: 6,
-      name: "Patrimonio",
-      description: "Historia, arquitectura y tradiciones culturales",
-      icon: "fas fa-landmark",
-    },
-  ],
-  notes: [
-    {
-      id: 1,
-      title: "El renacimiento del arte callejero",
-      category: 1,
-      author: "Ana López",
-      date: "2026-03-15",
-      image:
-        "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=80",
-      content:
-        "Exploramos cómo los artistas urbanos están transformando los espacios públicos...",
-    },
-    {
-      id: 2,
-      title: "Festival de Jazz: Una tradición que crece",
-      category: 2,
-      author: "Carlos Méndez",
-      date: "2026-03-10",
-      image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80",
-      content:
-        "El Festival Internacional de Jazz de Mar del Plata celebra su décima edición...",
-    },
-    {
-      id: 3,
-      title: "Nueva obra del Teatro Municipal",
-      category: 3,
-      author: "Laura Fernández",
-      date: "2026-03-05",
-      image:
-        "https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=800&q=80",
-      content: "El Teatro Municipal estrena 'Memorias de la Costa'...",
-    },
-  ],
-};
+
 
 // Inicializar variable global
-window.APP_DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+// window.APP_DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
 
 // ============================================================
 // 3. CARGA DE DATOS
 // ============================================================
-
 async function loadData() {
-  try {
-    const response = await fetch("./data.json", { cache: "no-cache" });
-    if (response.ok) {
-      const data = await response.json();
-      if (data && data.categories && data.categories.length > 0) {
-        window.APP_DATA = data;
-        console.log("Datos cargados desde data.json");
-      }
-    }
-  } catch (error) {
-    console.warn("Usando datos por defecto (offline o error fetch).");
-  }
+  const response = await fetch("./data.json", { cache: "no-cache" });
+  const data = await response.json();
 
-  // Una vez cargados (o usando fallback), refrescamos todo
-  refreshAllViews();
+  window.APP_DATA = {
+    issues: data.issues || [],
+    categories: data.categories || [],
+    notes: data.notes || [],
+  };
+
+  syncLegacyData();  
+  initApp();     
 }
+
 
 // ============================================================
 // 4. INICIALIZACIÓN PRINCIPAL
 // ============================================================
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("DOM cargado");
 
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM cargado - Inicializando aplicación");
-
-  // 1. Cargar datos
-  loadData();
-
-  // 2. Configurar eventos
   setupEventListeners();
-
-  // 3. Inicializar componentes visuales
   initializeFlipbook();
 
-  // 4. Cargar vista inicial pública
+  await loadData(); // ⬅️ ESPERAMOS A QUE CARGUE
+
+  console.log("APP_DATA después de loadData:", window.APP_DATA);
+
   loadCurrentIssue();
 });
+
 
 // ============================================================
 // 5. EVENT LISTENERS
@@ -515,9 +399,7 @@ function populateCategorySelect(data) {
 // =================================================================
 
 // --- Categorías ---
-function addCategory() {
-  console.log("Función addCategory ejecutada");
-
+async function addCategory() {
   const name = document.getElementById("category-name").value;
   const description = document.getElementById("category-description").value;
   const icon =
@@ -528,72 +410,94 @@ function addCategory() {
     return;
   }
 
-  const newCategory = {
-    id:
-      window.APP_DATA.categories.length > 0
-        ? Math.max(...window.APP_DATA.categories.map((c) => c.id)) + 1
-        : 1,
-    name,
-    description,
-    icon,
-  };
+  try {
+    const response = await fetch("bicoracultural/api/categories.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, description, icon }),
+    });
 
-  window.APP_DATA.categories.push(newCategory);
+    if (!response.ok) throw new Error("Error al crear categoría");
 
-  // Limpiar formulario
-  document.getElementById("category-name").value = "";
-  document.getElementById("category-description").value = "";
-  document.getElementById("category-icon").value = "";
+    document.getElementById("category-name").value = "";
+    document.getElementById("category-description").value = "";
+    document.getElementById("category-icon").value = "";
 
-  refreshAllViews();
-  alert(`Categoría '${name}' creada.`);
+    await loadData();
+    alert(`Categoría '${name}' creada.`);
+  } catch (error) {
+    console.error("Error al crear categoría:", error);
+    alert("Error al crear categoría.");
+  }
 }
+
 
 // Exportar funciones al scope global para que onclick funcione
 window.editCategory = function (id) {
-  console.log("Editando categoría ID:", id);
   const category = window.APP_DATA.categories.find((c) => c.id === id);
-  if (category) {
-    document.getElementById("edit-cat-id").value = category.id;
-    document.getElementById("edit-cat-name").value = category.name;
-    document.getElementById("edit-cat-desc").value = category.description;
-    document.getElementById("edit-cat-icon").value = category.icon;
-    document.getElementById("edit-category-modal").style.display = "flex";
-  }
+
+  if (!category) return;
+
+  document.getElementById("edit-cat-id").value = category.id;
+  document.getElementById("edit-cat-name").value = category.name;
+  document.getElementById("edit-cat-desc").value = category.description;
+  document.getElementById("edit-cat-icon").value = category.icon;
+
+  document.getElementById("edit-category-modal").style.display = "flex";
 };
 
-window.deleteCategory = function (id) {
-  if (!confirm(`¿Eliminar categoría? Las notas quedarán sin categoría.`))
+
+window.deleteCategory = async function (id) {
+  if (!confirm("¿Eliminar categoría? Las notas quedarán sin categoría."))
     return;
 
-  window.APP_DATA.categories = window.APP_DATA.categories.filter(
-    (c) => c.id !== id
-  );
-  // Desvincular notas
-  window.APP_DATA.notes = window.APP_DATA.notes.map((n) =>
-    n.category === id ? { ...n, category: null } : n
-  );
+  try {
+    await fetch(`./api/categories.php?id=${id}`, {
+      method: "DELETE",
+    });
 
-  refreshAllViews();
+    await loadData();
+  } catch (error) {
+    console.error("Error eliminando categoría:", error);
+    alert("Error al eliminar categoría.");
+  }
 };
 
-function saveEditCategory() {
-  const id = parseInt(document.getElementById("edit-cat-id").value);
-  const index = window.APP_DATA.categories.findIndex((c) => c.id === id);
 
-  if (index !== -1) {
-    window.APP_DATA.categories[index].name =
-      document.getElementById("edit-cat-name").value;
-    window.APP_DATA.categories[index].description =
-      document.getElementById("edit-cat-desc").value;
-    window.APP_DATA.categories[index].icon =
-      document.getElementById("edit-cat-icon").value;
+async function saveEditCategory() {
+  const id = document.getElementById("edit-cat-id").value;
+  const name = document.getElementById("edit-cat-name").value;
+  const description = document.getElementById("edit-cat-desc").value;
+  const icon = document.getElementById("edit-cat-icon").value;
+
+  if (!name || !description) {
+    alert("Complete nombre y descripción.");
+    return;
+  }
+
+  try {
+    const response = await fetch("./api/categories.php", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, name, description, icon }),
+    });
+
+    if (!response.ok) throw new Error("Error al editar categoría");
 
     document.getElementById("edit-category-modal").style.display = "none";
-    refreshAllViews();
+
+    await loadData(); // 🔥 vuelve a traer data.json
     alert("Categoría actualizada.");
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo actualizar la categoría.");
   }
 }
+
 
 // --- Notas ---
 function addNote() {

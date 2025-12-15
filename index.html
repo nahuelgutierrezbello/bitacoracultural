@@ -648,42 +648,35 @@
         </div>
       </header>
 
-      <!-- REVISTA ACTUAL -->
-      <section class="current-issue" id="revista">
-        <div class="container">
-          <h2 class="section-title">Revista Actual</h2>
-          <div class="issue-container">
-            <div class="issue-cover">
-              <img
-                id="current-cover"
-                src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80"
-                alt="Portada Revista Actual"
-              />
-            </div>
-            <div class="issue-content">
-              <h3 id="current-title">
-                Cultura en Mar del Plata: Tradición y Vanguardia
-              </h3>
-              <p class="issue-meta" id="current-meta">N° 15 - Marzo 2026</p>
-              <p class="issue-description" id="current-description">
-                Una edición especial dedicada a explorar la rica escena cultural
-                de Mar del Plata, desde sus tradiciones más arraigadas hasta las
-                expresiones artísticas más vanguardistas. Descubra entrevistas
-                exclusivas, reseñas de eventos y análisis profundos sobre el
-                patrimonio cultural de nuestra ciudad.
-              </p>
-              <div class="issue-actions">
-                <a href="#" id="current-pdf" class="btn" target="_blank">
-                  <i class="fas fa-download"></i> Descargar PDF
-                </a>
-                <a href="#" class="btn btn-outline">
-                  <i class="fas fa-eye"></i> Ver Revista
-                </a>
-              </div>
-            </div>
-          </div>
+   <!-- REVISTA ACTUAL -->
+<section class="current-issue" id="revista">
+  <div class="container">
+    <h2 class="section-title">Revista Actual</h2>
+    <div class="issue-container">
+      <div class="issue-cover">
+        <img
+          id="current-cover"
+          src=""
+          alt="Portada Revista Actual"
+        />
+      </div>
+      <div class="issue-content">
+        <h3 id="current-title"></h3>
+        <p class="issue-meta" id="current-meta"></p>
+        <p class="issue-description" id="current-description"></p>
+        <div class="issue-actions">
+          <a href="#" id="current-pdf" class="btn" target="_blank">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+          <a href="#" class="btn btn-outline">
+            <i class="fas fa-eye"></i> Ver Revista
+          </a>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <!-- OTRAS SECCIONES -->
       <section
@@ -1045,12 +1038,14 @@
         </div>
 
         <button
-          class="btn"
-          id="save-edit-btn"
-          style="margin-top: 20px; width: 100%"
-        >
-          <i class="fas fa-save"></i> Guardar Cambios
-        </button>
+  type="button"
+  class="btn"
+  id="save-edit-btn"
+  style="margin-top: 20px; width: 100%"
+>
+  <i class="fas fa-save"></i> Guardar Cambios
+</button>
+
       </div>
     </div>
 
@@ -1111,6 +1106,7 @@
         </div>
 
         <button
+        type="button"
           class="btn"
           id="save-note-btn"
           style="margin-top: 20px; width: 100%"
@@ -1120,61 +1116,122 @@
       </div>
     </div>
 
-    <script>
+  <script>
       // ============================================
       // SISTEMA DE REVISTAS Y NOTAS - CRUD COMPLETO
       // ============================================
 
-      // Base de datos local de revistas
-      let revistas = [
-        {
-          id: 1,
-          number: "15",
-          month: "marzo",
-          year: "2026",
-          title: "Cultura en Mar del Plata: Tradición y Vanguardia",
-          description:
-            "Una edición especial dedicada a explorar la rica escena cultural de Mar del Plata, desde sus tradiciones más arraigadas hasta las expresiones artísticas más vanguardistas.",
-          cover: "revista_15.jpg",
-          coverData:
-            "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA...", // Base64 placeholder
-          pdf: "revista_15.pdf",
-          pdfData: null,
-          isCurrent: true,
-        },
-      ];
+  let revistas = [];
+  let categorias = [];
+  let notas = [];
 
-      // Base de datos local de categorías
-      let categorias = [
-        {
-          id: 1,
-          name: "Música",
-          description: "Notas sobre música y conciertos",
-        },
-        { id: 2, name: "Arte", description: "Artes visuales y exposiciones" },
-        { id: 3, name: "Teatro", description: "Obras teatrales y dramaturgia" },
-        { id: 4, name: "Cine", description: "Estrenos y festivales de cine" },
-        { id: 5, name: "Literatura", description: "Libros y autores" },
-      ];
+async function cargarDesdeJSON() {
+  try {
+    // Traer todo desde el backend
+    const res = await fetch("./api/getAllData.php");
+    const data = await res.json();
 
-      // Base de datos local de notas periodísticas
-      let notas = [
-        {
-          id: 1,
-          title: "Nuevo Festival de Jazz en la Costa",
-          categoryId: 1,
-          description:
-            "El festival contará con artistas internacionales y locales en un escenario frente al mar.",
-          content:
-            "La ciudad se prepara para recibir la primera edición del Festival Internacional de Jazz Costa Atlántica...",
-          image: "jazz_festival.jpg",
-          imageData:
-            "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA...", // Base64 placeholder
-          author: "Carlos Rodríguez",
-          date: "2026-03-15",
-          views: 1245,
-        },
-      ];
+    // ============================
+    // REVISTAS
+    // ============================
+    revistas = (data.issues || []).map(issue => ({
+      id: issue.id,
+      number: issue.number,
+      month: issue.month,
+      year: issue.year,
+      title: issue.title || "",
+      description: issue.description || "",
+      cover: issue.cover || "",
+      coverData: issue.coverData || issue.cover || "",
+      pdf: issue.pdf || "",
+      pdfData: issue.pdfData || issue.pdf || "",
+      isCurrent: false
+    }));
+
+    if (revistas.length > 0) revistas[0].isCurrent = true;
+
+    // ============================
+    // CATEGORÍAS
+    // ============================
+    categorias = (data.categories || []).map(c => ({
+      id: c.id,
+      name: c.name || "",
+      description: c.description || "",
+      icon: c.icon || ""
+    }));
+
+    // ============================
+    // NOTAS
+    // ============================
+    notas = (data.notes || []).map(n => ({
+      id: n.id,
+      title: n.title || "",
+      category: n.category || null,
+      description: (n.content || n.description || "").substring(0, 120),
+      content: n.content || n.description || "",
+      image: n.image || "",
+      imageData: n.imageData || "",
+      author: n.author || "Redacción Bitácora Cultural",
+      date: n.date || new Date().toISOString().split("T")[0],
+      views: n.views || 0
+    }));
+
+    console.log("Revistas:", revistas, "Categorías:", categorias, "Notas:", notas);
+  } catch (error) {
+    console.error("Error cargando datos desde el backend:", error);
+  }
+}
+
+      // // Base de datos local de revistas
+      // let revistas = [
+      //   {
+      //     id: 1,
+      //     number: "15",
+      //     month: "marzo",
+      //     year: "2026",
+      //     title: "Cultura en Mar del Plata: Tradición y Vanguardia",
+      //     description:
+      //       "Una edición especial dedicada a explorar la rica escena cultural de Mar del Plata, desde sus tradiciones más arraigadas hasta las expresiones artísticas más vanguardistas.",
+      //     cover: "revista_15.jpg",
+      //     coverData:
+      //       "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA...", // Base64 placeholder
+      //     pdf: "revista_15.pdf",
+      //     pdfData: null,
+      //     isCurrent: true,
+      //   },
+      // ];
+
+      // // Base de datos local de categorías
+      // let categorias = [
+      //   {
+      //     id: 1,
+      //     name: "Música",
+      //     description: "Notas sobre música y conciertos",
+      //   },
+      //   { id: 2, name: "Arte", description: "Artes visuales y exposiciones" },
+      //   { id: 3, name: "Teatro", description: "Obras teatrales y dramaturgia" },
+      //   { id: 4, name: "Cine", description: "Estrenos y festivales de cine" },
+      //   { id: 5, name: "Literatura", description: "Libros y autores" },
+      // ];
+
+      // // Base de datos local de notas periodísticas
+      // let notas = [
+      //   {
+      //     id: 1,
+      //     title: "Nuevo Festival de Jazz en la Costa",
+      //     category: 1,
+      //     description:
+      //       "El festival contará con artistas internacionales y locales en un escenario frente al mar.",
+      //     content:
+      //       "La ciudad se prepara para recibir la primera edición del Festival Internacional de Jazz Costa Atlántica...",
+      //     image: "jazz_festival.jpg",
+      //     imageData:
+      //       "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA...", // Base64 placeholder
+      //     author: "Carlos Rodríguez",
+      //     date: "2026-03-15",
+      //     views: 1245,
+      //   },
+      // ];
 
       let revistaEditando = null;
       let notaEditando = null;
@@ -1182,26 +1239,23 @@
       let issuePdfFile = null;
       let noteImageFile = null;
       let editIssueCoverFile = null;
+      let notaEditandoId
+      let editNoteImageFile = null;
+
 
       // ============================================
       // FUNCIONES PRINCIPALES
       // ============================================
 
       // Inicializar la aplicación
-      function initApp() {
-        cargarRevistas();
-        cargarCategorias();
-        cargarNotas();
-        setupEventListeners();
-        console.log(
-          "Sistema cargado. Revistas:",
-          revistas.length,
-          "Notas:",
-          notas.length,
-          "Categorías:",
-          categorias.length
-        );
-      }
+     async function initApp() {
+  await cargarDesdeJSON();
+  cargarRevistas();
+  cargarCategorias();
+  cargarNotas();
+  setupEventListeners();
+}
+
 
       // Cargar revistas en el admin y en la vista pública
       function cargarRevistas() {
@@ -1213,8 +1267,8 @@
 
         // Ordenar por número (más reciente primero)
         const revistasOrdenadas = [...revistas].sort(
-          (a, b) => b.number - a.number
-        );
+  (a, b) => Number(b.number) - Number(a.number)
+);
 
         // Cargar cada revista en el admin
         revistasOrdenadas.forEach((revista) => {
@@ -1320,7 +1374,7 @@
                     <div class="issue-cover-small">
                         <img src="${
                           revista.coverData ||
-                          "https://via.placeholder.com/80x110?text=Portada"
+                          "https://dummyimage.com/80x110/cccccc/000000&text=Portada"
                         }" alt="Revista ${revista.number}">
                     </div>
                     <div class="item-content">
@@ -1355,23 +1409,34 @@
         return div;
       }
 
+      function getImageSrc(image) {
+  if (!image) {
+    return "https://dummyimage.com/80x110/cccccc/000000&text=Imagen";
+  }
+
+  if (image.startsWith("http") || image.startsWith("./api/uploads")) {
+    return image;
+  }
+
+  return "./api/uploads/" + image;
+}
+
+
+
       // Crear HTML para una nota en el admin
       function crearHTMLNota(nota) {
         const div = document.createElement("div");
         div.className = "item-card";
         div.dataset.id = nota.id;
 
-        const categoria = categorias.find((c) => c.id === nota.categoryId);
+        const categoria = categorias.find((c) => c.id === nota.category);
         const categoriaNombre = categoria ? categoria.name : "Sin categoría";
-        const categoriaColor = getCategoryColor(nota.categoryId);
+        const categoriaColor = getCategoryColor(nota.category);
 
         div.innerHTML = `
           <div class="item-details-container">
             <div class="note-image-small">
-              <img src="${
-                nota.imageData ||
-                "https://via.placeholder.com/80x110?text=Imagen"
-              }" alt="${nota.title}">
+              <img src="${nota.image}" alt="${nota.title}">
             </div>
             <div class="item-content">
               <h4>${nota.title}</h4>
@@ -1407,23 +1472,29 @@
       }
 
       // Cargar revista actual en vista pública
-      function cargarRevistaActual() {
-        const revistaActual =
-          revistas.find((r) => r.isCurrent === true) || revistas[0];
-        if (!revistaActual) return;
+     function cargarRevistaActual() {
 
-        document.getElementById("current-title").textContent =
-          revistaActual.title;
-        document.getElementById("current-meta").textContent = `N° ${
-          revistaActual.number
-        } - ${capitalize(revistaActual.month)} ${revistaActual.year}`;
-        document.getElementById("current-description").textContent =
-          revistaActual.description;
-        document.getElementById("current-cover").src =
-          revistaActual.coverData ||
-          "https://via.placeholder.com/300x400?text=Portada+Revista";
-        document.getElementById("current-pdf").href = "#";
-      }
+
+  // Buscar la revista actual, o la última si no hay ninguna seleccionada
+  const revistasOrdenadas = [...revistas].sort(
+  (a, b) => Number(b.number) - Number(a.number)
+);
+
+const revistaActual =revistasOrdenadas[0];
+
+  
+  if (!revistaActual) return;
+
+  // Actualizar los elementos del HTML con los datos de la revista actual
+  document.getElementById("current-title").textContent = revistaActual.title;
+  document.getElementById("current-meta").textContent = `N° ${
+    revistaActual.number
+  } - ${capitalize(revistaActual.month)} ${revistaActual.year}`;
+  document.getElementById("current-description").textContent = revistaActual.description;
+  document.getElementById("current-cover").src =
+    revistaActual.cover || "https://via.placeholder.com/300x400?text=Portada+Revista";
+  document.getElementById("current-pdf").href = revistaActual.pdf || "#";
+}
 
       // Cargar revistas anteriores en vista pública
       function cargarRevistasAnteriores() {
@@ -1431,11 +1502,13 @@
           ".past-issues .container > div"
         );
         if (!container) return;
+        const revistasOrdenadas = [...revistas].sort(
+  (a, b) => Number(b.number) - Number(a.number)
+);
 
-        const revistasAnteriores = revistas
-          .filter((r) => !r.isCurrent)
-          .slice(0, 6);
-
+        const revistasAnteriores = revistasOrdenadas
+          .filter((r) => !r[0])
+          .slice(1, 6);
         container.innerHTML = revistasAnteriores
           .map(
             (revista) => `
@@ -1497,87 +1570,69 @@
       // ============================================
 
       // CREAR - Agregar nueva revista
-      async function agregarRevista() {
-        const number = document.getElementById("issue-number").value;
-        const month = document.getElementById("issue-month").value;
-        const year = document.getElementById("issue-year").value;
-        const title = document.getElementById("issue-title").value;
-        const description = document.getElementById("issue-description").value;
+// CREAR - Agregar nueva revista conectada al backend
+async function agregarRevista() {
+  const number = document.getElementById("issue-number").value;
+  const month = document.getElementById("issue-month").value;
+  const year = document.getElementById("issue-year").value;
+  const title = document.getElementById("issue-title").value;
+  const description = document.getElementById("issue-description").value;
 
-        if (!title || !number) {
-          alert("Por favor complete el título y número de la revista");
-          return;
-        }
+  if (!title || !number) {
+    alert("Por favor complete el título y número de la revista");
+    return;
+  }
 
-        // Verificar que se haya subido una portada
-        if (!issueCoverFile) {
-          alert("Por favor seleccione una portada para la revista");
-          return;
-        }
+  if (!issueCoverFile) {
+    alert("Por favor seleccione una portada para la revista");
+    return;
+  }
 
-        // Convertir imagen a Base64
-        let coverData = null;
-        try {
-          coverData = await fileToBase64(issueCoverFile);
-        } catch (error) {
-          console.error("Error al convertir imagen:", error);
-          alert("Error al procesar la imagen");
-          return;
-        }
+  try {
+    const formData = new FormData();
+    formData.append("number", number);
+    formData.append("month", month);
+    formData.append("year", year);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("cover", issueCoverFile);
+    if (issuePdfFile) formData.append("pdf", issuePdfFile);
 
-        // Convertir PDF a Base64 si existe
-        let pdfData = null;
-        if (issuePdfFile) {
-          try {
-            pdfData = await fileToBase64(issuePdfFile);
-          } catch (error) {
-            console.error("Error al convertir PDF:", error);
-          }
-        }
+    const res = await fetch("./api/issues.php", {
+      method: "POST",
+      body: formData
+    });
 
-        // Crear nueva revista
-        const nuevaRevista = {
-          id:
-            revistas.length > 0
-              ? Math.max(...revistas.map((r) => r.id)) + 1
-              : 1,
-          number: number,
-          month: month,
-          year: year,
-          title: title,
-          description: description,
-          cover: issueCoverFile.name,
-          coverData: coverData,
-          pdf: issuePdfFile ? issuePdfFile.name : null,
-          pdfData: pdfData,
-          isCurrent: false, // Por defecto no es la actual
-        };
+    const data = await res.json();
 
-        // Agregar al array
-        revistas.push(nuevaRevista);
+    if (data.status === "success") {
+      // Agregar al array local
+      revistas.push(data.data);
+      cargarRevistas();
 
-        // Actualizar interfaz
-        cargarRevistas();
+      // Limpiar formulario y archivos
+      document.getElementById("issue-title").value = "";
+      document.getElementById("issue-description").value = "";
+      document.getElementById("issue-number").value = parseInt(number) + 1;
 
-        // Limpiar formulario
-        document.getElementById("issue-title").value = "";
-        document.getElementById("issue-description").value = "";
-        document.getElementById("issue-number").value = parseInt(number) + 1;
+      issueCoverFile = null;
+      issuePdfFile = null;
+      document.getElementById("issue-cover-input").value = "";
+      document.getElementById("issue-pdf-input").value = "";
+      document.getElementById("issue-cover-preview").classList.remove("active");
+      document.getElementById("pdf-file-name").textContent = "";
 
-        // Limpiar archivos y vistas previas
-        issueCoverFile = null;
-        issuePdfFile = null;
-        document.getElementById("issue-cover-input").value = "";
-        document.getElementById("issue-pdf-input").value = "";
-        document
-          .getElementById("issue-cover-preview")
-          .classList.remove("active");
-        document.getElementById("pdf-file-name").textContent = "";
+      alert(`✅ Revista "${title}" agregada correctamente`);
+      console.log("Nueva revista agregada:", data.data);
+    } else {
+      alert("❌ Error al crear la revista: " + data.message);
+    }
 
-        // Mostrar confirmación
-        alert(`✅ Revista "${title}" agregada correctamente`);
-        console.log("Nueva revista agregada:", nuevaRevista);
-      }
+  } catch (error) {
+    console.error("Error creando revista en backend:", error);
+    alert("❌ Error al comunicarse con el servidor");
+  }
+}
 
       // LEER - Ver detalles de revista
       function verRevista(id) {
@@ -1594,283 +1649,346 @@
       }
 
       // ACTUALIZAR - Editar revista
-      async function editarRevista(id) {
-        const revista = revistas.find((r) => r.id === id);
-        if (!revista) return;
+ // Abrir modal y llenar formulario para editar
+async function editarRevista(id) {
+    const revista = revistas.find(r => r.id === id);
+    if (!revista) return;
 
-        revistaEditando = revista;
+    revistaEditando = revista;
 
-        // Llenar formulario del modal
-        document.getElementById("edit-issue-number").value = revista.number;
-        document.getElementById("edit-issue-month").value = revista.month;
-        document.getElementById("edit-issue-year").value = revista.year;
-        document.getElementById("edit-issue-title").value = revista.title;
-        document.getElementById("edit-issue-description").value =
-          revista.description;
+    document.getElementById("edit-issue-number").value = revista.number;
+    document.getElementById("edit-issue-month").value = revista.month;
+    document.getElementById("edit-issue-year").value = revista.year;
+    document.getElementById("edit-issue-title").value = revista.title;
+    document.getElementById("edit-issue-description").value = revista.description;
 
-        // Mostrar vista previa de la portada actual
-        if (revista.coverData) {
-          const preview = document.getElementById("edit-issue-cover-preview");
-          preview.src = revista.coverData;
-          preview.classList.add("active");
-        }
+    // Vista previa portada
+    const preview = document.getElementById("edit-issue-cover-preview");
+    if (revista.coverData) {
+        preview.src = revista.coverData;
+        preview.classList.add("active");
+    } else {
+        preview.classList.remove("active");
+        preview.src = "";
+    }
 
-        // Mostrar modal
-        document.getElementById("edit-issue-modal").style.display = "flex";
-      }
+    // Mostrar modal
+    document.getElementById("edit-issue-modal").style.display = "flex";
+}
 
-      // Guardar cambios de edición de revista
-      async function guardarEdicionRevista() {
-        if (!revistaEditando) return;
+// Guardar cambios editados y actualizar backend
+// Variables globales para archivos
 
-        // Actualizar datos básicos
-        revistaEditando.number =
-          document.getElementById("edit-issue-number").value;
-        revistaEditando.month =
-          document.getElementById("edit-issue-month").value;
-        revistaEditando.year = document.getElementById("edit-issue-year").value;
-        revistaEditando.title =
-          document.getElementById("edit-issue-title").value;
-        revistaEditando.description = document.getElementById(
-          "edit-issue-description"
-        ).value;
+let guardarEdicionRevista;
 
-        // Actualizar portada si se subió una nueva
+guardarEdicionRevista = async (event) => {
+  event?.preventDefault?.();
+  if (!revistaEditando) return;
+
+
+  const formData = new FormData();
+  formData.append("_method", "PUT");
+  formData.append("id", revistaEditando.id);
+  formData.append("number", document.getElementById("edit-issue-number").value);
+  formData.append("month", document.getElementById("edit-issue-month").value);
+  formData.append("year", document.getElementById("edit-issue-year").value);
+  formData.append("title", document.getElementById("edit-issue-title").value);
+  formData.append("description", document.getElementById("edit-issue-description").value);
+
+  if (editIssueCoverFile) formData.append("cover", editIssueCoverFile);
+
+  try {
+    const res = await fetch("./api/issues.php", { method: "POST", body: formData });
+    const data = await res.json();
+
+    if (data.status === "success") {
+      const index = revistas.findIndex(r => r.id === revistaEditando.id);
+      if (index !== -1) {
+        revistas[index] = data.data;
         if (editIssueCoverFile) {
-          try {
-            revistaEditando.coverData = await fileToBase64(editIssueCoverFile);
-            revistaEditando.cover = editIssueCoverFile.name;
-          } catch (error) {
-            console.error("Error al convertir nueva imagen:", error);
-          }
+          revistas[index].coverData = await fileToBase64(editIssueCoverFile);
         }
-
-        // Actualizar interfaz
-        cargarRevistas();
-
-        // Cerrar modal
-        cerrarModalEdicion();
-
-        // Mostrar confirmación
-        alert(
-          `✏️ Revista "${revistaEditando.title}" actualizada correctamente`
-        );
-        console.log("Revista actualizada:", revistaEditando);
       }
+
+      cargarRevistas();
+      cerrarModalEdicion();
+      alert(`✏️ Revista "${data.data.title}" actualizada correctamente`);
+
+      editIssueCoverFile = null;
+      document.getElementById("edit-issue-cover-preview").classList.remove("active");
+      revistaEditando = null;
+    } else {
+      console.error("Error del backend:", data);
+      alert("Error al actualizar la revista");
+    }
+  } catch (error) {
+    console.error("Error en la petición al backend:", error);
+    alert("Error al comunicarse con el backend");
+  }
+};
+
 
       // ELIMINAR - Borrar revista
-      function eliminarRevista(id) {
-        const revista = revistas.find((r) => r.id === id);
-        if (!revista) return;
+async function eliminarRevista(id) {
+  const revista = revistas.find((r) => r.id === id);
+  if (!revista) return;
 
-        const confirmacion = confirm(
-          `¿Está seguro de eliminar la revista N° ${revista.number} - "${revista.title}"?\n\nEsta acción no se puede deshacer.`
-        );
+  const confirmacion = confirm(
+    `¿Está seguro de eliminar la revista N° ${revista.number} - "${revista.title}"?\n\nEsta acción no se puede deshacer.`
+  );
 
-        if (confirmacion) {
-          // Si es la revista actual, buscar nueva actual
-          if (revista.isCurrent && revistas.length > 1) {
-            const otraRevista = revistas.find((r) => r.id !== id);
-            if (otraRevista) otraRevista.isCurrent = true;
-          }
+  if (!confirmacion) return;
 
-          // Eliminar del array
-          revistas = revistas.filter((r) => r.id !== id);
+  try {
+    // Llamada al backend para eliminar
+    const res = await fetch(`./api/issues.php?id=${id}`, { method: "DELETE" });
+    const result = await res.json();
 
-          // Actualizar interfaz
-          cargarRevistas();
-
-          // Mostrar confirmación
-          alert(`🗑️ Revista "${revista.title}" eliminada correctamente`);
-          console.log("Revista eliminada:", revista);
-        }
+    if (result.status === "success") {
+      // Si era la revista actual, asignar otra como actual
+      if (revista.isCurrent && revistas.length > 1) {
+        const otraRevista = revistas.find((r) => r.id !== id);
+        if (otraRevista) otraRevista.isCurrent = true;
       }
+
+      // Eliminar del array local
+      revistas = revistas.filter((r) => r.id !== id);
+
+      // Actualizar interfaz
+      cargarRevistas();
+
+      alert(`🗑️ Revista "${revista.title}" eliminada correctamente`);
+      console.log("Revista eliminada:", revista);
+    } else {
+      console.error("Error al eliminar revista:", result);
+      alert("❌ No se pudo eliminar la revista");
+    }
+  } catch (error) {
+    console.error("Error en la petición al backend:", error);
+    alert("❌ Ocurrió un error al eliminar la revista");
+  }
+}
 
       // ============================================
       // CRUD - CATEGORÍAS
       // ============================================
 
-      // Agregar nueva categoría
-      function agregarCategoria() {
-        const name = document.getElementById("category-name").value;
-        const description = document.getElementById(
-          "category-description"
-        ).value;
+      // Agregar nueva categoría (con backend)
+async function agregarCategoria() {
+    const name = document.getElementById("category-name").value;
+    const description = document.getElementById("category-description").value;
 
-        if (!name) {
-          alert("Por favor ingrese el nombre de la categoría");
-          return;
+    if (!name) {
+        alert("Por favor ingrese el nombre de la categoría");
+        return;
+    }
+
+    const nuevaCategoria = { name, description };
+
+    try {
+        const res = await fetch("./api/categories.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nuevaCategoria)
+        });
+
+        const data = await res.json();
+
+        if (data.status === "success") {
+            // Agregar al array local y actualizar interfaz
+            categorias.push(data.data);
+            cargarCategorias();
+
+            // Limpiar formulario
+            document.getElementById("category-name").value = "";
+            document.getElementById("category-description").value = "";
+
+            alert(`✅ Categoría "${name}" agregada correctamente`);
+            console.log("Nueva categoría agregada:", data.data);
+        } else {
+            alert("❌ Error al agregar categoría");
+            console.error(data);
         }
+    } catch (error) {
+        console.error("Error conectando al backend:", error);
+        alert("❌ Error al conectar con el servidor");
+    }
+}
 
-        // Crear nueva categoría
-        const nuevaCategoria = {
-          id:
-            categorias.length > 0
-              ? Math.max(...categorias.map((c) => c.id)) + 1
-              : 1,
-          name: name,
-          description: description,
-        };
+// Editar categoría (con backend)
+async function editarCategoria(id) {
+    const categoria = categorias.find((c) => c.id === id);
+    if (!categoria) return;
 
-        // Agregar al array
-        categorias.push(nuevaCategoria);
+    const nuevoNombre = prompt("Nuevo nombre de la categoría:", categoria.name);
+    if (!nuevoNombre || nuevoNombre.trim() === "") return;
 
-        // Actualizar interfaz
-        cargarCategorias();
+    const nuevaDescripcion = prompt("Nueva descripción:", categoria.description);
+    if (nuevaDescripcion === null) return;
 
-        // Limpiar formulario
-        document.getElementById("category-name").value = "";
-        document.getElementById("category-description").value = "";
+    const categoriaActualizada = {
+        id: categoria.id,
+        name: nuevoNombre.trim(),
+        description: nuevaDescripcion
+    };
 
-        // Mostrar confirmación
-        alert(`✅ Categoría "${name}" agregada correctamente`);
-        console.log("Nueva categoría agregada:", nuevaCategoria);
-      }
+    try {
+        const res = await fetch(`./api/categories.php`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(categoriaActualizada)
+        });
 
-      // Editar categoría
-      function editarCategoria(id) {
-        const categoria = categorias.find((c) => c.id === id);
-        if (!categoria) return;
+        const data = await res.json();
 
-        const nuevoNombre = prompt(
-          "Nuevo nombre de la categoría:",
-          categoria.name
-        );
-        if (nuevoNombre && nuevoNombre.trim() !== "") {
-          categoria.name = nuevoNombre.trim();
-          const nuevaDescripcion = prompt(
-            "Nueva descripción:",
-            categoria.description
-          );
-          if (nuevaDescripcion !== null) {
-            categoria.description = nuevaDescripcion;
-          }
+        if (data.status === "success") {
+            // Actualizar array local y refrescar interfaz
+            categoria.name = categoriaActualizada.name;
+            categoria.description = categoriaActualizada.description;
+            cargarCategorias();
 
-          // Actualizar interfaz
-          cargarCategorias();
-          alert(`✅ Categoría actualizada correctamente`);
+            alert(`✅ Categoría actualizada correctamente`);
+            console.log("Categoría actualizada:", categoriaActualizada);
+        } else {
+            alert("❌ Error al actualizar categoría");
+            console.error(data);
         }
-      }
+    } catch (error) {
+        console.error("Error conectando al backend:", error);
+        alert("❌ Error al conectar con el servidor");
+    }
+}
 
       // Eliminar categoría
-      function eliminarCategoria(id) {
-        const categoria = categorias.find((c) => c.id === id);
-        if (!categoria) return;
+  async function eliminarCategoria(id) {
+  const categoria = categorias.find((c) => c.id === id);
+  if (!categoria) return;
 
-        // Verificar si hay notas con esta categoría
-        const notasConCategoria = notas.filter((n) => n.categoryId === id);
-        if (notasConCategoria.length > 0) {
-          alert(
-            `No se puede eliminar la categoría "${categoria.name}" porque tiene ${notasConCategoria.length} nota(s) asociada(s).\n\nPrimero debe reasignar o eliminar esas notas.`
-          );
-          return;
-        }
+  // Verificar si hay notas con esta categoría
+  const notasConCategoria = notas.filter((n) => n.category === id);
+  if (notasConCategoria.length > 0) {
+    alert(
+      `No se puede eliminar la categoría "${categoria.name}" porque tiene ${notasConCategoria.length} nota(s) asociada(s).\n\nPrimero debe reasignar o eliminar esas notas.`
+    );
+    return;
+  }
 
-        const confirmacion = confirm(
-          `¿Está seguro de eliminar la categoría "${categoria.name}"?\n\nEsta acción no se puede deshacer.`
-        );
+  const confirmacion = confirm(
+    `¿Está seguro de eliminar la categoría "${categoria.name}"?\n\nEsta acción no se puede deshacer.`
+  );
+  if (!confirmacion) return;
 
-        if (confirmacion) {
-          // Eliminar del array
-          categorias = categorias.filter((c) => c.id !== id);
+  try {
+    const res = await fetch(`./api/categories.php?id=${id}`, {
+      method: "DELETE",
+    });
+    const result = await res.json();
 
-          // Actualizar interfaz
-          cargarCategorias();
+    if (result.status === "success") {
+      // Eliminar del array local
+      categorias = categorias.filter((c) => c.id !== id);
 
-          // Mostrar confirmación
-          alert(`🗑️ Categoría "${categoria.name}" eliminada correctamente`);
-          console.log("Categoría eliminada:", categoria);
-        }
-      }
+      // Actualizar interfaz
+      cargarCategorias();
+
+      alert(`🗑️ Categoría "${categoria.name}" eliminada correctamente`);
+      console.log("Categoría eliminada:", categoria);
+    } else {
+      console.error("Error backend:", result);
+      alert("Error eliminando categoría");
+    }
+  } catch (error) {
+    console.error("Error conectando al backend:", error);
+    alert("Error conectando al backend");
+  }
+}
 
       // ============================================
       // CRUD - NOTAS PERIODÍSTICAS
       // ============================================
 
       // CREAR - Agregar nueva nota
-      async function agregarNota() {
-        const title = document.getElementById("note-title").value;
-        const categoryId = parseInt(
-          document.getElementById("note-category").value
-        );
-        const description = document.getElementById("note-description").value;
-        const content = document.getElementById("note-content").value;
-        const author = document.getElementById("note-author").value;
+   async function agregarNota() {
+  const title = document.getElementById("note-title").value.trim();
+  const category = parseInt(
+    document.getElementById("note-category").value
+  );
+  const description = document.getElementById("note-description").value.trim();
+  const content = document.getElementById("note-content").value.trim();
+  const author = document.getElementById("note-author").value.trim();
 
-        if (!title || !categoryId || !description) {
-          alert(
-            "Por favor complete título, categoría y descripción de la nota"
-          );
-          return;
-        }
+  if (!title || !category || !description) {
+    alert("Por favor complete título, categoría y descripción");
+    return;
+  }
 
-        // Verificar que la categoría exista
-        const categoria = categorias.find((c) => c.id === categoryId);
-        if (!categoria) {
-          alert("La categoría seleccionada no existe");
-          return;
-        }
+  const categoria = categorias.find((c) => c.id === category);
+  if (!categoria) {
+    alert("La categoría seleccionada no existe");
+    return;
+  }
 
-        // Verificar que se haya subido una imagen
-        if (!noteImageFile) {
-          alert("Por favor seleccione una imagen para la nota");
-          return;
-        }
+  if (!noteImageFile) {
+    alert("Por favor seleccione una imagen");
+    return;
+  }
 
-        // Convertir imagen a Base64
-        let imageData = null;
-        try {
-          imageData = await fileToBase64(noteImageFile);
-        } catch (error) {
-          console.error("Error al convertir imagen:", error);
-          alert("Error al procesar la imagen");
-          return;
-        }
+  try {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", category);
+    formData.append("description", description);
+    formData.append("content", content || description);
+    formData.append(
+      "author",
+      author || "Redacción Bitácora Cultural"
+    );
+    formData.append("imageFile", noteImageFile);
 
-        // Crear nueva nota
-        const nuevaNota = {
-          id: notas.length > 0 ? Math.max(...notas.map((n) => n.id)) + 1 : 1,
-          title: title,
-          categoryId: categoryId,
-          description: description,
-          content: content || description,
-          image: noteImageFile.name,
-          imageData: imageData,
-          author: author || "Redacción Bitácora Cultural",
-          date: new Date().toISOString().split("T")[0],
-          views: 0,
-        };
+    const res = await fetch("./api/notes.php", {
+      method: "POST",
+      body: formData,
+    });
 
-        // Agregar al array
-        notas.push(nuevaNota);
+    const result = await res.json();
 
-        // Actualizar interfaz
-        cargarNotas();
+    if (!res.ok || result.status !== "success") {
+      console.error("Error backend:", result);
+      alert("Error agregando la nota");
+      return;
+    }
 
-        // Limpiar formulario
-        document.getElementById("note-title").value = "";
-        document.getElementById("note-description").value = "";
-        document.getElementById("note-content").value = "";
-        document.getElementById("note-author").value = "";
-        document.getElementById("note-category").value = "";
+    // 🔥 USAR LO QUE DEVUELVE EL BACKEND (CLAVE)
+    notas.push(result.data);
 
-        // Limpiar imagen y vista previa
-        noteImageFile = null;
-        document.getElementById("note-image-input").value = "";
-        document
-          .getElementById("note-image-preview")
-          .classList.remove("active");
+    cargarNotas();
 
-        // Mostrar confirmación
-        alert(`✅ Nota "${title}" agregada correctamente`);
-        console.log("Nueva nota agregada:", nuevaNota);
-      }
+    // Limpiar formulario
+    document.getElementById("note-title").value = "";
+    document.getElementById("note-category").value = "";
+    document.getElementById("note-description").value = "";
+    document.getElementById("note-content").value = "";
+    document.getElementById("note-author").value = "";
+    document.getElementById("note-image-input").value = "";
+    document
+      .getElementById("note-image-preview")
+      .classList.remove("active");
+
+    noteImageFile = null;
+
+    alert(`✅ Nota "${title}" agregada correctamente`);
+    console.log("Nota creada:", result.data);
+  } catch (error) {
+    console.error("Error conectando al backend:", error);
+    alert("Error conectando al backend");
+  }
+}
 
       // LEER - Ver detalles de nota
       function verNota(id) {
         const nota = notas.find((n) => n.id === id);
         if (nota) {
-          const categoria = categorias.find((c) => c.id === nota.categoryId);
+          const categoria = categorias.find((c) => c.id === nota.category);
           const categoriaNombre = categoria ? categoria.name : "Sin categoría";
 
           alert(
@@ -1886,99 +2004,129 @@
         }
       }
 
-      // ACTUALIZAR - Editar nota
-      async function editarNota(id) {
-        const nota = notas.find((n) => n.id === id);
-        if (!nota) return;
+// =========================
+// EDITAR NOTA
+// =========================
+function editarNota(id) {
+  const nota = notas.find(n => n.id === id);
+  if (!nota) return;
 
-        notaEditando = nota;
+  notaEditandoId = id;
+  editNoteImageFile = null;
 
-        // Llenar formulario del modal
-        document.getElementById("edit-note-title").value = nota.title;
-        document.getElementById("edit-note-description").value =
-          nota.description;
-        document.getElementById("edit-note-content").value = nota.content;
-        document.getElementById("edit-note-author").value = nota.author;
 
-        // Establecer la categoría seleccionada
-        const editCategorySelect =
-          document.getElementById("edit-note-category");
-        if (editCategorySelect) {
-          editCategorySelect.value = nota.categoryId;
-        }
+  document.getElementById("edit-note-title").value = nota.title;
+  document.getElementById("edit-note-category").value = nota.category;
+  document.getElementById("edit-note-description").value = nota.description;
+  document.getElementById("edit-note-author").value = nota.author;
+  document.getElementById("edit-note-content").value = nota.content;
 
-        // Mostrar vista previa de la imagen actual
-        if (nota.imageData) {
-          const preview = document.getElementById("edit-note-image-preview");
-          preview.src = nota.imageData;
-          preview.classList.add("active");
-        }
+  const preview = document.getElementById("edit-note-image-preview");
+  preview.src = nota.image || "";
+  preview.style.display = nota.image ? "block" : "none";
 
-        // Mostrar modal
-        document.getElementById("edit-note-modal").style.display = "flex";
-      }
+  document.getElementById("edit-note-modal").style.display = "flex";
+}
 
-      // Guardar cambios de edición de nota
-      async function guardarEdicionNota() {
-        if (!notaEditando) return;
+// =========================
+// GUARDAR CAMBIOS DE NOTA 
+// =========================
+async function guardarEdicionNota() {
+  if (!notaEditandoId) {
+    alert("No hay nota en edición");
+    return;
+  }
 
-        // Actualizar datos básicos
-        notaEditando.title = document.getElementById("edit-note-title").value;
-        notaEditando.categoryId = parseInt(
-          document.getElementById("edit-note-category").value
-        );
-        notaEditando.description = document.getElementById(
-          "edit-note-description"
-        ).value;
-        notaEditando.content =
-          document.getElementById("edit-note-content").value;
-        notaEditando.author = document.getElementById("edit-note-author").value;
+  const formData = new FormData();
+  formData.append("id", notaEditandoId);
+  formData.append(
+    "title",
+    document.getElementById("edit-note-title").value
+  );
+  formData.append(
+    "category",
+    document.getElementById("edit-note-category").value
+  );
+  formData.append(
+    "description",
+    document.getElementById("edit-note-description").value
+  );
+  formData.append(
+    "author",
+    document.getElementById("edit-note-author").value
+  );
+  formData.append(
+    "content",
+    document.getElementById("edit-note-content").value
+  );
 
-        // Actualizar imagen si se subió una nueva
-        const noteImageInput = document.getElementById("edit-note-image-input");
-        if (noteImageInput.files.length > 0) {
-          try {
-            notaEditando.imageData = await fileToBase64(
-              noteImageInput.files[0]
-            );
-            notaEditando.image = noteImageInput.files[0].name;
-          } catch (error) {
-            console.error("Error al convertir nueva imagen:", error);
-          }
-        }
+  // 👉 SOLO si se seleccionó una imagen nueva
+  if (editNoteImageFile) {
+    formData.append("imageFile", editNoteImageFile);
+  }
 
-        // Actualizar interfaz
-        cargarNotas();
+  try {
+    const res = await fetch("./api/notes.php", {
+      method: "POST",
+      body: formData,
+    });
 
-        // Cerrar modal
-        cerrarModalNota();
+    const data = await res.json();
 
-        // Mostrar confirmación
-        alert(`✏️ Nota "${notaEditando.title}" actualizada correctamente`);
-        console.log("Nota actualizada:", notaEditando);
-      }
+    if (!data.status) {
+      alert("Error al actualizar la nota");
+      return;
+    }
+
+    document.getElementById("edit-note-modal").style.display = "none";
+    notaEditandoId = null;
+    editNoteImageFile = null;
+
+    await cargarDesdeJSON();
+    cargarNotas();
+
+    alert("✅ Nota actualizada correctamente");
+  } catch (error) {
+    console.error("Error actualizando nota:", error);
+    alert("Error al conectar con el backend");
+  }
+}
 
       // ELIMINAR - Borrar nota
-      function eliminarNota(id) {
-        const nota = notas.find((n) => n.id === id);
-        if (!nota) return;
+async function eliminarNota(id) {
+  const nota = notas.find((n) => n.id === id);
+  if (!nota) return;
 
-        const confirmacion = confirm(
-          `¿Está seguro de eliminar la nota "${nota.title}"?\n\nEsta acción no se puede deshacer.`
-        );
+  const confirmacion = confirm(
+    `¿Está seguro de eliminar la nota "${nota.title}"?\n\nEsta acción no se puede deshacer.`
+  );
 
-        if (confirmacion) {
-          // Eliminar del array
-          notas = notas.filter((n) => n.id !== id);
+  if (!confirmacion) return;
 
-          // Actualizar interfaz
-          cargarNotas();
+  try {
+    const res = await fetch(`./api/notes.php?id=${id}`, {
+      method: "DELETE",
+    });
 
-          // Mostrar confirmación
-          alert(`🗑️ Nota "${nota.title}" eliminada correctamente`);
-          console.log("Nota eliminada:", nota);
-        }
-      }
+    const data = await res.json();
+
+    if (!res.ok || data.status !== "success") {
+      throw new Error(data.error || "Error al eliminar");
+    }
+
+    // Eliminar del estado local
+    notas = notas.filter((n) => n.id !== id);
+
+    // Refrescar UI
+    cargarNotas();
+
+    alert(`🗑️ Nota "${nota.title}" eliminada correctamente`);
+    console.log("Nota eliminada:", nota);
+  } catch (error) {
+    console.error("Error eliminando nota:", error);
+    alert("❌ No se pudo eliminar la nota");
+  }
+}
 
       // ============================================
       // UTILIDADES
@@ -1997,7 +2145,7 @@
         });
       }
 
-      function getCategoryColor(categoryId) {
+      function getCategoryColor(category) {
         const colors = [
           "#3498db", // Azul
           "#2ecc71", // Verde
@@ -2008,7 +2156,7 @@
           "#d35400", // Calabaza
           "#34495e", // Gris oscuro
         ];
-        return colors[categoryId % colors.length];
+        return colors[category % colors.length];
       }
 
       function cerrarModalEdicion() {
@@ -2022,10 +2170,15 @@
       }
 
       function cerrarModalNota() {
-        document.getElementById("edit-note-modal").style.display = "none";
-        notaEditando = null;
-        document.getElementById("edit-note-image-input").value = "";
+       document
+  .getElementById("close-note-modal")
+  .addEventListener("click", () => {
+    notaEditandoId = null;
+    document.getElementById("edit-note-modal").style.display = "none";
+  });
+
       }
+      
 
       // ============================================
       // EVENT LISTENERS
@@ -2143,14 +2296,27 @@
           .addEventListener("click", agregarNota);
 
         // Guardar edición revista
-        document
-          .getElementById("save-edit-btn")
-          .addEventListener("click", guardarEdicionRevista);
+        document.getElementById("save-edit-btn")
+  .addEventListener("click", guardarEdicionRevista);
+// Imagen nueva en editar nota → vista previa
+document
+  .getElementById("edit-note-image-input")
+  .addEventListener("change", function () {
+    if (this.files.length > 0) {
+      editNoteImageFile = this.files[0];
+
+      const preview = document.getElementById("edit-note-image-preview");
+      preview.src = URL.createObjectURL(editNoteImageFile);
+      preview.style.display = "block";
+    }
+  });
+
 
         // Guardar edición nota
         document
-          .getElementById("save-note-btn")
-          .addEventListener("click", guardarEdicionNota);
+  .getElementById("save-note-btn")
+  .addEventListener("click", guardarEdicionNota);
+
 
         // Cerrar modales
         document
@@ -2238,5 +2404,6 @@
         }
       });
     </script>
+
   </body>
 </html>
