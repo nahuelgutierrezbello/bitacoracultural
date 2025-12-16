@@ -846,7 +846,7 @@
             <div class="logo">
               <div class="logo-image">
                 <img
-                  src="..//bitacoracultural-main/titulo.jpeg"
+                  src="..//bitacoracultural/titulo.jpeg"
                   alt="Bitácora Cultural Logo"
                 />
               </div>
@@ -1910,7 +1910,7 @@
         // Obtener URL del PDF (usar la ruta correcta del backend)
         const pdfUrl = revista.pdf.startsWith("http")
           ? revista.pdf
-          : `./api/uploads/${revista.pdf}`;
+          : `${revista.pdf}`;
         currentPdfUrl = pdfUrl;
 
         // Cargar PDF con pdf.js
