@@ -735,7 +735,7 @@
       }
 
       /* RESPONSIVE */
-      @media (max-width: 768px) {
+      @media (max-width: 1500px) {
         .header-content {
           flex-direction: column;
           gap: 15px;
@@ -797,7 +797,7 @@
         }
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: 1500px) {
         .pdf-controls {
           position: relative;
           top: 0;
@@ -816,6 +816,279 @@
           font-size: 14px;
         }
       }
+      #pdf-canvas-container {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+#pdf-canvas-container canvas {
+  margin: 0;
+  transition: box-shadow 2.2s ease;
+}
+
+/* Animaciones */
+#pdf-canvas-container.flip-next {
+  animation: flipNext 1.2s ease;
+}
+
+#pdf-canvas-container.flip-prev {
+  animation: flipPrev 1.2s ease;
+}
+#pdf-canvas-container.slide-next {
+  animation: slideNext 1.2s ease;
+}
+
+#pdf-canvas-container.slide-prev {
+  animation: slidePrev 1.2s ease;
+}
+/* Transición desktop */
+#pdf-canvas-container {
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+#pdf-canvas-container.fade-out {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+#pdf-canvas-container.fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+@keyframes flipNext {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-12deg);
+  }
+}
+
+@keyframes flipPrev {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(12deg);
+  }
+}
+@media (max-width: 1500px) {
+  #pdf-canvas-container {
+    justify-content: center;
+  }
+
+  #pdf-canvas-container canvas {
+    max-width: 95vw;
+    height: auto;
+  }
+}
+
+/* Animaciones mobile */
+#pdf-canvas-container.slide-next {
+  animation: slideNext 0.3s ease;
+}
+
+#pdf-canvas-container.slide-prev {
+  animation: slidePrev 0.3s ease;
+}
+
+@keyframes slideNext {
+  from {
+    transform: translateX(20px);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slidePrev {
+  from {
+    transform: translateX(-20px);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@media (max-width: 1500px) {
+  #zoom-select,
+  #rotate-left,
+  #rotate-right,
+  #fullscreen-btn {
+    display: none !important;
+  }
+
+  .pdf-controls {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .pdf-controls button {
+    flex: 1;
+    font-size: 18px;
+    padding: 12px 0;
+  }
+
+  .page-counter {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  /* =========================
+   MODO LECTOR MOBILE
+========================= */
+@media (max-width: 1500px) {
+
+  /* Modal ocupa toda la pantalla */
+  #magazine-modal {
+    padding: 0;
+  }
+
+  .magazine-container {
+    height: 100vh;
+    padding: 0;
+  }
+
+  /* Ocultamos header feo */
+  .magazine-header {
+    display: none;
+  }
+
+  /* Contenedor del PDF */
+  .pdf-canvas-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f172a; /* fondo elegante */
+  }
+
+  canvas {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+  }
+
+  /* Ocultamos controles innecesarios */
+  .pdf-controls select,
+  #rotate-left,
+  #rotate-right,
+  #fullscreen-btn {
+    display: none;
+  }
+
+  /* Flechas flotantes */
+  #prev-page,
+  #next-page {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(0,0,0,.4);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+  }
+
+  #prev-page {
+    left: 10px;
+  }
+
+  #next-page {
+    right: 10px;
+  }
+
+  /* Ocultamos contador si querés */
+  .page-counter {
+    display: none;
+  }
+}
+/* =========================
+   FIX VISOR PDF – MOBILE SIN BORDES
+========================= */
+@media (max-width: 1500px) {
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Modal ocupa TODO */
+  #magazine-modal {
+    inset: 0;
+    padding: 0;
+  }
+
+  /* Contenedor principal */
+  .magazine-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 !important;
+    background: #0f172a;
+  }
+
+  /* Viewer intermedio */
+  .pdf-viewer-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 !important;
+    background: #0f172a;
+  }
+
+  /* Contenedor de canvases */
+  .pdf-canvas-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f172a;
+    overflow: hidden;
+  }
+
+  /* El PDF en sí */
+  .pdf-canvas-container canvas {
+    width: 100vw !important;
+    height: auto !important;
+    max-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: white;
+  }
+}
+@media (max-width: 1500px) {
+
+  .pdf-canvas-container {
+    align-items: flex-start !important; /* ⬅️ CLAVE */
+    padding-top: 0 !important;
+  }
+
+  .pdf-canvas-container canvas {
+    margin-top: 0 !important;
+    align-self: flex-start;
+  }
+}
+
+}
+
     </style>
   </head>
   <body>
@@ -928,12 +1201,22 @@
               </button>
             </div>
             <div class="pdf-canvas-container" id="pdf-canvas-container">
-              <div class="loading-pdf" id="loading-pdf">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p>Cargando revista...</p>
-              </div>
-              <!-- Los canvases para las páginas se insertarán aquí -->
-            </div>
+  <canvas id="page-left"></canvas>
+  <canvas id="page-right"></canvas>
+
+  <div class="loading-pdf" id="loading-pdf">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>Cargando revista...</p>
+  </div>
+</div>
+
+
+  <div class="pdf-book" id="pdf-book">
+    <canvas id="page-left"></canvas>
+    <canvas id="page-right"></canvas>
+  </div>
+</div>
+
             <div class="page-counter" id="page-counter">
               Página <span id="current-page">1</span> de
               <span id="total-pages">1</span>
@@ -1389,13 +1672,13 @@
       let notas = [];
 
       // Variables para el visor de PDF
-      let pdfDoc = null;
-      let currentPage = 1;
       let pageRendering = false;
       let pageNumPending = null;
-      let scale = 1;
-      let rotation = 0;
       let currentPdfUrl = null;
+      let pdfDoc = null;
+      let currentPage = 1;
+      let scale = 1.2;
+      let rotation = 0;
 
       async function cargarDesdeJSON() {
         try {
@@ -1802,6 +2085,9 @@
       // ============================================
       // VISOR DE PDF - REVISTA ONLINE
       // ============================================
+function isMobile() {
+  return window.innerWidth <= 1500;
+}
 
       function initPdfViewer() {
         // Configurar evento para cerrar revista
@@ -1815,42 +2101,83 @@
             }
           });
 
-        // Configurar controles
-        document
-          .getElementById("prev-page")
-          .addEventListener("click", function () {
-            if (currentPage <= 1) return;
-            currentPage--;
-            queueRenderPage(currentPage);
-          });
+      document.getElementById("next-page").addEventListener("click", async () => {
+  if (!pdfDoc) return;
 
-        document
-          .getElementById("next-page")
-          .addEventListener("click", function () {
-            if (currentPage >= pdfDoc.numPages) return;
-            currentPage++;
-            queueRenderPage(currentPage);
-          });
+  const container = document.getElementById("pdf-canvas-container");
+
+  if (isMobile()) {
+    if (currentPage + 1 > pdfDoc.numPages) return;
+
+    container.classList.add("slide-next");
+
+    setTimeout(async () => {
+      container.classList.remove("slide-next");
+      currentPage += 1;
+      await renderSinglePage(currentPage);
+    }, 300);
+
+  } else {
+    if (currentPage + 2 > pdfDoc.numPages) return;
+
+    container.classList.add("flip-next");
+
+    setTimeout(async () => {
+      container.classList.remove("flip-next");
+      currentPage += 2;
+      await renderTwoPagesWithTransition(currentPage, "next");
+    }, 500);
+  }
+});
+
+document.getElementById("prev-page").addEventListener("click", async () => {
+  if (!pdfDoc) return;
+
+  const container = document.getElementById("pdf-canvas-container");
+
+  if (isMobile()) {
+    if (currentPage - 1 < 1) return;
+
+    container.classList.add("slide-prev");
+
+    setTimeout(async () => {
+      container.classList.remove("slide-prev");
+      currentPage -= 1;
+      await renderSinglePage(currentPage);
+    }, 300);
+
+  } else {
+    if (currentPage - 2 < 1) return;
+
+    container.classList.add("flip-prev");
+
+    setTimeout(async () => {
+      container.classList.remove("flip-prev");
+      currentPage -= 2;
+      await renderTwoPagesWithTransition(currentPage, "prev");
+    }, 500);
+  }
+});
+
+
 
         document
           .getElementById("zoom-select")
           .addEventListener("change", function () {
             scale = parseFloat(this.value);
-            queueRenderPage(currentPage);
-          });
+            renderTwoPages(currentPage);          });
 
         document
           .getElementById("rotate-left")
           .addEventListener("click", function () {
             rotation -= 90;
-            queueRenderPage(currentPage);
-          });
+            renderTwoPages(currentPage);          });
 
         document
           .getElementById("rotate-right")
           .addEventListener("click", function () {
             rotation += 90;
-            queueRenderPage(currentPage);
+            renderTwoPages(currentPage);
           });
 
         document
@@ -1934,7 +2261,7 @@
             document.getElementById("loading-pdf").style.display = "none";
 
             // Renderizar primera página
-            renderPage(currentPage);
+            cargarPDFLibro(pdfUrl);
           })
           .catch(function (error) {
             console.error("Error al cargar el PDF:", error);
@@ -1943,57 +2270,110 @@
           });
       }
 
-      function renderPage(num) {
-        pageRendering = true;
+    // ============================================
+// VISOR PDF DOBLE PÁGINA (TIPO LIBRO)
+// ============================================
 
-        pdfDoc.getPage(num).then(function (page) {
-          const viewport = page.getViewport({
-            scale: scale,
-            rotation: rotation,
-          });
-          const canvas = document.createElement("canvas");
-          const canvasContainer = document.getElementById(
-            "pdf-canvas-container"
-          );
 
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          canvas.style.margin = "0 auto";
-          canvas.style.display = "block";
 
-          // Limpiar contenedor
-          canvasContainer.innerHTML = "";
-          canvasContainer.appendChild(canvas);
+const canvasLeft = document.getElementById("page-left");
+const canvasRight = document.getElementById("page-right");
+const ctxLeft = canvasLeft.getContext("2d");
+const ctxRight = canvasRight.getContext("2d");
 
-          const renderContext = {
-            canvasContext: canvas.getContext("2d"),
-            viewport: viewport,
-          };
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+async function renderSinglePage(pageNum) {
+  if (!pdfDoc) return;
 
-          const renderTask = page.render(renderContext);
+  const container = document.getElementById("pdf-canvas-container");
+  container.innerHTML = "";
 
-          renderTask.promise.then(function () {
-            pageRendering = false;
-            if (pageNumPending !== null) {
-              renderPage(pageNumPending);
-              pageNumPending = null;
-            }
+  const page = await pdfDoc.getPage(pageNum);
+  const viewport = page.getViewport({ scale: 1.1, rotation });
 
-            // Actualizar contador
-            document.getElementById("current-page").textContent = num;
-            document.getElementById("total-pages").textContent =
-              pdfDoc.numPages;
-          });
-        });
-      }
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
-      function queueRenderPage(num) {
-        if (pageRendering) {
-          pageNumPending = num;
-        } else {
-          renderPage(num);
-        }
-      }
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+
+  canvas.style.background = "#fff";
+  canvas.style.boxShadow = "0 8px 25px rgba(0,0,0,.25)";
+  canvas.style.borderRadius = "8px";
+
+  container.appendChild(canvas);
+
+  await page.render({
+    canvasContext: ctx,
+    viewport
+  }).promise;
+
+  document.getElementById("current-page").textContent = pageNum;
+  document.getElementById("total-pages").textContent = pdfDoc.numPages;
+}
+
+async function renderTwoPages(startPage) {
+  if (!pdfDoc) return;
+
+  const container = document.getElementById("pdf-canvas-container");
+  container.innerHTML = "";
+
+  for (let i = 0; i < 2; i++) {
+    const pageNum = startPage + i;
+    if (pageNum > pdfDoc.numPages) break;
+
+    const page = await pdfDoc.getPage(pageNum);
+    const viewport = page.getViewport({ scale, rotation });
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    canvas.style.background = "#fff";
+    canvas.style.boxShadow = "0 0 10px rgba(0,0,0,.4)";
+
+    container.appendChild(canvas);
+
+    await page.render({
+      canvasContext: ctx,
+      viewport
+    }).promise;
+  }
+
+  document.getElementById("current-page").textContent = startPage;
+  document.getElementById("total-pages").textContent = pdfDoc.numPages;
+}
+function renderTwoPagesWithTransition(startPage, direction = "next") {
+  const container = document.getElementById("pdf-canvas-container");
+
+  // animación de salida
+  container.classList.remove("fade-in");
+  container.classList.add("fade-out");
+
+  setTimeout(async () => {
+    await renderTwoPages(startPage);
+
+    // animación de entrada
+    container.classList.remove("fade-out");
+    container.classList.add("fade-in");
+  }, 180);
+}
+
+async function cargarPDFLibro(pdfUrl) {
+  const loadingTask = pdfjsLib.getDocument(pdfUrl);
+  pdfDoc = await loadingTask.promise;
+  currentPage = 1;
+
+  if (isMobile()) {
+    renderSinglePage(currentPage);
+  } else {
+    renderTwoPages(currentPage);
+  }
+}
+
 
       // ============================================
       // CRUD - REVISTAS
