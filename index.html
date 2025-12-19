@@ -1261,6 +1261,36 @@ body.admin-mode footer {
           </div>
         </div>
       </section>
+<!-- CATEGORÍAS -->
+<section class="categories" id="categorias">
+  <div class="container">
+    <h2 class="section-title">Categorías</h2>
+    <div class="categories-grid" id="categories-container">
+      <!-- categorías render JS -->
+    </div>
+  </div>
+</section>
+
+<!-- NOTAS -->
+<section class="featured-notes" id="notas">
+  <div class="container">
+    <h2 class="section-title">Notas Periodísticas</h2>
+    <div class="notes-grid" id="notes-container">
+      <!-- notas render JS -->
+    </div>
+  </div>
+</section>
+
+<!-- NOTAS POR CATEGORÍA -->
+<section class="category-notes" id="category-notes" style="display:none;">
+  <div class="container">
+    <div class="category-header">
+      <a href="#" id="back-to-categories">← Volver a Categorías</a>
+      <h2 class="section-title" id="category-title"></h2>
+    </div>
+    <div class="notes-grid" id="category-notes-container"></div>
+  </div>
+</section>
 
       <footer
         style="
@@ -1782,6 +1812,20 @@ let currentView = "public"; // "public" | "admin"
         setupEventListeners();
         initPdfViewer();
       }
+async function initApp() {
+  await cargarDesdeJSON();
+  cargarRevistas();
+  cargarCategorias();
+  cargarNotas();
+
+  if (currentView === "public") {
+    renderCategoriasPublicas();
+    renderNotasPublicas();
+  }
+
+  setupEventListeners();
+  initPdfViewer();
+}
 
       // Cargar revistas en el admin y en la vista pública
       function cargarRevistas() {
@@ -1893,6 +1937,68 @@ if (adminPanel && adminPanel.style.display === "block") {
           notesList.appendChild(notaHTML);
         });
       }
+function renderCategoriasPublicas() {
+  const container = document.getElementById("categories-container");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  categorias.forEach((categoria) => {
+    const div = document.createElement("div");
+    div.className = "category-card";
+    div.innerHTML = `
+      <h3>${categoria.name}</h3>
+      <p>${categoria.description || ""}</p>
+    `;
+
+    div.addEventListener("click", () => {
+      renderNotasPorCategoria(categoria.id, categoria.name);
+    });
+
+    container.appendChild(div);
+  });
+}
+function renderNotasPublicas() {
+  const container = document.getElementById("notes-container");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  notas.forEach((nota) => {
+    const div = document.createElement("div");
+    div.className = "note-card";
+    div.innerHTML = `
+      <img src="${nota.image || ""}" alt="${nota.title}">
+      <h4>${nota.title}</h4>
+      <p>${nota.description}</p>
+    `;
+
+    container.appendChild(div);
+  });
+}
+function renderNotasPorCategoria(categoryId, categoryName) {
+  document.getElementById("categorias").style.display = "none";
+  document.getElementById("notas").style.display = "none";
+  document.getElementById("category-notes").style.display = "block";
+
+  document.getElementById("category-title").textContent = categoryName;
+
+  const container = document.getElementById("category-notes-container");
+  container.innerHTML = "";
+
+  notas
+    .filter((n) => n.category === categoryId)
+    .forEach((nota) => {
+      const div = document.createElement("div");
+      div.className = "note-card";
+      div.innerHTML = `
+        <img src="${nota.image || ""}" alt="${nota.title}">
+        <h4>${nota.title}</h4>
+        <p>${nota.description}</p>
+      `;
+      container.appendChild(div);
+    });
+}
 
       // Crear HTML para una revista en el admin
       function crearHTMLRevista(revista) {
@@ -2149,6 +2255,12 @@ function isMobile() {
       await renderTwoPagesWithTransition(currentPage, "next");
     }, 500);
   }
+});
+document.getElementById("back-to-categories")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("category-notes").style.display = "none";
+  document.getElementById("categorias").style.display = "block";
+  document.getElementById("notas").style.display = "block";
 });
 
 document.getElementById("prev-page").addEventListener("click", async () => {
