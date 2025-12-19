@@ -245,6 +245,9 @@
         display: block;
         animation: fadeIn 0.5s ease;
       }
+body.admin-mode #anteriores {
+  display: none !important;
+}
 
       @keyframes fadeIn {
         from {
@@ -1073,6 +1076,12 @@
     border-radius: 0 !important;
     background: white;
   }
+
+  #public-view,
+#admin-panel {
+  display: none;
+}
+
 }
 @media (max-width: 1500px) {
 
@@ -1089,7 +1098,14 @@
 
 }
 
-    </style>
+    body.admin-mode #public-view {
+  display: none !important;
+}
+body.admin-mode footer {
+  display: none;
+}
+
+</style>
   </head>
   <body>
     <!-- LOGIN -->
@@ -1671,7 +1687,7 @@
       let categorias = [];
       let notas = [];
 
-      // Variables para el visor de PDF
+let currentView = "public"; // "public" | "admin"
       let pageRendering = false;
       let pageNumPending = null;
       let currentPdfUrl = null;
@@ -1769,6 +1785,11 @@
 
       // Cargar revistas en el admin y en la vista pública
       function cargarRevistas() {
+        const adminPanel = document.getElementById("admin-panel");
+if (adminPanel && adminPanel.style.display === "block") {
+  return;
+}
+
         const issuesList = document.getElementById("issues-list");
         if (!issuesList) return;
 
@@ -1786,11 +1807,11 @@
           issuesList.appendChild(revistaHTML);
         });
 
-        // Cargar revista actual en vista pública
-        cargarRevistaActual();
+        if (currentView === "public") {
+  cargarRevistaActual();
+  cargarRevistasAnteriores();
+}
 
-        // Cargar revistas anteriores en vista pública
-        cargarRevistasAnteriores();
       }
 
       // Cargar categorías en los select
@@ -3037,6 +3058,8 @@ async function cargarPDFLibro(pdfUrl) {
           const pass = document.getElementById("password").value;
 
           if (user === "admin" && pass === "admin") {
+            document.body.classList.add("admin-mode");
+          currentView = "admin"
             document.getElementById("login-container").style.display = "none";
             document.getElementById("public-view").style.display = "none";
             document.getElementById("admin-panel").style.display = "block";
@@ -3049,11 +3072,15 @@ async function cargarPDFLibro(pdfUrl) {
           .getElementById("public-toggle")
           .addEventListener("click", (e) => {
             e.preventDefault();
+            document.body.classList.remove("admin-mode");
+            currentView = "public";
             document.getElementById("admin-panel").style.display = "none";
             document.getElementById("public-view").style.display = "block";
           });
 
         document.getElementById("logout-btn").addEventListener("click", (e) => {
+          document.body.classList.remove("admin-mode");
+          currentView = "public";
           e.preventDefault();
           document.getElementById("admin-panel").style.display = "none";
           document.getElementById("public-view").style.display = "block";
