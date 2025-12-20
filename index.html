@@ -478,11 +478,13 @@ body.admin-mode #anteriores {
         padding: 30px;
         border-radius: 10px;
         width: 90%;
-        max-width: 500px;
+         max-width: auto; 
         max-height: 90vh;
         overflow-y: auto;
       }
-
+ .issue-cover img{
+max-height: 250px;
+} 
       .modal-content h2 {
         color: #2c3e50;
         margin-bottom: 20px;
@@ -594,7 +596,7 @@ body.admin-mode #anteriores {
         width: 100%;
         background: rgba(44, 62, 80, 0.9);
         color: white;
-        padding: 15px 20px;
+        padding: 20px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -603,7 +605,7 @@ body.admin-mode #anteriores {
 
       .magazine-header h3 {
         margin: 0;
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .close-magazine {
@@ -639,7 +641,7 @@ body.admin-mode #anteriores {
       .pdf-viewer-container {
         width: 100%;
         height: 100%;
-        max-width: 1200px;
+        max-width: 1300px;
         background: #2c3e50;
         border-radius: 8px;
         overflow: hidden;
@@ -860,6 +862,19 @@ body.admin-mode #anteriores {
 #pdf-canvas-container.fade-in {
   opacity: 1;
   transform: translateX(0);
+}
+.modal-content.revista-modal {
+  background: #fff;
+  max-width: 1050px;
+  width: 92%;
+  border-radius: 16px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  animation: modalFadeUp .35s ease;
+  max-width: 1050px !important;
+  max-height: 500px !important;
+  display: flex !important;
 }
 
 
@@ -1295,7 +1310,7 @@ body.admin-mode #admin-panel {
 }
 
 /* Contenido del modal */
-.modal-content {
+.modal-content-nota {
   background: #fff;
   margin: auto;
   border-radius: 10px;
@@ -1306,7 +1321,7 @@ body.admin-mode #admin-panel {
   animation: fadeIn 0.3s ease;
 }
 
-.modal-content img {
+.modal-content-nota img {
   width: 100%;
   height: 250px;
   object-fit: cover;
@@ -1334,6 +1349,175 @@ body.admin-mode #admin-panel {
   from {opacity: 0; transform: translateY(-20px);}
   to {opacity: 1; transform: translateY(0);}
 }
+.revista-modal {
+  max-width: 900px;
+  width: 100%;
+}
+
+.modal .issue-container {
+  margin: 0;
+}
+.modal {
+  justify-content: center;
+  align-items: center;
+}
+.modal-content.revista-modal {
+    background: hsl(0, 0%, 100%);
+    max-width: auto;
+    width: 100%;
+    border-radius: 16px;
+    padding: 30px;
+    /* position: relative; */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+    animation: modalFadeUp .35s 
+ease;
+    /* max-width: 500px !important; */
+    /* max-height: 500px !important; */
+    /* display: flex !important; */
+}
+.revista-modal {
+    max-width: 900px;
+    width: 100%;
+}
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-content.revista-modal {
+  background: #fff;
+  max-width: 900px;
+  width: 92%;
+  border-radius: 16px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  animation: modalFadeUp .35s ease;
+}
+@keyframes modalFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.modal-content .close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  transition: color .2s;
+  padding: 5px;
+}
+
+.modal-content .close:hover {
+  color: #ff6f61;
+}
+.revista-modal .issue-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.revista-modal .issue-cover img {
+  width: auto;
+  max-height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.15);
+}
+
+.revista-modal .issue-content {
+  flex: 1;
+}
+.revista-modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+  color: #2c3e50;
+}
+
+.revista-modal .issue-meta {
+  font-size: .85rem;
+  color: #ff6f61;
+  margin-bottom: 12px;
+}
+
+.revista-modal .issue-description {
+  font-size: .95rem;
+  color: #555;
+  line-height: 1.5;
+}
+.revista-modal .issue-actions {
+  margin-top: 22px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.revista-modal .btn {
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-size: .9rem;
+}
+@media (max-width: 768px) {
+  .revista-modal .issue-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .revista-modal .issue-cover img {
+    width: 180px;
+  }
+}
+.revista-modal .issue-content {
+  max-width: 420px;
+}
+.revista-modal .issue-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.revista-modal .btn {
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+}
+.revista-modal .issue-cover {
+  max-width: 260px;
+  max-height: 360px;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.revista-modal .issue-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 </style>
   </head>
   <body>
@@ -1366,19 +1550,23 @@ body.admin-mode #admin-panel {
                 <img
                   src="..//bitacoracultural/titulo.jpeg"
                   alt="Bitácora Cultural Logo"
+                  width="350px"
+                  margin-right="20px"
                 />
               </div>
               <p>Revista Cultural Digital</p>
             </div>
-            <nav>
+            <nav >
               <ul>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#revista">Revista Actual</a></li>
                 <li><a href="#anteriores">Revistas Anteriores</a></li>
                 <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#notas">Notas</a></li>
                 <li>
                   <a href="#" id="admin-toggle" class="admin-link">Admin</a>
                 </li>
+                
               </ul>
             </nav>
           </div>
@@ -1797,7 +1985,7 @@ body.admin-mode #admin-panel {
 
     <!-- MODAL PARA EDITAR REVISTA -->
     <div id="edit-issue-modal" class="modal-overlay">
-      <div class="modal-content">
+      <div class="modal-content" style="justify-content: center; align-items: center;">
         <button class="modal-close" id="close-edit-modal">&times;</button>
         <h2><i class="fas fa-edit"></i> Editar Revista</h2>
 
@@ -1941,16 +2129,43 @@ body.admin-mode #admin-panel {
     </div>
 <!-- Modal de Nota -->
 <div id="note-modal" class="modal">
-  <div class="modal-content">
+  <div class="modal-content-nota">
     <span class="close">&times;</span>
     <img id="modal-img" src="" alt="Imagen de nota">
     <div class="modal-body">
-      <span class="note-category" id="modal-category"></span>
+      <!-- <span class="note-category" id="modal-category"></span> -->
       <h4 id="modal-title"></h4>
       <p id="modal-text"></p>
       <div class="note-meta" id="modal-meta">
         <span id="modal-author"></span>
         <span id="modal-date"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL REVISTA -->
+<div id="revista-modal" class="modal">
+  <div class="modal-content revista-modal" style="width: auto; height: auto;">
+    <span class="close">&times;</span>
+
+    <div class="issue-container">
+      <div class="issue-cover">
+        <img id="modal-cover" src="" alt="Portada Revista" />
+      </div>
+
+      <div class="issue-content">
+        <h3 id="modal-title"></h3>
+        <p class="issue-meta" id="modal-meta"></p>
+        <p class="issue-description" id="modal-description"></p>
+
+        <div class="issue-actions">
+          <a href="#" id="modal-pdf" class="btn" target="_blank">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+          <a href="#" id="modal-online" class="btn btn-outline" target="_blank">
+            <i class="fas fa-eye"></i> Ver Revista Online
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -2198,6 +2413,10 @@ function renderNotasPublicas() {
   notas.forEach((nota) => {
     const div = document.createElement("div");
     div.className = "note-card";
+
+    // 👇 ESTA LÍNEA ES LA CLAVE
+    div.onclick = () => openModal(nota);
+
     div.innerHTML = `
       <img src="${nota.image || ""}" alt="${nota.title}">
       <h4>${nota.title}</h4>
@@ -2207,6 +2426,7 @@ function renderNotasPublicas() {
     container.appendChild(div);
   });
 }
+
 function renderNotasPorCategoria(categoryId, categoryName) {
   document.getElementById("notas").style.display = "none";
   document.getElementById("category-notes").style.display = "block";
@@ -2221,17 +2441,21 @@ function renderNotasPorCategoria(categoryId, categoryName) {
     .forEach((nota) => {
       const div = document.createElement("div");
       div.className = "note-card";
+
+      // 👇 ESTA LÍNEA ES LA CLAVE
+      div.onclick = () => openModal(nota);
+
       div.innerHTML = `
-  <img src="${nota.image || ""}" alt="${nota.title}">
-  <div class="note-content">
-    <h4>${nota.title}</h4>
-    <p>${nota.description}</p>
-  </div>
-`;
+        <img src="${nota.image || ""}" alt="${nota.title}">
+        <div class="note-content">
+          <h4>${nota.title}</h4>
+          <p>${nota.description}</p>
+        </div>
+      `;
+
       container.appendChild(div);
     });
 }
-
 
       // Crear HTML para una revista en el admin
       function crearHTMLRevista(revista) {
@@ -2374,45 +2598,103 @@ function renderNotasPorCategoria(categoryId, categoryName) {
       }
 
       // Cargar revistas anteriores en vista pública
-      function cargarRevistasAnteriores() {
-        const container = document.querySelector(
-          ".past-issues .container > div"
-        );
-        if (!container) return;
-        const revistasOrdenadas = [...revistas].sort(
-          (a, b) => Number(b.number) - Number(a.number)
-        );
+      // function cargarRevistasAnteriores() {
+      //   const container = document.querySelector(
+      //     ".past-issues .container > div"
+      //   );
+      //   if (!container) return;
+      //   const revistasOrdenadas = [...revistas].sort(
+      //     (a, b) => Number(b.number) - Number(a.number)
+      //   );
 
-        const revistasAnteriores = revistasOrdenadas
-          .filter((r) => !r[0])
-          .slice(1, 6);
-        container.innerHTML = revistasAnteriores
-          .map(
-            (revista) => `
-              <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                  <img src="${
-                    revista.coverData ||
-                    "https://via.placeholder.com/200x150?text=Revista"
-                  }" alt="Revista ${
-              revista.number
-            }" style="width: 100%; height: 150px; object-fit: cover;">
-                  <div style="padding: 15px;">
-                      <h4 style="font-size: 14px; margin-bottom: 5px; color: #2c3e50;">N° ${
-                        revista.number
-                      }</h4>
-                      <p style="font-size: 12px; color: #ff6f61; margin-bottom: 5px;">${capitalize(
-                        revista.month
-                      )} ${revista.year}</p>
-                      <p style="font-size: 12px; color: #666;">${revista.title.substring(
-                        0,
-                        50
-                      )}...</p>
-                  </div>
-              </div>
-          `
-          )
-          .join("");
-      }
+      //   const revistasAnteriores = revistasOrdenadas
+      //     .filter((r) => !r[0])
+      //     .slice(1, 6);
+      //   container.innerHTML = revistasAnteriores
+      //     .map(
+      //       (revista) => `
+      //         <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+      //             <img src="${
+      //               revista.coverData ||
+      //               "https://via.placeholder.com/200x150?text=Revista"
+      //             }" alt="Revista ${
+      //         revista.number
+      //       }" style="width: 100%; height: 150px; object-fit: cover;">
+      //             <div style="padding: 15px;">
+      //                 <h4 style="font-size: 14px; margin-bottom: 5px; color: #2c3e50;">N° ${
+      //                   revista.number
+      //                 }</h4>
+      //                 <p style="font-size: 12px; color: #ff6f61; margin-bottom: 5px;">${capitalize(
+      //                   revista.month
+      //                 )} ${revista.year}</p>
+      //                 <p style="font-size: 12px; color: #666;">${revista.title.substring(
+      //                   0,
+      //                   50
+      //                 )}...</p>
+      //             </div>
+      //         </div>
+      //     `
+      //     )
+      //     .join("");
+      // }
+      let revistasAnterioresGlobal = [];
+
+function cargarRevistasAnteriores() {
+  const container = document.querySelector(
+    ".past-issues .container > div"
+  );
+  if (!container) return;
+
+  const revistasOrdenadas = [...revistas].sort(
+    (a, b) => Number(b.number) - Number(a.number)
+  );
+
+  revistasAnterioresGlobal = revistasOrdenadas
+    .filter((r) => !r[0])
+    .slice(1, 6);
+
+  container.innerHTML = revistasAnterioresGlobal
+    .map(
+      (revista, index) => `
+        <div
+          class="issue-card"
+          data-index="${index}"
+          style="cursor:pointer; background:white; border-radius:8px; overflow:hidden; box-shadow:0 3px 10px rgba(0,0,0,0.1);"
+        >
+          <img src="${
+            revista.coverData ||
+            "https://via.placeholder.com/200x150?text=Revista"
+          }"
+          alt="Revista ${revista.number}"
+          style="width:100%; height:150px; object-fit:cover;">
+
+          <div style="padding:15px;">
+            <h4 style="font-size:14px; margin-bottom:5px; color:#2c3e50;">
+              N° ${revista.number}
+            </h4>
+            <p style="font-size:12px; color:#ff6f61; margin-bottom:5px;">
+              ${capitalize(revista.month)} ${revista.year}
+            </p>
+            <p style="font-size:12px; color:#666;">
+              ${revista.title.substring(0, 50)}...
+            </p>
+          </div>
+        </div>
+      `
+    )
+    .join("");
+}
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(".issue-card");
+  if (!card) return;
+
+  const index = card.dataset.index;
+  const revista = revistasAnterioresGlobal[index];
+
+  if (revista) {
+    openRevistaModal(revista);
+  }
+});
 
       // ============================================
       // FUNCIONES PARA MANEJAR ARCHIVOS
@@ -2592,7 +2874,7 @@ document.getElementById("prev-page").addEventListener("click", async () => {
 
         // Mostrar modal
         const modal = document.getElementById("magazine-modal");
-        modal.style.display = "block";
+        modal.style.display = "flex";
         document.getElementById(
           "magazine-title"
         ).textContent = `${revista.title} - N° ${revista.number}`;
@@ -3627,11 +3909,10 @@ const closeBtn = document.querySelector(".modal .close");
 
 // Función para abrir modal con la info de la nota
 function openModal(note) {
-  modal.style.display = "block";
+  modal.style.display = "flex";
   modalImg.src = note.image || ""; // si tiene imagen
-  modalCategory.textContent = note.category;
   modalTitle.textContent = note.title;
-  modalText.textContent = note.text;
+  modalText.textContent = note.description;
   modalAuthor.textContent = note.author || "";
   modalDate.textContent = note.date || "";
 }
@@ -3648,6 +3929,48 @@ document.querySelectorAll(".note-card").forEach(card => {
     if(note) openModal(note);
   });
 });
+let revistaModal = document.getElementById("revista-modal");
+
+function openRevistaModal(revista) {
+  revistaModal.style.display = "flex";
+
+  document.getElementById("modal-cover").src = revista.cover;
+  document.getElementById("modal-title").textContent = revista.title;
+  document.getElementById("modal-meta").textContent =
+    `N° ${revista.number} - ${revista.date}`;
+  document.getElementById("modal-description").textContent =
+    revista.description || "";
+
+  document.getElementById("modal-pdf").href = revista.pdf;
+  const btnOnline = document.getElementById("modal-online");
+
+btnOnline.onclick = (e) => {
+  e.preventDefault(); // evita que navegue por href
+  abrirVisorRevista(revista);
+};
+
+}
+ revistaModal = document.getElementById("revista-modal");
+
+if (revistaModal) {
+  const revistaClose = revistaModal.querySelector(".close");
+
+  revistaClose.addEventListener("click", () => {
+    revistaModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === revistaModal) {
+      revistaModal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      revistaModal.style.display = "none";
+    }
+  });
+}
 
     </script>
   </body>
