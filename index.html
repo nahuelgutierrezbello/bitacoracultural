@@ -1097,6 +1097,155 @@ body.admin-mode #anteriores {
 }
 
 }
+.categories {
+  padding: 60px 0;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  justify-items: center;
+}
+
+.category-card {
+  width: 100%;
+  max-width: 260px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 22px 20px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  border-top: 3px solid #ff6f61;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+.category-card i {
+  font-size: 1.6rem;
+  color: #ff6f61;
+  margin-bottom: 12px;
+}
+
+.category-card h3 {
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+}
+.section-title {
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #4b8b60;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+.featured-notes {
+  padding: 70px 0;
+  background: #ffffff;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+}
+
+.note-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.note-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+.note-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.note-card .note-content {
+  padding: 18px 18px 22px;
+  flex: 1;
+}
+.note-category {
+  display: inline-block;
+  background: #ff6f61;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.note-card h4 {
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  padding: 18px;
+
+}
+
+.note-card p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.45;
+  margin-bottom: 12px;
+  padding: 0px 18px;
+
+}
+
+.note-meta {
+  font-size: 0.75rem;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+@media (max-width: 1500px) {
+  .categories-grid,
+  .notes-grid {
+    gap: 20px;
+  }
+
+  .category-card {
+    max-width: 100%;
+  }
+}
+
 
     body.admin-mode #public-view {
   display: none !important;
@@ -1104,7 +1253,87 @@ body.admin-mode #anteriores {
 body.admin-mode footer {
   display: none;
 }
+/* =========================
+   OCULTAR VISTA PÚBLICA EN ADMIN
+========================= */
 
+body.admin-mode #public-view {
+  display: none !important;
+}
+
+body.admin-mode footer {
+  display: none !important;
+}
+
+/* Seguridad extra por si algo se renderiza fuera */
+body.admin-mode .categories,
+body.admin-mode .featured-notes,
+body.admin-mode .category-notes,
+body.admin-mode .current-issue,
+body.admin-mode .past-issues {
+  display: none !important;
+}
+
+/* Mostrar SOLO admin */
+body.admin-mode #admin-panel {
+  display: block !important;
+}
+
+
+/* Fondo del modal */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.6); 
+  padding: 50px 0;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: #fff;
+  margin: auto;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* Cerrar botón */
+.close {
+  color: #333;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 15px 0 0;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ff6f61;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
 </style>
   </head>
   <body>
@@ -1285,10 +1514,12 @@ body.admin-mode footer {
 <section class="category-notes" id="category-notes" style="display:none;">
   <div class="container">
     <div class="category-header">
-      <a href="#" id="back-to-categories">← Volver a Categorías</a>
+      <a href="#" id="back-to-categories">← Volver a Notas</a>
       <h2 class="section-title" id="category-title"></h2>
     </div>
-    <div class="notes-grid" id="category-notes-container"></div>
+    <div class="notes-grid" id="category-notes-container">
+            <!-- notas filtradas render JS -->
+    </div>
   </div>
 </section>
 
@@ -1298,6 +1529,7 @@ body.admin-mode footer {
           color: white;
           padding: 40px 0;
           text-align: center;
+          margin-top: 50px;
         "
       >
         <div class="container">
@@ -1331,10 +1563,10 @@ body.admin-mode footer {
           <button class="tab-btn active" data-tab="revistas">
             <i class="fas fa-newspaper"></i> Gestionar Revistas
           </button>
-          <button class="tab-btn" data-tab="categorias">
+          <button class="tab-btn" data-tab="admin-categorias">
             <i class="fas fa-tags"></i> Gestionar Categorías
           </button>
-          <button class="tab-btn" data-tab="notas">
+          <button class="tab-btn" data-tab="admin-notas">
             <i class="fas fa-file-alt"></i> Gestionar Notas
           </button>
         </div>
@@ -1460,7 +1692,7 @@ body.admin-mode footer {
         </div>
 
         <!-- TAB: GESTIONAR CATEGORÍAS -->
-        <div class="admin-section" id="categorias">
+        <div class="admin-section" id="admin-categorias">
           <h3><i class="fas fa-tags"></i> Gestionar Categorías</h3>
           <div class="form-group">
             <label for="category-name">Nombre de Categoría</label>
@@ -1480,7 +1712,7 @@ body.admin-mode footer {
         </div>
 
         <!-- TAB: GESTIONAR NOTAS -->
-        <div class="admin-section" id="notas">
+        <div class="admin-section" id="admin-notas">
           <h3><i class="fas fa-file-alt"></i> Gestionar Notas Periodísticas</h3>
 
           <div class="form-row">
@@ -1707,6 +1939,22 @@ body.admin-mode footer {
         </button>
       </div>
     </div>
+<!-- Modal de Nota -->
+<div id="note-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modal-img" src="" alt="Imagen de nota">
+    <div class="modal-body">
+      <span class="note-category" id="modal-category"></span>
+      <h4 id="modal-title"></h4>
+      <p id="modal-text"></p>
+      <div class="note-meta" id="modal-meta">
+        <span id="modal-author"></span>
+        <span id="modal-date"></span>
+      </div>
+    </div>
+  </div>
+</div>
 
     <script>
       // ============================================
@@ -1804,14 +2052,6 @@ let currentView = "public"; // "public" | "admin"
       // ============================================
 
       // Inicializar la aplicación
-      async function initApp() {
-        await cargarDesdeJSON();
-        cargarRevistas();
-        cargarCategorias();
-        cargarNotas();
-        setupEventListeners();
-        initPdfViewer();
-      }
 async function initApp() {
   await cargarDesdeJSON();
   cargarRevistas();
@@ -1829,34 +2069,25 @@ async function initApp() {
 
       // Cargar revistas en el admin y en la vista pública
       function cargarRevistas() {
-        const adminPanel = document.getElementById("admin-panel");
-if (adminPanel && adminPanel.style.display === "block") {
-  return;
+  const issuesList = document.getElementById("issues-list");
+  if (!issuesList) return;
+
+  issuesList.innerHTML = "";
+
+  const revistasOrdenadas = [...revistas].sort(
+    (a, b) => Number(b.number) - Number(a.number)
+  );
+
+  revistasOrdenadas.forEach((revista) => {
+    const revistaHTML = crearHTMLRevista(revista);
+    issuesList.appendChild(revistaHTML);
+  });
+
+  if (currentView === "public") {
+    cargarRevistaActual();
+    cargarRevistasAnteriores();
+  }
 }
-
-        const issuesList = document.getElementById("issues-list");
-        if (!issuesList) return;
-
-        // Limpiar lista
-        issuesList.innerHTML = "";
-
-        // Ordenar por número (más reciente primero)
-        const revistasOrdenadas = [...revistas].sort(
-          (a, b) => Number(b.number) - Number(a.number)
-        );
-
-        // Cargar cada revista en el admin
-        revistasOrdenadas.forEach((revista) => {
-          const revistaHTML = crearHTMLRevista(revista);
-          issuesList.appendChild(revistaHTML);
-        });
-
-        if (currentView === "public") {
-  cargarRevistaActual();
-  cargarRevistasAnteriores();
-}
-
-      }
 
       // Cargar categorías en los select
       function cargarCategorias() {
@@ -1977,7 +2208,6 @@ function renderNotasPublicas() {
   });
 }
 function renderNotasPorCategoria(categoryId, categoryName) {
-  document.getElementById("categorias").style.display = "none";
   document.getElementById("notas").style.display = "none";
   document.getElementById("category-notes").style.display = "block";
 
@@ -1992,13 +2222,16 @@ function renderNotasPorCategoria(categoryId, categoryName) {
       const div = document.createElement("div");
       div.className = "note-card";
       div.innerHTML = `
-        <img src="${nota.image || ""}" alt="${nota.title}">
-        <h4>${nota.title}</h4>
-        <p>${nota.description}</p>
-      `;
+  <img src="${nota.image || ""}" alt="${nota.title}">
+  <div class="note-content">
+    <h4>${nota.title}</h4>
+    <p>${nota.description}</p>
+  </div>
+`;
       container.appendChild(div);
     });
 }
+
 
       // Crear HTML para una revista en el admin
       function crearHTMLRevista(revista) {
@@ -3383,6 +3616,39 @@ async function cargarPDFLibro(pdfUrl) {
           exportarDatos();
         }
       });
+      const modal = document.getElementById("note-modal");
+const modalImg = document.getElementById("modal-img");
+const modalCategory = document.getElementById("modal-category");
+const modalTitle = document.getElementById("modal-title");
+const modalText = document.getElementById("modal-text");
+const modalAuthor = document.getElementById("modal-author");
+const modalDate = document.getElementById("modal-date");
+const closeBtn = document.querySelector(".modal .close");
+
+// Función para abrir modal con la info de la nota
+function openModal(note) {
+  modal.style.display = "block";
+  modalImg.src = note.image || ""; // si tiene imagen
+  modalCategory.textContent = note.category;
+  modalTitle.textContent = note.title;
+  modalText.textContent = note.text;
+  modalAuthor.textContent = note.author || "";
+  modalDate.textContent = note.date || "";
+}
+
+// Cerrar modal
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; };
+
+// Agregar evento a todas las notas
+document.querySelectorAll(".note-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const noteId = card.getAttribute("data-id");
+    const note = notas.find(n => n.id == noteId);
+    if(note) openModal(note);
+  });
+});
+
     </script>
   </body>
 </html>
