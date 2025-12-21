@@ -3003,33 +3003,18 @@ async function agregarRevista() {
       // Guardar cambios editados y actualizar backend
       let guardarEdicionRevista;
 
-      guardarEdicionRevista = async (event) => {
+  guardarEdicionRevista = async (event) => {
   event?.preventDefault?.();
   if (!revistaEditando) return;
 
   const formData = new FormData();
   formData.append("_method", "PUT");
   formData.append("id", revistaEditando.id);
-  formData.append(
-    "number",
-    document.getElementById("edit-issue-number").value
-  );
-  formData.append(
-    "month",
-    document.getElementById("edit-issue-month").value
-  );
-  formData.append(
-    "year",
-    document.getElementById("edit-issue-year").value
-  );
-  formData.append(
-    "title",
-    document.getElementById("edit-issue-title").value
-  );
-  formData.append(
-    "description",
-    document.getElementById("edit-issue-description").value
-  );
+  formData.append("number", document.getElementById("edit-issue-number").value);
+  formData.append("month", document.getElementById("edit-issue-month").value);
+  formData.append("year", document.getElementById("edit-issue-year").value);
+  formData.append("title", document.getElementById("edit-issue-title").value);
+  formData.append("description", document.getElementById("edit-issue-description").value);
 
   if (editIssueCoverFile) formData.append("cover", editIssueCoverFile);
 
@@ -3041,32 +3026,30 @@ async function agregarRevista() {
     const data = await res.json();
 
     if (data.status === "success") {
-      // Actualizar array en memoria
-      const index = revistas.findIndex(
-        (r) => r.id === revistaEditando.id
-      );
+      const index = revistas.findIndex(r => r.id === revistaEditando.id);
       if (index !== -1) {
         revistas[index] = data.data;
+
+        // 🔹 Si subiste nueva imagen, la convertimos a base64
         if (editIssueCoverFile) {
           revistas[index].coverData = await fileToBase64(editIssueCoverFile);
+        } else {
+          // 🔹 Si no subiste nueva imagen, mantener la coverData anterior
+          revistas[index].coverData = revistaEditando.coverData || "";
         }
       }
 
       // 🔹 Actualizar vistas
-      cargarRevistas(); // admin
-      // if (currentView === "public") {
-        cargarRevistaActual();       // actualizar revista actual
-        cargarRevistasAnteriores();  // actualizar revistas anteriores
-      // }
+      cargarRevistas();
+      cargarRevistaActual();
+      cargarRevistasAnteriores();
 
       cerrarModalEdicion();
       alert(`✏️ Revista "${data.data.title}" actualizada correctamente`);
 
       // Limpiar variables
       editIssueCoverFile = null;
-      document
-        .getElementById("edit-issue-cover-preview")
-        .classList.remove("active");
+      document.getElementById("edit-issue-cover-preview").classList.remove("active");
       revistaEditando = null;
     } else {
       console.error("Error del backend:", data);
@@ -3077,7 +3060,7 @@ async function agregarRevista() {
     alert("Error al comunicarse con el backend");
   }
 };
-      // ELIMINAR - Borrar revista
+   // ELIMINAR - Borrar revista
       async function eliminarRevista(id) {
         const revista = revistas.find((r) => r.id === id);
         if (!revista) return;
