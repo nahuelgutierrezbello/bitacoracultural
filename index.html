@@ -45,6 +45,36 @@
         top: 0;
         z-index: 100;
       }
+      
+#public-view header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  margin-bottom: 1200px
+}
+#public-view > section:first-of-type {
+  margin-top: 160px;
+}
+#public-view {
+  padding-top: 30px;
+}
+@media (max-width: 1500px) {
+  #public-view {
+    padding-top: auto;
+  }
+}
+@media (max-width: 768px) {
+  #public-view {
+    padding-top: auto;
+  }
+}
+
+body.modal-open #public-view header {
+  position: static;
+}
+
 
       .header-content {
         display: flex;
@@ -506,7 +536,7 @@ max-height: 250px;
       /* REVISTA ACTUAL EN VISTA PÚBLICA */
       .current-issue {
         padding: 60px 0;
-        background: white;
+        /* background: white; */
       }
 
       .section-title {
@@ -690,22 +720,8 @@ max-height: 250px;
         font-size: 14px;
       }
 
-      .pdf-canvas-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: auto;
-        padding: 20px;
-      }
 
-      .pdf-canvas-container canvas {
-        max-width: 100%;
-        max-height: 100%;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
-      }
+      
 
       .page-counter {
         position: absolute;
@@ -802,316 +818,8 @@ max-height: 250px;
         }
       }
 
-      @media (max-width: 1500px) {
-        .pdf-controls {
-          position: relative;
-          top: 0;
-          right: 0;
-          width: 100%;
-          justify-content: center;
-          margin-bottom: 10px;
-          background: transparent;
-          box-shadow: none;
-        }
-
-        .pdf-controls button,
-        .pdf-controls select {
-          width: 35px;
-          height: 35px;
-          font-size: 14px;
-        }
-      }
-      #pdf-canvas-container {
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  perspective: 2000px;
-  transform-style: preserve-3d;
-}
-
-#pdf-canvas-container canvas {
-  margin: 0;
-  transition: box-shadow 2.2s ease;
-}
-
-/* Animaciones */
-#pdf-canvas-container.flip-next {
-  animation: flipNext 1.2s ease;
-}
-
-#pdf-canvas-container.flip-prev {
-  animation: flipPrev 1.2s ease;
-}
-#pdf-canvas-container.slide-next {
-  animation: slideNext 1.2s ease;
-}
-
-#pdf-canvas-container.slide-prev {
-  animation: slidePrev 1.2s ease;
-}
-/* Transición desktop */
-#pdf-canvas-container {
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-#pdf-canvas-container.fade-out {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-#pdf-canvas-container.fade-in {
-  opacity: 1;
-  transform: translateX(0);
-}
-.modal-content.revista-modal {
-  background: #fff;
-  max-width: 1050px;
-  width: 92%;
-  border-radius: 16px;
-  padding: 30px;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-  animation: modalFadeUp .35s ease;
-  max-width: 1050px !important;
-  max-height: 500px !important;
-  display: flex !important;
-}
 
 
-@keyframes flipNext {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(-12deg);
-  }
-}
-
-@keyframes flipPrev {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(12deg);
-  }
-}
-@media (max-width: 1500px) {
-  #pdf-canvas-container {
-    justify-content: center;
-  }
-
-  #pdf-canvas-container canvas {
-    max-width: 95vw;
-    height: auto;
-  }
-}
-
-/* Animaciones mobile */
-#pdf-canvas-container.slide-next {
-  animation: slideNext 0.3s ease;
-}
-
-#pdf-canvas-container.slide-prev {
-  animation: slidePrev 0.3s ease;
-}
-
-@keyframes slideNext {
-  from {
-    transform: translateX(20px);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slidePrev {
-  from {
-    transform: translateX(-20px);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-@media (max-width: 1500px) {
-  #zoom-select,
-  #rotate-left,
-  #rotate-right,
-  #fullscreen-btn {
-    display: none !important;
-  }
-
-  .pdf-controls {
-    justify-content: space-between;
-    gap: 0;
-  }
-
-  .pdf-controls button {
-    flex: 1;
-    font-size: 18px;
-    padding: 12px 0;
-  }
-
-  .page-counter {
-    font-size: 14px;
-    margin-top: 10px;
-  }
-
-  /* =========================
-   MODO LECTOR MOBILE
-========================= */
-@media (max-width: 1500px) {
-
-  /* Modal ocupa toda la pantalla */
-  #magazine-modal {
-    padding: 0;
-  }
-
-  .magazine-container {
-    height: 100vh;
-    padding: 0;
-  }
-
-  /* Ocultamos header feo */
-  .magazine-header {
-    display: none;
-  }
-
-  /* Contenedor del PDF */
-  .pdf-canvas-container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0f172a; /* fondo elegante */
-  }
-
-  canvas {
-    max-width: 100%;
-    max-height: 100%;
-    margin: 0 auto;
-  }
-
-  /* Ocultamos controles innecesarios */
-  .pdf-controls select,
-  #rotate-left,
-  #rotate-right,
-  #fullscreen-btn {
-    display: none;
-  }
-
-  /* Flechas flotantes */
-  #prev-page,
-  #next-page {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1000;
-    background: rgba(0,0,0,.4);
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-  }
-
-  #prev-page {
-    left: 10px;
-  }
-
-  #next-page {
-    right: 10px;
-  }
-
-  /* Ocultamos contador si querés */
-  .page-counter {
-    display: none;
-  }
-}
-/* =========================
-   FIX VISOR PDF – MOBILE SIN BORDES
-========================= */
-@media (max-width: 1500px) {
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  /* Modal ocupa TODO */
-  #magazine-modal {
-    inset: 0;
-    padding: 0;
-  }
-
-  /* Contenedor principal */
-  .magazine-container {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    border-radius: 0 !important;
-    background: #0f172a;
-  }
-
-  /* Viewer intermedio */
-  .pdf-viewer-container {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    border-radius: 0 !important;
-    background: #0f172a;
-  }
-
-  /* Contenedor de canvases */
-  .pdf-canvas-container {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0f172a;
-    overflow: hidden;
-  }
-
-  /* El PDF en sí */
-  .pdf-canvas-container canvas {
-    width: 100vw !important;
-    height: auto !important;
-    max-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    background: white;
-  }
-
-  #public-view,
-#admin-panel {
-  display: none;
-}
-
-}
-@media (max-width: 1500px) {
-
-  .pdf-canvas-container {
-    align-items: flex-start !important; /* ⬅️ CLAVE */
-    padding-top: 0 !important;
-  }
-
-  .pdf-canvas-container canvas {
-    margin-top: 0 !important;
-    align-self: flex-start;
-  }
-}
-
-}
 .categories {
   padding: 60px 0;
 }
@@ -1518,6 +1226,150 @@ ease;
   object-fit: cover;
 }
 
+#pdf-canvas-container {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+#pdf-canvas-container canvas {
+  margin: 0;
+  transition: box-shadow 0.4s ease;
+}
+
+/* Animaciones */
+#pdf-canvas-container.flip-next {
+  animation: flipNext 0.6s ease;
+}
+
+#pdf-canvas-container.flip-prev {
+  animation: flipPrev 0.6s ease;
+}
+
+@keyframes flipNext {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-12deg);
+  }
+}
+
+@keyframes flipPrev {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(12deg);
+  }
+}
+/* =========================
+   FIX VISOR PDF – MOBILE SIN BORDES
+========================= */
+@media (max-width: 1500px) {
+ /* Ocultamos lo innecesario */
+  #zoom-select,
+  #rotate-left,
+  #rotate-right,
+  #fullscreen-btn,
+  .page-counter {
+    display: none !important;
+  }#prev-page { left: 10px; }
+  #next-page { right: 10px; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+    /* Flechas flotantes */
+  #prev-page,
+  #next-page {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(0,0,0,.4);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+  }
+
+  #prev-page {
+    left: 10px;
+  }
+
+  #next-page {
+    right: 10px;
+  }
+
+  /* Modal ocupa TODO */
+  #magazine-modal {
+    inset: 0;
+    padding: 0;
+  }
+
+  /* Contenedor principal */
+  .magazine-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 !important;
+    background: #0f172a;
+  }
+
+  /* Viewer intermedio */
+  .pdf-viewer-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 !important;
+    background: #0f172a;
+  }
+
+  /* Contenedor de canvases */
+  .pdf-canvas-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f172a;
+    overflow: hidden;
+  }
+
+  /* El PDF en sí */
+  .pdf-canvas-container canvas {
+    width: 100vw !important;
+    height: auto !important;
+    max-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: white;
+  }
+  .pdf-canvas-container {
+  display: flex;
+  align-items: flex-start; /* 👈 CLAVE */
+  justify-content: center;
+}
+.pdf-canvas-container canvas {
+  margin-top: 0 !important;
+  align-self: flex-start;
+}
+.modal-content:not(.revista-modal) {
+  max-width: 520px !important;
+  width: 92%;
+}
+
+}
+
 </style>
   </head>
   <body>
@@ -1634,14 +1486,19 @@ ease;
               </button>
             </div>
             <div class="pdf-canvas-container" id="pdf-canvas-container">
-  <canvas id="page-left"></canvas>
-  <canvas id="page-right"></canvas>
 
   <div class="loading-pdf" id="loading-pdf">
     <i class="fas fa-spinner fa-spin"></i>
     <p>Cargando revista...</p>
   </div>
+
+  <div class="pdf-book" id="pdf-book">
+    <canvas id="page-left"></canvas>
+    <canvas id="page-right"></canvas>
+  </div>
+
 </div>
+
 
 
   <div class="pdf-book" id="pdf-book">
@@ -1985,7 +1842,7 @@ ease;
 
     <!-- MODAL PARA EDITAR REVISTA -->
     <div id="edit-issue-modal" class="modal-overlay">
-      <div class="modal-content" style="justify-content: center; align-items: center;">
+      <div class="modal-content" style="justify-content: center; align-items: center;max-width: 600px;">
         <button class="modal-close" id="close-edit-modal">&times;</button>
         <h2><i class="fas fa-edit"></i> Editar Revista</h2>
 
@@ -2063,7 +1920,7 @@ ease;
 
     <!-- MODAL PARA EDITAR NOTA -->
     <div id="edit-note-modal" class="modal-overlay">
-      <div class="modal-content">
+      <div class="modal-content" style="max-width: 600px;">
         <button class="modal-close" id="close-note-modal">&times;</button>
         <h2><i class="fas fa-edit"></i> Editar Nota Periodística</h2>
 
@@ -2867,56 +2724,29 @@ document.getElementById("prev-page").addEventListener("click", async () => {
       }
 
       function abrirVisorRevista(revista) {
-        if (!revista || !revista.pdf) {
-          alert("Esta revista no tiene un PDF disponible para ver en línea.");
-          return;
-        }
+  if (!revista || !revista.pdf) {
+    alert("Esta revista no tiene un PDF disponible para ver en línea.");
+    return;
+  }
 
-        // Mostrar modal
-        const modal = document.getElementById("magazine-modal");
-        modal.style.display = "flex";
-        document.getElementById(
-          "magazine-title"
-        ).textContent = `${revista.title} - N° ${revista.number}`;
+  // 🔥 reset visor
+  if (pdfDoc) {
+    pdfDoc.destroy();
+    pdfDoc = null;
+  }
+  currentPage = 1;
+  rotation = 0;
 
-        // Mostrar loader
-        document.getElementById("loading-pdf").style.display = "flex";
+  const modal = document.getElementById("magazine-modal");
+  modal.style.display = "block";
 
-        // Obtener URL del PDF (usar la ruta correcta del backend)
-        const pdfUrl = revista.pdf.startsWith("http")
-          ? revista.pdf
-          : `${revista.pdf}`;
-        currentPdfUrl = pdfUrl;
+  document.getElementById("magazine-title").textContent =
+    `${revista.title} - N° ${revista.number}`;
 
-        // Cargar PDF con pdf.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc =
-          "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  currentPdfUrl = revista.pdf;
 
-        // Limpiar contenedor anterior
-        const container = document.getElementById("pdf-canvas-container");
-        container.innerHTML =
-          '<div class="loading-pdf" id="loading-pdf"><i class="fas fa-spinner fa-spin"></i><p>Cargando revista...</p></div>';
-
-        // Cargar el PDF
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
-        loadingTask.promise
-          .then(function (pdf) {
-            pdfDoc = pdf;
-            document.getElementById("total-pages").textContent = pdf.numPages;
-            currentPage = 1;
-
-            // Ocultar loader
-            document.getElementById("loading-pdf").style.display = "none";
-
-            // Renderizar primera página
-            cargarPDFLibro(pdfUrl);
-          })
-          .catch(function (error) {
-            console.error("Error al cargar el PDF:", error);
-            document.getElementById("loading-pdf").innerHTML =
-              '<p style="color: #ff6f61;">Error al cargar la revista. Asegúrate de que el archivo PDF sea válido.</p>';
-          });
-      }
+  cargarPDFLibro(currentPdfUrl);
+}
 
     // ============================================
 // VISOR PDF DOBLE PÁGINA (TIPO LIBRO)
@@ -3945,9 +3775,15 @@ function openRevistaModal(revista) {
   const btnOnline = document.getElementById("modal-online");
 
 btnOnline.onclick = (e) => {
-  e.preventDefault(); // evita que navegue por href
+  e.preventDefault();
+
+  // cerrar modal de revista
+  revistaModal.style.display = "none";
+
+  // abrir visor online
   abrirVisorRevista(revista);
 };
+
 
 }
  revistaModal = document.getElementById("revista-modal");
@@ -3972,6 +3808,13 @@ if (revistaModal) {
   });
 }
 
-    </script>
+    // cerrar login al hacer click fuera del formulario
+document.getElementById("login-container")?.addEventListener("click", (e) => {
+  // si el click es sobre el overlay, no dentro del form
+  if (e.target === e.currentTarget) {
+    document.getElementById("login-container").style.display = "none";
+  }
+});
+</script>
   </body>
 </html>
