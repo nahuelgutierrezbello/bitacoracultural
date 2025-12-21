@@ -671,7 +671,7 @@ max-height: 250px;
       .pdf-viewer-container {
         width: 100%;
         height: 100%;
-        max-width: 1300px;
+        max-width: 3000px;
         background: #2c3e50;
         border-radius: 8px;
         overflow: hidden;
@@ -729,7 +729,7 @@ max-height: 250px;
         left: 50%;
         transform: translateX(-50%);
         background: rgba(44, 62, 80, 0.9);
-        color: white;
+        color: red;
         padding: 8px 16px;
         border-radius: 20px;
         font-size: 14px;
@@ -1322,8 +1322,8 @@ ease;
 
   /* Viewer intermedio */
   .pdf-viewer-container {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     border-radius: 0 !important;
@@ -1332,8 +1332,8 @@ ease;
 
   /* Contenedor de canvases */
   .pdf-canvas-container {
-    width: 100vw;
-    height: 100vh;
+    width: 200px;
+    height: 500px;
     margin: 0;
     padding: 0;
     display: flex;
@@ -1370,6 +1370,19 @@ ease;
 
 }
 
+#pdf-canvas-container {
+  width: 100% !important;           /* ocupar todo el ancho del modal */
+  margin: 0 auto;        /* centrar en pantalla */
+  display: flex;
+  justify-content: center;
+  gap: 20px;             /* espacio entre páginas si hay dos canvas */
+  overflow-x: auto;      /* permitir scroll horizontal si hace falta */
+}
+.pdf-book canvas {
+  width: 100% !important;   /* ocupa todo el ancho disponible del contenedor */
+  height: auto !important;  /* mantiene proporción */
+  display: block;
+}
 </style>
   </head>
   <body>
@@ -1485,7 +1498,7 @@ ease;
                 <i class="fas fa-expand"></i>
               </button>
             </div>
-            <div class="pdf-canvas-container" id="pdf-canvas-container">
+            <div class="pdf-canvas-container" id="pdf-canvas-container" style="height: 100%;">
 
   <div class="loading-pdf" id="loading-pdf">
     <i class="fas fa-spinner fa-spin"></i>
@@ -1497,14 +1510,6 @@ ease;
     <canvas id="page-right"></canvas>
   </div>
 
-</div>
-
-
-
-  <div class="pdf-book" id="pdf-book">
-    <canvas id="page-left"></canvas>
-    <canvas id="page-right"></canvas>
-  </div>
 </div>
 
             <div class="page-counter" id="page-counter">
@@ -2240,27 +2245,38 @@ async function initApp() {
           notesList.appendChild(notaHTML);
         });
       }
-function renderCategoriasPublicas() {
+async function renderCategoriasPublicas() {
   const container = document.getElementById("categories-container");
   if (!container) return;
 
   container.innerHTML = "";
 
-  categorias.forEach((categoria) => {
-    const div = document.createElement("div");
-    div.className = "category-card";
-    div.innerHTML = `
-      <h3>${categoria.name}</h3>
-      <p>${categoria.description || ""}</p>
-    `;
+  try {
+    // Traer las categorías actualizadas desde el backend o el JSON
+    const res = await fetch("./data.json");
+    const data = await res.json();
+    console.log(data)
+    const categoriasActualizadas = data.categories || [];
 
-    div.addEventListener("click", () => {
-      renderNotasPorCategoria(categoria.id, categoria.name);
+    categoriasActualizadas.forEach((categoria) => {
+      const div = document.createElement("div");
+      div.className = "category-card";
+      div.innerHTML = `
+        <h3>${categoria.name}</h3>
+        <p>${categoria.description || ""}</p>
+      `;
+
+      div.addEventListener("click", () => {
+        renderNotasPorCategoria(categoria.id, categoria.name);
+      });
+
+      container.appendChild(div);
     });
-
-    container.appendChild(div);
-  });
+  } catch (err) {
+    console.error("Error cargando categorías públicas:", err);
+  }
 }
+
 function renderNotasPublicas() {
   const container = document.getElementById("notes-container");
   if (!container) return;
@@ -2797,33 +2813,44 @@ async function renderTwoPages(startPage) {
   const container = document.getElementById("pdf-canvas-container");
   container.innerHTML = "";
 
+  const containerWidth = container.clientWidth; // ancho total disponible
+  const gap = 20; // espacio entre páginas
+  const pageWidth = (containerWidth - gap) / 2; // ancho de cada página
+
   for (let i = 0; i < 2; i++) {
     const pageNum = startPage + i;
     if (pageNum > pdfDoc.numPages) break;
 
     const page = await pdfDoc.getPage(pageNum);
-    const viewport = page.getViewport({ scale, rotation });
+
+    // Calculamos el viewport escalado para que quepa en el ancho disponible
+    const viewport = page.getViewport({ scale: 1, rotation });
+    const scaleX = pageWidth / viewport.width;
+    const scaleY = scaleX; // mantenemos proporción
+    const scaledViewport = page.getViewport({ scale: scaleX, rotation });
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
+    canvas.width = scaledViewport.width;
+    canvas.height = scaledViewport.height;
 
     canvas.style.background = "#fff";
     canvas.style.boxShadow = "0 0 10px rgba(0,0,0,.4)";
+    canvas.style.margin = "0px";
 
     container.appendChild(canvas);
 
     await page.render({
       canvasContext: ctx,
-      viewport
+      viewport: scaledViewport
     }).promise;
   }
 
   document.getElementById("current-page").textContent = startPage;
   document.getElementById("total-pages").textContent = pdfDoc.numPages;
 }
+
 function renderTwoPagesWithTransition(startPage, direction = "next") {
   const container = document.getElementById("pdf-canvas-container");
 
@@ -3391,7 +3418,7 @@ async function cargarPDFLibro(pdfUrl) {
           });
 
           const data = await res.json();
-
+console.log(data,"data")
           if (!data.status) {
             alert("Error al actualizar la nota");
             return;
